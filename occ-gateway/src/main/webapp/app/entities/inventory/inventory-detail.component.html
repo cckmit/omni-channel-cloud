@@ -1,0 +1,78 @@
+
+<div *ngIf="inventory">
+    <h2><span jhiTranslate="occGatewayApp.inventory.detail.title">Inventory</span> {{inventory.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.inventory.productId">Product Id</span></dt>
+        <dd>
+            <span>{{inventory.productId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.productCode">Product Code</span></dt>
+        <dd>
+            <span>{{inventory.productCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.productName">Product Name</span></dt>
+        <dd>
+            <span>{{inventory.productName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.toSellQuantity">To Sell Quantity</span></dt>
+        <dd>
+            <span>{{inventory.toSellQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.lockedQuantity">Locked Quantity</span></dt>
+        <dd>
+            <span>{{inventory.lockedQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.saledQuantity">Saled Quantity</span></dt>
+        <dd>
+            <span>{{inventory.saledQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{inventory.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.version">Version</span></dt>
+        <dd>
+            <span>{{inventory.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.dr">Dr</span></dt>
+        <dd>
+            <span>{{inventory.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.ts">Ts</span></dt>
+        <dd>
+            <span>{{inventory.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.creator">Creator</span></dt>
+        <dd>
+            <span>{{inventory.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{inventory.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{inventory.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.inventory.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{inventory.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,41 @@
+{
+    "occGatewayApp": {
+        "soItem" : {
+            "home": {
+                "title": "So Items",
+                "createLabel": "Create a new So Item",
+                "createOrEditLabel": "Create or edit a So Item"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete So Item {{ id }}?"
+            },
+            "detail": {
+                "title": "So Item"
+            },
+            "productCategoryId": "Product Category Id",
+            "productCategoryCode": "Product Category Code",
+            "productCategoryName": "Product Category Name",
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "price": "Price",
+            "quantity": "Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "soItemState": "So Item State",
+            "saleOrder": "Sale Order"
+        }
+    },
+    "occMsOrderApp": {
+        "soItem" : {
+            "created": "A new So Item is created with identifier {{ param }}",
+            "updated": "A So Item is updated with identifier {{ param }}",
+            "deleted": "A So Item is deleted with identifier {{ param }}"
+        }
+    }
+}

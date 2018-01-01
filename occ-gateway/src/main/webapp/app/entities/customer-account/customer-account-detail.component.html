@@ -1,0 +1,72 @@
+
+<div *ngIf="customerAccount">
+    <h2><span jhiTranslate="occGatewayApp.customerAccount.detail.title">Customer Account</span> {{customerAccount.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.code">Code</span></dt>
+        <dd>
+            <span>{{customerAccount.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.name">Name</span></dt>
+        <dd>
+            <span>{{customerAccount.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.credit">Credit</span></dt>
+        <dd>
+            <span>{{customerAccount.credit}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{customerAccount.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.version">Version</span></dt>
+        <dd>
+            <span>{{customerAccount.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.dr">Dr</span></dt>
+        <dd>
+            <span>{{customerAccount.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.ts">Ts</span></dt>
+        <dd>
+            <span>{{customerAccount.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.creator">Creator</span></dt>
+        <dd>
+            <span>{{customerAccount.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{customerAccount.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{customerAccount.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{customerAccount.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customerAccount.customer">Customer</span></dt>
+        <dd>
+            <div *ngIf="customerAccount.customerId">
+                <a [routerLink]="['/customer', customerAccount.customerId]">{{customerAccount.customerName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'customer-account/'+ customerAccount.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

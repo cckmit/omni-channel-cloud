@@ -1,0 +1,89 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "productId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "productCode",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "productName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "toSellQuantity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "lockedQuantity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "saledQuantity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "isEnabled",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "version",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "dr",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "ts",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "creator",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "timeCreated",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "modifier",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "timeModified",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20180101071655",
+    "entityTableName": "inv_inventory",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "occMsInventory"
+}

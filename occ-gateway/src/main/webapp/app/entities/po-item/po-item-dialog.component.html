@@ -1,0 +1,200 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPoItemLabel" jhiTranslate="occGatewayApp.poItem.home.createOrEditLabel">Create or edit a Po Item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!poItem.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="poItem.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productCategoryId" for="field_productCategoryId">Product Category Id</label>
+            <input type="text" class="form-control" name="productCategoryId" id="field_productCategoryId"
+                [(ngModel)]="poItem.productCategoryId" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productCategoryId?.dirty && editForm.controls.productCategoryId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productCategoryId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productCategoryCode" for="field_productCategoryCode">Product Category Code</label>
+            <input type="text" class="form-control" name="productCategoryCode" id="field_productCategoryCode"
+                [(ngModel)]="poItem.productCategoryCode" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productCategoryCode?.dirty && editForm.controls.productCategoryCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productCategoryCode?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productCategoryName" for="field_productCategoryName">Product Category Name</label>
+            <input type="text" class="form-control" name="productCategoryName" id="field_productCategoryName"
+                [(ngModel)]="poItem.productCategoryName" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productCategoryName?.dirty && editForm.controls.productCategoryName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productCategoryName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productId" for="field_productId">Product Id</label>
+            <input type="text" class="form-control" name="productId" id="field_productId"
+                [(ngModel)]="poItem.productId" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productId?.dirty && editForm.controls.productId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productCode" for="field_productCode">Product Code</label>
+            <input type="text" class="form-control" name="productCode" id="field_productCode"
+                [(ngModel)]="poItem.productCode" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productCode?.dirty && editForm.controls.productCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productCode?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.productName" for="field_productName">Product Name</label>
+            <input type="text" class="form-control" name="productName" id="field_productName"
+                [(ngModel)]="poItem.productName" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productName?.dirty && editForm.controls.productName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price"
+                [(ngModel)]="poItem.price" min="0"/>
+            <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.price?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.quantity" for="field_quantity">Quantity</label>
+            <input type="number" class="form-control" name="quantity" id="field_quantity"
+                [(ngModel)]="poItem.quantity" min="0"/>
+            <div [hidden]="!(editForm.controls.quantity?.dirty && editForm.controls.quantity?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantity?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantity?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.version" for="field_version">Version</label>
+            <input type="number" class="form-control" name="version" id="field_version"
+                [(ngModel)]="poItem.version" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.dr" for="field_dr">Dr</label>
+            <input type="number" class="form-control" name="dr" id="field_dr"
+                [(ngModel)]="poItem.dr" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.ts" for="field_ts">Ts</label>
+            <div class="d-flex">
+                <input id="field_ts" type="datetime-local" class="form-control" name="ts" [(ngModel)]="poItem.ts"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.creator" for="field_creator">Creator</label>
+            <input type="text" class="form-control" name="creator" id="field_creator"
+                [(ngModel)]="poItem.creator" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.creator?.dirty && editForm.controls.creator?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creator?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.timeCreated" for="field_timeCreated">Time Created</label>
+            <div class="d-flex">
+                <input id="field_timeCreated" type="datetime-local" class="form-control" name="timeCreated" [(ngModel)]="poItem.timeCreated"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.modifier" for="field_modifier">Modifier</label>
+            <input type="text" class="form-control" name="modifier" id="field_modifier"
+                [(ngModel)]="poItem.modifier" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.modifier?.dirty && editForm.controls.modifier?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.modifier?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.timeModified" for="field_timeModified">Time Modified</label>
+            <div class="d-flex">
+                <input id="field_timeModified" type="datetime-local" class="form-control" name="timeModified" [(ngModel)]="poItem.timeModified"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.poItemState" for="field_poItemState">Po Item State</label>
+            <select class="form-control" id="field_poItemState" name="poItemState" [(ngModel)]="poItem.poItemStateId"  required>
+                <option *ngIf="!editForm.value.poItemState" [ngValue]="null" selected></option>
+                <option [ngValue]="poStateOption.id" *ngFor="let poStateOption of postates; trackBy: trackPoStateById">{{poStateOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.poItemState?.dirty && editForm.controls.poItemState?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.poItemState?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.poItem.purchaseOrder" for="field_purchaseOrder">Purchase Order</label>
+            <select class="form-control" id="field_purchaseOrder" name="purchaseOrder" [(ngModel)]="poItem.purchaseOrderId"  required>
+                <option *ngIf="!editForm.value.purchaseOrder" [ngValue]="null" selected></option>
+                <option [ngValue]="purchaseOrderOption.id" *ngFor="let purchaseOrderOption of purchaseorders; trackBy: trackPurchaseOrderById">{{purchaseOrderOption.code}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.purchaseOrder?.dirty && editForm.controls.purchaseOrder?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.purchaseOrder?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

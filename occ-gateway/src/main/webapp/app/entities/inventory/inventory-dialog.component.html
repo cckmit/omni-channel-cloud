@@ -1,0 +1,131 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myInventoryLabel" jhiTranslate="occGatewayApp.inventory.home.createOrEditLabel">Create or edit a Inventory</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!inventory.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="inventory.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.productId" for="field_productId">Product Id</label>
+            <input type="text" class="form-control" name="productId" id="field_productId"
+                [(ngModel)]="inventory.productId" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productId?.dirty && editForm.controls.productId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.productCode" for="field_productCode">Product Code</label>
+            <input type="text" class="form-control" name="productCode" id="field_productCode"
+                [(ngModel)]="inventory.productCode" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productCode?.dirty && editForm.controls.productCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productCode?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.productName" for="field_productName">Product Name</label>
+            <input type="text" class="form-control" name="productName" id="field_productName"
+                [(ngModel)]="inventory.productName" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.productName?.dirty && editForm.controls.productName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.productName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.toSellQuantity" for="field_toSellQuantity">To Sell Quantity</label>
+            <input type="number" class="form-control" name="toSellQuantity" id="field_toSellQuantity"
+                [(ngModel)]="inventory.toSellQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.lockedQuantity" for="field_lockedQuantity">Locked Quantity</label>
+            <input type="number" class="form-control" name="lockedQuantity" id="field_lockedQuantity"
+                [(ngModel)]="inventory.lockedQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.saledQuantity" for="field_saledQuantity">Saled Quantity</label>
+            <input type="number" class="form-control" name="saledQuantity" id="field_saledQuantity"
+                [(ngModel)]="inventory.saledQuantity" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.isEnabled" for="field_isEnabled">Is Enabled</label>
+            <input type="checkbox" class="form-control" name="isEnabled" id="field_isEnabled"
+                [(ngModel)]="inventory.isEnabled" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.version" for="field_version">Version</label>
+            <input type="number" class="form-control" name="version" id="field_version"
+                [(ngModel)]="inventory.version" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.dr" for="field_dr">Dr</label>
+            <input type="number" class="form-control" name="dr" id="field_dr"
+                [(ngModel)]="inventory.dr" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.ts" for="field_ts">Ts</label>
+            <div class="d-flex">
+                <input id="field_ts" type="datetime-local" class="form-control" name="ts" [(ngModel)]="inventory.ts"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.creator" for="field_creator">Creator</label>
+            <input type="text" class="form-control" name="creator" id="field_creator"
+                [(ngModel)]="inventory.creator" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.creator?.dirty && editForm.controls.creator?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creator?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.timeCreated" for="field_timeCreated">Time Created</label>
+            <div class="d-flex">
+                <input id="field_timeCreated" type="datetime-local" class="form-control" name="timeCreated" [(ngModel)]="inventory.timeCreated"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.modifier" for="field_modifier">Modifier</label>
+            <input type="text" class="form-control" name="modifier" id="field_modifier"
+                [(ngModel)]="inventory.modifier" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.modifier?.dirty && editForm.controls.modifier?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.modifier?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.inventory.timeModified" for="field_timeModified">Time Modified</label>
+            <div class="d-flex">
+                <input id="field_timeModified" type="datetime-local" class="form-control" name="timeModified" [(ngModel)]="inventory.timeModified"
+                />
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

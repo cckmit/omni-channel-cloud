@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "operationType" : {
+            "home": {
+                "title": "Operation Types",
+                "createLabel": "Create a new Operation Type",
+                "createOrEditLabel": "Create or edit a Operation Type"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Operation Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Operation Type"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsInventoryApp": {
+        "operationType" : {
+            "created": "A new Operation Type is created with identifier {{ param }}",
+            "updated": "A Operation Type is updated with identifier {{ param }}",
+            "deleted": "A Operation Type is deleted with identifier {{ param }}"
+        }
+    }
+}

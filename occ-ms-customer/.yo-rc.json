@@ -1,0 +1,44 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.yonyou.occ.ms.customer",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "4.13.1",
+    "baseName": "occMsCustomer",
+    "packageName": "com.yonyou.occ.ms.customer",
+    "packageFolder": "com/yonyou/occ/ms/customer",
+    "serverPort": "8083",
+    "authenticationType": "uaa",
+    "uaaBaseName": "occUaa",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "1d9160b5332d105c059402caf10e978dbd23a489",
+    "enableTranslation": true,
+    "applicationType": "microservice",
+    "testFrameworks": [
+      "gatling",
+      "cucumber"
+    ],
+    "jhiPrefix": "jhi",
+    "nativeLanguage": "zh-cn",
+    "languages": [
+      "zh-cn",
+      "en"
+    ],
+    "clientPackageManager": "yarn",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

@@ -1,0 +1,60 @@
+
+<div *ngIf="lockLog">
+    <h2><span jhiTranslate="occGatewayApp.lockLog.detail.title">Lock Log</span> {{lockLog.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.lockLog.lockedQuantity">Locked Quantity</span></dt>
+        <dd>
+            <span>{{lockLog.lockedQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.version">Version</span></dt>
+        <dd>
+            <span>{{lockLog.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.dr">Dr</span></dt>
+        <dd>
+            <span>{{lockLog.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.ts">Ts</span></dt>
+        <dd>
+            <span>{{lockLog.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.creator">Creator</span></dt>
+        <dd>
+            <span>{{lockLog.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{lockLog.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{lockLog.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{lockLog.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.lockLog.inventory">Inventory</span></dt>
+        <dd>
+            <div *ngIf="lockLog.inventoryId">
+                <a [routerLink]="['/inventory', lockLog.inventoryId]">{{lockLog.inventoryProductName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'lock-log/'+ lockLog.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

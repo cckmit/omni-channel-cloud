@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "poType" : {
+            "home": {
+                "title": "Po Types",
+                "createLabel": "创建新 Po Type",
+                "createOrEditLabel": "创建或编辑 Po Type"
+            },
+            "delete": {
+                "question": "你确定要删除 Po Type {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Po Type"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "poType" : {
+            "created": "Po Type {{ param }} 创建成功",
+            "updated": "Po Type {{ param }} 更新成功",
+            "deleted": "Po Type {{ param }} 删除成功"
+        }
+    }
+}

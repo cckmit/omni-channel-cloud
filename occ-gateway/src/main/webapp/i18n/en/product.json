@@ -1,0 +1,37 @@
+{
+    "occGatewayApp": {
+        "product" : {
+            "home": {
+                "title": "Products",
+                "createLabel": "Create a new Product",
+                "createOrEditLabel": "Create or edit a Product"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Product {{ id }}?"
+            },
+            "detail": {
+                "title": "Product"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "price": "Price",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "productCategory": "Product Category"
+        }
+    },
+    "occMsProductApp": {
+        "product" : {
+            "created": "A new Product is created with identifier {{ param }}",
+            "updated": "A Product is updated with identifier {{ param }}",
+            "deleted": "A Product is deleted with identifier {{ param }}"
+        }
+    }
+}

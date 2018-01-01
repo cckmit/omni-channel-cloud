@@ -1,0 +1,36 @@
+{
+    "occGatewayApp": {
+        "poPayment" : {
+            "home": {
+                "title": "Po Payments",
+                "createLabel": "Create a new Po Payment",
+                "createOrEditLabel": "Create or edit a Po Payment"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Po Payment {{ id }}?"
+            },
+            "detail": {
+                "title": "Po Payment"
+            },
+            "amount": "Amount",
+            "paymentSuccessful": "Payment Successful",
+            "failedReason": "Failed Reason",
+            "timePaid": "Time Paid",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "purchaseOrder": "Purchase Order"
+        }
+    },
+    "occMsOrderApp": {
+        "poPayment" : {
+            "created": "A new Po Payment is created with identifier {{ param }}",
+            "updated": "A Po Payment is updated with identifier {{ param }}",
+            "deleted": "A Po Payment is deleted with identifier {{ param }}"
+        }
+    }
+}

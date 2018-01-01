@@ -1,0 +1,81 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "purchaseOrder",
+            "otherEntityName": "purchaseOrder",
+            "otherEntityField": "code"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": 0
+        },
+        {
+            "fieldName": "paymentSuccessful",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "failedReason",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "timePaid",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "version",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "dr",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "ts",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "creator",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "timeCreated",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "modifier",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 40
+        },
+        {
+            "fieldName": "timeModified",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20180101075558",
+    "entityTableName": "ord_po_payment",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "occMsOrder"
+}

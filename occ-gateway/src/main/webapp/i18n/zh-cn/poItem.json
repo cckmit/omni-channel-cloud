@@ -1,0 +1,41 @@
+{
+    "occGatewayApp": {
+        "poItem" : {
+            "home": {
+                "title": "Po Items",
+                "createLabel": "创建新 Po Item",
+                "createOrEditLabel": "创建或编辑 Po Item"
+            },
+            "delete": {
+                "question": "你确定要删除 Po Item {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Po Item"
+            },
+            "productCategoryId": "Product Category Id",
+            "productCategoryCode": "Product Category Code",
+            "productCategoryName": "Product Category Name",
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "price": "Price",
+            "quantity": "Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "poItemState": "Po Item State",
+            "purchaseOrder": "Purchase Order"
+        }
+    },
+    "occMsOrderApp": {
+        "poItem" : {
+            "created": "Po Item {{ param }} 创建成功",
+            "updated": "Po Item {{ param }} 更新成功",
+            "deleted": "Po Item {{ param }} 删除成功"
+        }
+    }
+}

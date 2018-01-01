@@ -1,0 +1,44 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.yonyou.occ.ms.order",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "4.13.1",
+    "baseName": "occMsOrder",
+    "packageName": "com.yonyou.occ.ms.order",
+    "packageFolder": "com/yonyou/occ/ms/order",
+    "serverPort": "8082",
+    "authenticationType": "uaa",
+    "uaaBaseName": "occUaa",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "b768bf8b6a0d49882f423d22fc73bb4a61dca7dd",
+    "enableTranslation": true,
+    "applicationType": "microservice",
+    "testFrameworks": [
+      "gatling",
+      "cucumber"
+    ],
+    "jhiPrefix": "jhi",
+    "nativeLanguage": "zh-cn",
+    "languages": [
+      "zh-cn",
+      "en"
+    ],
+    "clientPackageManager": "yarn",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

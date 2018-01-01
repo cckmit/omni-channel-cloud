@@ -1,0 +1,84 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.customer.home.title">Customers</span>
+        <button class="btn btn-primary float-right jh-create-entity create-customer" [routerLink]="['/', { outlets: { popup: ['customer-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.customer.home.createLabel">
+            Create new Customer
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="customers">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="code"><span jhiTranslate="occGatewayApp.customer.code">Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslate="occGatewayApp.customer.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isEnabled"><span jhiTranslate="occGatewayApp.customer.isEnabled">Is Enabled</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.customer.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.customer.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.customer.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.customer.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.customer.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.customer.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.customer.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let customer of customers ;trackBy: trackId">
+                <td><a [routerLink]="['../customer', customer.id ]">{{customer.id}}</a></td>
+                <td>{{customer.code}}</td>
+                <td>{{customer.name}}</td>
+                <td>{{customer.isEnabled}}</td>
+                <td>{{customer.version}}</td>
+                <td>{{customer.dr}}</td>
+                <td>{{customer.ts | date:'medium'}}</td>
+                <td>{{customer.creator}}</td>
+                <td>{{customer.timeCreated | date:'medium'}}</td>
+                <td>{{customer.modifier}}</td>
+                <td>{{customer.timeModified | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../customer', customer.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'customer/'+ customer.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'customer/'+ customer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="customers && customers.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

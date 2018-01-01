@@ -1,0 +1,92 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.inventory.home.title">Inventories</span>
+        <button class="btn btn-primary float-right jh-create-entity create-inventory" [routerLink]="['/', { outlets: { popup: ['inventory-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.inventory.home.createLabel">
+            Create new Inventory
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="inventories">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productId"><span jhiTranslate="occGatewayApp.inventory.productId">Product Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productCode"><span jhiTranslate="occGatewayApp.inventory.productCode">Product Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productName"><span jhiTranslate="occGatewayApp.inventory.productName">Product Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="toSellQuantity"><span jhiTranslate="occGatewayApp.inventory.toSellQuantity">To Sell Quantity</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lockedQuantity"><span jhiTranslate="occGatewayApp.inventory.lockedQuantity">Locked Quantity</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="saledQuantity"><span jhiTranslate="occGatewayApp.inventory.saledQuantity">Saled Quantity</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isEnabled"><span jhiTranslate="occGatewayApp.inventory.isEnabled">Is Enabled</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.inventory.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.inventory.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.inventory.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.inventory.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.inventory.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.inventory.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.inventory.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let inventory of inventories ;trackBy: trackId">
+                <td><a [routerLink]="['../inventory', inventory.id ]">{{inventory.id}}</a></td>
+                <td>{{inventory.productId}}</td>
+                <td>{{inventory.productCode}}</td>
+                <td>{{inventory.productName}}</td>
+                <td>{{inventory.toSellQuantity}}</td>
+                <td>{{inventory.lockedQuantity}}</td>
+                <td>{{inventory.saledQuantity}}</td>
+                <td>{{inventory.isEnabled}}</td>
+                <td>{{inventory.version}}</td>
+                <td>{{inventory.dr}}</td>
+                <td>{{inventory.ts | date:'medium'}}</td>
+                <td>{{inventory.creator}}</td>
+                <td>{{inventory.timeCreated | date:'medium'}}</td>
+                <td>{{inventory.modifier}}</td>
+                <td>{{inventory.timeModified | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../inventory', inventory.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'inventory/'+ inventory.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="inventories && inventories.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

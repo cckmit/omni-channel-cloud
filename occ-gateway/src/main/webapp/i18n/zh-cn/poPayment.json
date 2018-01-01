@@ -1,0 +1,36 @@
+{
+    "occGatewayApp": {
+        "poPayment" : {
+            "home": {
+                "title": "Po Payments",
+                "createLabel": "创建新 Po Payment",
+                "createOrEditLabel": "创建或编辑 Po Payment"
+            },
+            "delete": {
+                "question": "你确定要删除 Po Payment {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Po Payment"
+            },
+            "amount": "Amount",
+            "paymentSuccessful": "Payment Successful",
+            "failedReason": "Failed Reason",
+            "timePaid": "Time Paid",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "purchaseOrder": "Purchase Order"
+        }
+    },
+    "occMsOrderApp": {
+        "poPayment" : {
+            "created": "Po Payment {{ param }} 创建成功",
+            "updated": "Po Payment {{ param }} 更新成功",
+            "deleted": "Po Payment {{ param }} 删除成功"
+        }
+    }
+}

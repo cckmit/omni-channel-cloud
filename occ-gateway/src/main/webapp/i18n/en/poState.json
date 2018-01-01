@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "poState" : {
+            "home": {
+                "title": "Po States",
+                "createLabel": "Create a new Po State",
+                "createOrEditLabel": "Create or edit a Po State"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Po State {{ id }}?"
+            },
+            "detail": {
+                "title": "Po State"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "poState" : {
+            "created": "A new Po State is created with identifier {{ param }}",
+            "updated": "A Po State is updated with identifier {{ param }}",
+            "deleted": "A Po State is deleted with identifier {{ param }}"
+        }
+    }
+}

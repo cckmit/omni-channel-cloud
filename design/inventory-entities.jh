@@ -1,0 +1,66 @@
+entity Inventory(inv_inventory) {
+	productId String maxlength(40),
+	productCode String maxlength(40),
+    productName String maxlength(40),
+    toSellQuantity BigDecimal,
+    lockedQuantity BigDecimal,
+    saledQuantity BigDecimal,
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity LockLog(inv_lock_log) {
+    lockedQuantity BigDecimal,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity OperationType(inv_operation_type) {
+    code String maxlength(10),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity OperationLog(inv_operation_log) {
+    operationQuantity BigDecimal,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+relationship ManyToOne {
+    OperationLog{operationType(name) required} to OperationType,
+    LockLog{inventory(productName) required} to Inventory,
+    OperationLog{inventory(productName) required} to Inventory
+}
+
+// Set pagination options
+paginate * with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass except LockLog, OperationLog

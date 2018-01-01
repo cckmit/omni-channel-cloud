@@ -1,0 +1,62 @@
+
+<div *ngIf="customer">
+    <h2><span jhiTranslate="occGatewayApp.customer.detail.title">Customer</span> {{customer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.customer.code">Code</span></dt>
+        <dd>
+            <span>{{customer.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.name">Name</span></dt>
+        <dd>
+            <span>{{customer.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{customer.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.version">Version</span></dt>
+        <dd>
+            <span>{{customer.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.dr">Dr</span></dt>
+        <dd>
+            <span>{{customer.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.ts">Ts</span></dt>
+        <dd>
+            <span>{{customer.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.creator">Creator</span></dt>
+        <dd>
+            <span>{{customer.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{customer.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{customer.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.customer.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{customer.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'customer/'+ customer.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

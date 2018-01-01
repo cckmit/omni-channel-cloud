@@ -1,0 +1,98 @@
+
+<div *ngIf="purchaseOrder">
+    <h2><span jhiTranslate="occGatewayApp.purchaseOrder.detail.title">Purchase Order</span> {{purchaseOrder.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.code">Code</span></dt>
+        <dd>
+            <span>{{purchaseOrder.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.orderDate">Order Date</span></dt>
+        <dd>
+            <span>{{purchaseOrder.orderDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.totalAmount">Total Amount</span></dt>
+        <dd>
+            <span>{{purchaseOrder.totalAmount}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.customerId">Customer Id</span></dt>
+        <dd>
+            <span>{{purchaseOrder.customerId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.customerCode">Customer Code</span></dt>
+        <dd>
+            <span>{{purchaseOrder.customerCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.customerName">Customer Name</span></dt>
+        <dd>
+            <span>{{purchaseOrder.customerName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.accountId">Account Id</span></dt>
+        <dd>
+            <span>{{purchaseOrder.accountId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.accountCode">Account Code</span></dt>
+        <dd>
+            <span>{{purchaseOrder.accountCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.accountName">Account Name</span></dt>
+        <dd>
+            <span>{{purchaseOrder.accountName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.version">Version</span></dt>
+        <dd>
+            <span>{{purchaseOrder.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.dr">Dr</span></dt>
+        <dd>
+            <span>{{purchaseOrder.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.ts">Ts</span></dt>
+        <dd>
+            <span>{{purchaseOrder.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.creator">Creator</span></dt>
+        <dd>
+            <span>{{purchaseOrder.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{purchaseOrder.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{purchaseOrder.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{purchaseOrder.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.poType">Po Type</span></dt>
+        <dd>
+            <div *ngIf="purchaseOrder.poTypeId">
+                <a [routerLink]="['/po-type', purchaseOrder.poTypeId]">{{purchaseOrder.poTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.purchaseOrder.poState">Po State</span></dt>
+        <dd>
+            <div *ngIf="purchaseOrder.poStateId">
+                <a [routerLink]="['/po-state', purchaseOrder.poStateId]">{{purchaseOrder.poStateName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'purchase-order/'+ purchaseOrder.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,180 @@
+entity PoType(ord_po_type) {
+    code String maxlength(10),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity PoState(ord_po_state) {
+    code String maxlength(10),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity SoType(ord_so_type) {
+    code String maxlength(10),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity SoState(ord_so_state) {
+    code String maxlength(10),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity OrderCtrlRule(ord_order_ctrl_rule) {
+    autoPoToSo Boolean,
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity PurchaseOrder(ord_purchase_order) {
+	code String maxlength(40),
+	orderDate ZonedDateTime,
+    totalAmount BigDecimal min(0),
+    customerId String maxlength(40),
+	customerCode String maxlength(40),
+    customerName String maxlength(40),
+    accountId String maxlength(40),
+	accountCode String maxlength(40),
+    accountName String maxlength(40),
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity PoItem(ord_po_item) {
+	productCategoryId String maxlength(40),
+	productCategoryCode String maxlength(40),
+    productCategoryName String maxlength(40),
+	productId String maxlength(40),
+	productCode String maxlength(40),
+    productName String maxlength(40),
+    price BigDecimal min(0),
+    quantity BigDecimal min(0),
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity PoPayment(ord_po_payment) {
+    amount BigDecimal min(0),
+	paymentSuccessful Boolean,
+	failedReason String maxlength(100),
+	timePaid ZonedDateTime,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity SaleOrder(ord_sale_order) {
+	code String maxlength(40),
+	orderDate ZonedDateTime,
+    totalAmount BigDecimal min(0),
+    customerId String maxlength(40),
+	customerCode String maxlength(40),
+    customerName String maxlength(40),
+    accountId String maxlength(40),
+	accountCode String maxlength(40),
+    accountName String maxlength(40),
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity SoItem(ord_so_item) {
+	productCategoryId String maxlength(40),
+	productCategoryCode String maxlength(40),
+    productCategoryName String maxlength(40),
+	productId String maxlength(40),
+	productCode String maxlength(40),
+    productName String maxlength(40),
+    price BigDecimal min(0),
+    quantity BigDecimal min(0),
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+relationship ManyToOne {
+    OrderCtrlRule{poType(name) required} to PoType,
+    OrderCtrlRule{soType(name) required} to SoType,
+    PurchaseOrder{poType(name) required} to PoType,
+    PurchaseOrder{poState(name) required} to PoState,
+    PoItem{poItemState(name) required} to PoState,
+    SaleOrder{soType(name) required} to SoType,
+    SaleOrder{soState(name) required} to SoState,
+    SoItem{soItemState(name) required} to SoState
+}
+
+relationship OneToMany {
+    PurchaseOrder{poItem} to PoItem{purchaseOrder(code) required},
+    PurchaseOrder{poPayment} to PoPayment{purchaseOrder(code) required},
+    SaleOrder{soItem} to SoItem{saleOrder(code) required}
+}
+
+// Set pagination options
+paginate * with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass except PoItem, SoItem

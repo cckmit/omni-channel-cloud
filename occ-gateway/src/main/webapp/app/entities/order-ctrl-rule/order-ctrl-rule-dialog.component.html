@@ -1,0 +1,114 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myOrderCtrlRuleLabel" jhiTranslate="occGatewayApp.orderCtrlRule.home.createOrEditLabel">Create or edit a Order Ctrl Rule</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!orderCtrlRule.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="orderCtrlRule.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.autoPoToSo" for="field_autoPoToSo">Auto Po To So</label>
+            <input type="checkbox" class="form-control" name="autoPoToSo" id="field_autoPoToSo"
+                [(ngModel)]="orderCtrlRule.autoPoToSo" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.isEnabled" for="field_isEnabled">Is Enabled</label>
+            <input type="checkbox" class="form-control" name="isEnabled" id="field_isEnabled"
+                [(ngModel)]="orderCtrlRule.isEnabled" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.version" for="field_version">Version</label>
+            <input type="number" class="form-control" name="version" id="field_version"
+                [(ngModel)]="orderCtrlRule.version" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.dr" for="field_dr">Dr</label>
+            <input type="number" class="form-control" name="dr" id="field_dr"
+                [(ngModel)]="orderCtrlRule.dr" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.ts" for="field_ts">Ts</label>
+            <div class="d-flex">
+                <input id="field_ts" type="datetime-local" class="form-control" name="ts" [(ngModel)]="orderCtrlRule.ts"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.creator" for="field_creator">Creator</label>
+            <input type="text" class="form-control" name="creator" id="field_creator"
+                [(ngModel)]="orderCtrlRule.creator" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.creator?.dirty && editForm.controls.creator?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creator?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.timeCreated" for="field_timeCreated">Time Created</label>
+            <div class="d-flex">
+                <input id="field_timeCreated" type="datetime-local" class="form-control" name="timeCreated" [(ngModel)]="orderCtrlRule.timeCreated"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.modifier" for="field_modifier">Modifier</label>
+            <input type="text" class="form-control" name="modifier" id="field_modifier"
+                [(ngModel)]="orderCtrlRule.modifier" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.modifier?.dirty && editForm.controls.modifier?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.modifier?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.timeModified" for="field_timeModified">Time Modified</label>
+            <div class="d-flex">
+                <input id="field_timeModified" type="datetime-local" class="form-control" name="timeModified" [(ngModel)]="orderCtrlRule.timeModified"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.poType" for="field_poType">Po Type</label>
+            <select class="form-control" id="field_poType" name="poType" [(ngModel)]="orderCtrlRule.poTypeId"  required>
+                <option *ngIf="!editForm.value.poType" [ngValue]="null" selected></option>
+                <option [ngValue]="poTypeOption.id" *ngFor="let poTypeOption of potypes; trackBy: trackPoTypeById">{{poTypeOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.poType?.dirty && editForm.controls.poType?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.poType?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.orderCtrlRule.soType" for="field_soType">So Type</label>
+            <select class="form-control" id="field_soType" name="soType" [(ngModel)]="orderCtrlRule.soTypeId"  required>
+                <option *ngIf="!editForm.value.soType" [ngValue]="null" selected></option>
+                <option [ngValue]="soTypeOption.id" *ngFor="let soTypeOption of sotypes; trackBy: trackSoTypeById">{{soTypeOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.soType?.dirty && editForm.controls.soType?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.soType?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

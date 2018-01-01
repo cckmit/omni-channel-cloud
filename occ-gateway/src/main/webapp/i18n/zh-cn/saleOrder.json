@@ -1,0 +1,43 @@
+{
+    "occGatewayApp": {
+        "saleOrder" : {
+            "home": {
+                "title": "Sale Orders",
+                "createLabel": "创建新 Sale Order",
+                "createOrEditLabel": "创建或编辑 Sale Order"
+            },
+            "delete": {
+                "question": "你确定要删除 Sale Order {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Sale Order"
+            },
+            "code": "Code",
+            "orderDate": "Order Date",
+            "totalAmount": "Total Amount",
+            "customerId": "Customer Id",
+            "customerCode": "Customer Code",
+            "customerName": "Customer Name",
+            "accountId": "Account Id",
+            "accountCode": "Account Code",
+            "accountName": "Account Name",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "soItem": "So Item",
+            "soType": "So Type",
+            "soState": "So State"
+        }
+    },
+    "occMsOrderApp": {
+        "saleOrder" : {
+            "created": "Sale Order {{ param }} 创建成功",
+            "updated": "Sale Order {{ param }} 更新成功",
+            "deleted": "Sale Order {{ param }} 删除成功"
+        }
+    }
+}

@@ -1,0 +1,66 @@
+
+<div *ngIf="operationType">
+    <h2><span jhiTranslate="occGatewayApp.operationType.detail.title">Operation Type</span> {{operationType.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.operationType.code">Code</span></dt>
+        <dd>
+            <span>{{operationType.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.name">Name</span></dt>
+        <dd>
+            <span>{{operationType.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.desc">Desc</span></dt>
+        <dd>
+            <span>{{operationType.desc}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{operationType.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.version">Version</span></dt>
+        <dd>
+            <span>{{operationType.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.dr">Dr</span></dt>
+        <dd>
+            <span>{{operationType.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.ts">Ts</span></dt>
+        <dd>
+            <span>{{operationType.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.creator">Creator</span></dt>
+        <dd>
+            <span>{{operationType.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{operationType.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{operationType.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationType.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{operationType.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'operation-type/'+ operationType.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,36 @@
+{
+    "occGatewayApp": {
+        "customerAccount" : {
+            "home": {
+                "title": "Customer Accounts",
+                "createLabel": "Create a new Customer Account",
+                "createOrEditLabel": "Create or edit a Customer Account"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Customer Account {{ id }}?"
+            },
+            "detail": {
+                "title": "Customer Account"
+            },
+            "code": "Code",
+            "name": "Name",
+            "credit": "Credit",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "customer": "Customer"
+        }
+    },
+    "occMsCustomerApp": {
+        "customerAccount" : {
+            "created": "A new Customer Account is created with identifier {{ param }}",
+            "updated": "A Customer Account is updated with identifier {{ param }}",
+            "deleted": "A Customer Account is deleted with identifier {{ param }}"
+        }
+    }
+}

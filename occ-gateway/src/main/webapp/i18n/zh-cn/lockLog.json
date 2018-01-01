@@ -1,0 +1,33 @@
+{
+    "occGatewayApp": {
+        "lockLog" : {
+            "home": {
+                "title": "Lock Logs",
+                "createLabel": "创建新 Lock Log",
+                "createOrEditLabel": "创建或编辑 Lock Log"
+            },
+            "delete": {
+                "question": "你确定要删除 Lock Log {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Lock Log"
+            },
+            "lockedQuantity": "Locked Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "inventory": "Inventory"
+        }
+    },
+    "occMsInventoryApp": {
+        "lockLog" : {
+            "created": "Lock Log {{ param }} 创建成功",
+            "updated": "Lock Log {{ param }} 更新成功",
+            "deleted": "Lock Log {{ param }} 删除成功"
+        }
+    }
+}

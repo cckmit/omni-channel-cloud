@@ -1,0 +1,94 @@
+
+<div *ngIf="soItem">
+    <h2><span jhiTranslate="occGatewayApp.soItem.detail.title">So Item</span> {{soItem.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.soItem.productCategoryId">Product Category Id</span></dt>
+        <dd>
+            <span>{{soItem.productCategoryId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.productCategoryCode">Product Category Code</span></dt>
+        <dd>
+            <span>{{soItem.productCategoryCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.productCategoryName">Product Category Name</span></dt>
+        <dd>
+            <span>{{soItem.productCategoryName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.productId">Product Id</span></dt>
+        <dd>
+            <span>{{soItem.productId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.productCode">Product Code</span></dt>
+        <dd>
+            <span>{{soItem.productCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.productName">Product Name</span></dt>
+        <dd>
+            <span>{{soItem.productName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.price">Price</span></dt>
+        <dd>
+            <span>{{soItem.price}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.quantity">Quantity</span></dt>
+        <dd>
+            <span>{{soItem.quantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.version">Version</span></dt>
+        <dd>
+            <span>{{soItem.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.dr">Dr</span></dt>
+        <dd>
+            <span>{{soItem.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.ts">Ts</span></dt>
+        <dd>
+            <span>{{soItem.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.creator">Creator</span></dt>
+        <dd>
+            <span>{{soItem.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{soItem.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{soItem.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{soItem.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.soItemState">So Item State</span></dt>
+        <dd>
+            <div *ngIf="soItem.soItemStateId">
+                <a [routerLink]="['/so-state', soItem.soItemStateId]">{{soItem.soItemStateName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soItem.saleOrder">Sale Order</span></dt>
+        <dd>
+            <div *ngIf="soItem.saleOrderId">
+                <a [routerLink]="['/sale-order', soItem.saleOrderId]">{{soItem.saleOrderCode}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'so-item/'+ soItem.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

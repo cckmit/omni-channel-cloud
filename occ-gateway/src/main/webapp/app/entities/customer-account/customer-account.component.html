@@ -1,0 +1,92 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.customerAccount.home.title">Customer Accounts</span>
+        <button class="btn btn-primary float-right jh-create-entity create-customer-account" [routerLink]="['/', { outlets: { popup: ['customer-account-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.customerAccount.home.createLabel">
+            Create new Customer Account
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="customerAccounts">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="code"><span jhiTranslate="occGatewayApp.customerAccount.code">Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslate="occGatewayApp.customerAccount.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="credit"><span jhiTranslate="occGatewayApp.customerAccount.credit">Credit</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isEnabled"><span jhiTranslate="occGatewayApp.customerAccount.isEnabled">Is Enabled</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.customerAccount.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.customerAccount.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.customerAccount.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.customerAccount.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.customerAccount.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.customerAccount.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.customerAccount.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="customerName"><span jhiTranslate="occGatewayApp.customerAccount.customer">Customer</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let customerAccount of customerAccounts ;trackBy: trackId">
+                <td><a [routerLink]="['../customer-account', customerAccount.id ]">{{customerAccount.id}}</a></td>
+                <td>{{customerAccount.code}}</td>
+                <td>{{customerAccount.name}}</td>
+                <td>{{customerAccount.credit}}</td>
+                <td>{{customerAccount.isEnabled}}</td>
+                <td>{{customerAccount.version}}</td>
+                <td>{{customerAccount.dr}}</td>
+                <td>{{customerAccount.ts | date:'medium'}}</td>
+                <td>{{customerAccount.creator}}</td>
+                <td>{{customerAccount.timeCreated | date:'medium'}}</td>
+                <td>{{customerAccount.modifier}}</td>
+                <td>{{customerAccount.timeModified | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="customerAccount.customerId">
+                        <a [routerLink]="['../customer', customerAccount.customerId  ]" >{{customerAccount.customerName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../customer-account', customerAccount.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'customer-account/'+ customerAccount.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'customer-account/'+ customerAccount.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="customerAccounts && customerAccounts.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

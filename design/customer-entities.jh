@@ -1,0 +1,38 @@
+entity Customer(cus_customer) {
+	code String maxlength(40),
+	name String maxlength(40),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity CustomerAccount(cus_customer_account) {
+	code String maxlength(40),
+	name String maxlength(40),
+    credit BigDecimal min(0),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+relationship ManyToOne {
+    CustomerAccount{customer(name) required} to Customer
+}
+
+// Set pagination options
+paginate * with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass

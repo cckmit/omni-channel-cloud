@@ -1,0 +1,38 @@
+{
+    "occGatewayApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "Create a new Inventory",
+                "createOrEditLabel": "Create or edit a Inventory"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Inventory {{ id }}?"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "toSellQuantity": "To Sell Quantity",
+            "lockedQuantity": "Locked Quantity",
+            "saledQuantity": "Saled Quantity",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsInventoryApp": {
+        "inventory" : {
+            "created": "A new Inventory is created with identifier {{ param }}",
+            "updated": "A Inventory is updated with identifier {{ param }}",
+            "deleted": "A Inventory is deleted with identifier {{ param }}"
+        }
+    }
+}

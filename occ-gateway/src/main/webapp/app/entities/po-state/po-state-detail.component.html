@@ -1,0 +1,66 @@
+
+<div *ngIf="poState">
+    <h2><span jhiTranslate="occGatewayApp.poState.detail.title">Po State</span> {{poState.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.poState.code">Code</span></dt>
+        <dd>
+            <span>{{poState.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.name">Name</span></dt>
+        <dd>
+            <span>{{poState.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.desc">Desc</span></dt>
+        <dd>
+            <span>{{poState.desc}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{poState.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.version">Version</span></dt>
+        <dd>
+            <span>{{poState.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.dr">Dr</span></dt>
+        <dd>
+            <span>{{poState.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.ts">Ts</span></dt>
+        <dd>
+            <span>{{poState.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.creator">Creator</span></dt>
+        <dd>
+            <span>{{poState.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{poState.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{poState.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.poState.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{poState.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'po-state/'+ poState.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,41 @@
+{
+    "occGatewayApp": {
+        "poItem" : {
+            "home": {
+                "title": "Po Items",
+                "createLabel": "Create a new Po Item",
+                "createOrEditLabel": "Create or edit a Po Item"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Po Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Po Item"
+            },
+            "productCategoryId": "Product Category Id",
+            "productCategoryCode": "Product Category Code",
+            "productCategoryName": "Product Category Name",
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "price": "Price",
+            "quantity": "Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "poItemState": "Po Item State",
+            "purchaseOrder": "Purchase Order"
+        }
+    },
+    "occMsOrderApp": {
+        "poItem" : {
+            "created": "A new Po Item is created with identifier {{ param }}",
+            "updated": "A Po Item is updated with identifier {{ param }}",
+            "deleted": "A Po Item is deleted with identifier {{ param }}"
+        }
+    }
+}

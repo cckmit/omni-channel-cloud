@@ -1,0 +1,70 @@
+
+<div *ngIf="orderCtrlRule">
+    <h2><span jhiTranslate="occGatewayApp.orderCtrlRule.detail.title">Order Ctrl Rule</span> {{orderCtrlRule.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.autoPoToSo">Auto Po To So</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.autoPoToSo}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.version">Version</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.dr">Dr</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.ts">Ts</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.creator">Creator</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{orderCtrlRule.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.poType">Po Type</span></dt>
+        <dd>
+            <div *ngIf="orderCtrlRule.poTypeId">
+                <a [routerLink]="['/po-type', orderCtrlRule.poTypeId]">{{orderCtrlRule.poTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.orderCtrlRule.soType">So Type</span></dt>
+        <dd>
+            <div *ngIf="orderCtrlRule.soTypeId">
+                <a [routerLink]="['/so-type', orderCtrlRule.soTypeId]">{{orderCtrlRule.soTypeName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'order-ctrl-rule/'+ orderCtrlRule.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

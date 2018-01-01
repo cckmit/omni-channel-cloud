@@ -1,0 +1,203 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="mySaleOrderLabel" jhiTranslate="occGatewayApp.saleOrder.home.createOrEditLabel">Create or edit a Sale Order</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!saleOrder.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="saleOrder.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="saleOrder.code" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.code?.dirty && editForm.controls.code?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.code?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.orderDate" for="field_orderDate">Order Date</label>
+            <div class="d-flex">
+                <input id="field_orderDate" type="datetime-local" class="form-control" name="orderDate" [(ngModel)]="saleOrder.orderDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.totalAmount" for="field_totalAmount">Total Amount</label>
+            <input type="number" class="form-control" name="totalAmount" id="field_totalAmount"
+                [(ngModel)]="saleOrder.totalAmount" min="0"/>
+            <div [hidden]="!(editForm.controls.totalAmount?.dirty && editForm.controls.totalAmount?.invalid)">
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.totalAmount?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 0 }">
+                    This field should be at least 0.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.totalAmount?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.customerId" for="field_customerId">Customer Id</label>
+            <input type="text" class="form-control" name="customerId" id="field_customerId"
+                [(ngModel)]="saleOrder.customerId" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.customerId?.dirty && editForm.controls.customerId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.customerId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.customerCode" for="field_customerCode">Customer Code</label>
+            <input type="text" class="form-control" name="customerCode" id="field_customerCode"
+                [(ngModel)]="saleOrder.customerCode" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.customerCode?.dirty && editForm.controls.customerCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.customerCode?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.customerName" for="field_customerName">Customer Name</label>
+            <input type="text" class="form-control" name="customerName" id="field_customerName"
+                [(ngModel)]="saleOrder.customerName" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.customerName?.dirty && editForm.controls.customerName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.customerName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.accountId" for="field_accountId">Account Id</label>
+            <input type="text" class="form-control" name="accountId" id="field_accountId"
+                [(ngModel)]="saleOrder.accountId" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.accountId?.dirty && editForm.controls.accountId?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountId?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.accountCode" for="field_accountCode">Account Code</label>
+            <input type="text" class="form-control" name="accountCode" id="field_accountCode"
+                [(ngModel)]="saleOrder.accountCode" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.accountCode?.dirty && editForm.controls.accountCode?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountCode?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.accountName" for="field_accountName">Account Name</label>
+            <input type="text" class="form-control" name="accountName" id="field_accountName"
+                [(ngModel)]="saleOrder.accountName" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.accountName?.dirty && editForm.controls.accountName?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.accountName?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.version" for="field_version">Version</label>
+            <input type="number" class="form-control" name="version" id="field_version"
+                [(ngModel)]="saleOrder.version" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.dr" for="field_dr">Dr</label>
+            <input type="number" class="form-control" name="dr" id="field_dr"
+                [(ngModel)]="saleOrder.dr" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.ts" for="field_ts">Ts</label>
+            <div class="d-flex">
+                <input id="field_ts" type="datetime-local" class="form-control" name="ts" [(ngModel)]="saleOrder.ts"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.creator" for="field_creator">Creator</label>
+            <input type="text" class="form-control" name="creator" id="field_creator"
+                [(ngModel)]="saleOrder.creator" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.creator?.dirty && editForm.controls.creator?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.creator?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.timeCreated" for="field_timeCreated">Time Created</label>
+            <div class="d-flex">
+                <input id="field_timeCreated" type="datetime-local" class="form-control" name="timeCreated" [(ngModel)]="saleOrder.timeCreated"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.modifier" for="field_modifier">Modifier</label>
+            <input type="text" class="form-control" name="modifier" id="field_modifier"
+                [(ngModel)]="saleOrder.modifier" maxlength="40"/>
+            <div [hidden]="!(editForm.controls.modifier?.dirty && editForm.controls.modifier?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.modifier?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 40 }">
+                   This field cannot be longer than 40 characters.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.timeModified" for="field_timeModified">Time Modified</label>
+            <div class="d-flex">
+                <input id="field_timeModified" type="datetime-local" class="form-control" name="timeModified" [(ngModel)]="saleOrder.timeModified"
+                />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.soType" for="field_soType">So Type</label>
+            <select class="form-control" id="field_soType" name="soType" [(ngModel)]="saleOrder.soTypeId"  required>
+                <option *ngIf="!editForm.value.soType" [ngValue]="null" selected></option>
+                <option [ngValue]="soTypeOption.id" *ngFor="let soTypeOption of sotypes; trackBy: trackSoTypeById">{{soTypeOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.soType?.dirty && editForm.controls.soType?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.soType?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="occGatewayApp.saleOrder.soState" for="field_soState">So State</label>
+            <select class="form-control" id="field_soState" name="soState" [(ngModel)]="saleOrder.soStateId"  required>
+                <option *ngIf="!editForm.value.soState" [ngValue]="null" selected></option>
+                <option [ngValue]="soStateOption.id" *ngFor="let soStateOption of sostates; trackBy: trackSoStateById">{{soStateOption.name}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.soState?.dirty && editForm.controls.soState?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.soState?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

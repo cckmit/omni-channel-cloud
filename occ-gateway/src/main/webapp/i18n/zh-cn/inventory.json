@@ -1,0 +1,38 @@
+{
+    "occGatewayApp": {
+        "inventory" : {
+            "home": {
+                "title": "Inventories",
+                "createLabel": "创建新 Inventory",
+                "createOrEditLabel": "创建或编辑 Inventory"
+            },
+            "delete": {
+                "question": "你确定要删除 Inventory {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "Inventory"
+            },
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "toSellQuantity": "To Sell Quantity",
+            "lockedQuantity": "Locked Quantity",
+            "saledQuantity": "Saled Quantity",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsInventoryApp": {
+        "inventory" : {
+            "created": "Inventory {{ param }} 创建成功",
+            "updated": "Inventory {{ param }} 更新成功",
+            "deleted": "Inventory {{ param }} 删除成功"
+        }
+    }
+}

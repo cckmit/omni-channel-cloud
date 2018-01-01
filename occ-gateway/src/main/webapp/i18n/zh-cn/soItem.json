@@ -1,0 +1,41 @@
+{
+    "occGatewayApp": {
+        "soItem" : {
+            "home": {
+                "title": "So Items",
+                "createLabel": "创建新 So Item",
+                "createOrEditLabel": "创建或编辑 So Item"
+            },
+            "delete": {
+                "question": "你确定要删除 So Item {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "So Item"
+            },
+            "productCategoryId": "Product Category Id",
+            "productCategoryCode": "Product Category Code",
+            "productCategoryName": "Product Category Name",
+            "productId": "Product Id",
+            "productCode": "Product Code",
+            "productName": "Product Name",
+            "price": "Price",
+            "quantity": "Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "soItemState": "So Item State",
+            "saleOrder": "Sale Order"
+        }
+    },
+    "occMsOrderApp": {
+        "soItem" : {
+            "created": "So Item {{ param }} 创建成功",
+            "updated": "So Item {{ param }} 更新成功",
+            "deleted": "So Item {{ param }} 删除成功"
+        }
+    }
+}

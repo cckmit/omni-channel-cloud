@@ -1,0 +1,66 @@
+
+<div *ngIf="soType">
+    <h2><span jhiTranslate="occGatewayApp.soType.detail.title">So Type</span> {{soType.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.soType.code">Code</span></dt>
+        <dd>
+            <span>{{soType.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.name">Name</span></dt>
+        <dd>
+            <span>{{soType.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.desc">Desc</span></dt>
+        <dd>
+            <span>{{soType.desc}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{soType.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.version">Version</span></dt>
+        <dd>
+            <span>{{soType.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.dr">Dr</span></dt>
+        <dd>
+            <span>{{soType.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.ts">Ts</span></dt>
+        <dd>
+            <span>{{soType.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.creator">Creator</span></dt>
+        <dd>
+            <span>{{soType.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{soType.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{soType.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.soType.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{soType.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'so-type/'+ soType.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

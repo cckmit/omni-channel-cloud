@@ -1,0 +1,86 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.poState.home.title">Po States</span>
+        <button class="btn btn-primary float-right jh-create-entity create-po-state" [routerLink]="['/', { outlets: { popup: ['po-state-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.poState.home.createLabel">
+            Create new Po State
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="poStates">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="code"><span jhiTranslate="occGatewayApp.poState.code">Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span jhiTranslate="occGatewayApp.poState.name">Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="desc"><span jhiTranslate="occGatewayApp.poState.desc">Desc</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isEnabled"><span jhiTranslate="occGatewayApp.poState.isEnabled">Is Enabled</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.poState.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.poState.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.poState.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.poState.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.poState.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.poState.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.poState.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let poState of poStates ;trackBy: trackId">
+                <td><a [routerLink]="['../po-state', poState.id ]">{{poState.id}}</a></td>
+                <td>{{poState.code}}</td>
+                <td>{{poState.name}}</td>
+                <td>{{poState.desc}}</td>
+                <td>{{poState.isEnabled}}</td>
+                <td>{{poState.version}}</td>
+                <td>{{poState.dr}}</td>
+                <td>{{poState.ts | date:'medium'}}</td>
+                <td>{{poState.creator}}</td>
+                <td>{{poState.timeCreated | date:'medium'}}</td>
+                <td>{{poState.modifier}}</td>
+                <td>{{poState.timeModified | date:'medium'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../po-state', poState.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'po-state/'+ poState.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'po-state/'+ poState.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="poStates && poStates.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

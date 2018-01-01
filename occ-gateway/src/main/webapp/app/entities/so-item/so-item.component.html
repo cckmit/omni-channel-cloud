@@ -1,0 +1,106 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.soItem.home.title">So Items</span>
+        <button class="btn btn-primary float-right jh-create-entity create-so-item" [routerLink]="['/', { outlets: { popup: ['so-item-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.soItem.home.createLabel">
+            Create new So Item
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="soItems">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productCategoryId"><span jhiTranslate="occGatewayApp.soItem.productCategoryId">Product Category Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productCategoryCode"><span jhiTranslate="occGatewayApp.soItem.productCategoryCode">Product Category Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productCategoryName"><span jhiTranslate="occGatewayApp.soItem.productCategoryName">Product Category Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productId"><span jhiTranslate="occGatewayApp.soItem.productId">Product Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productCode"><span jhiTranslate="occGatewayApp.soItem.productCode">Product Code</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="productName"><span jhiTranslate="occGatewayApp.soItem.productName">Product Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="price"><span jhiTranslate="occGatewayApp.soItem.price">Price</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="quantity"><span jhiTranslate="occGatewayApp.soItem.quantity">Quantity</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.soItem.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.soItem.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.soItem.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.soItem.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.soItem.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.soItem.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.soItem.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="soItemStateName"><span jhiTranslate="occGatewayApp.soItem.soItemState">So Item State</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="saleOrderCode"><span jhiTranslate="occGatewayApp.soItem.saleOrder">Sale Order</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let soItem of soItems ;trackBy: trackId">
+                <td><a [routerLink]="['../so-item', soItem.id ]">{{soItem.id}}</a></td>
+                <td>{{soItem.productCategoryId}}</td>
+                <td>{{soItem.productCategoryCode}}</td>
+                <td>{{soItem.productCategoryName}}</td>
+                <td>{{soItem.productId}}</td>
+                <td>{{soItem.productCode}}</td>
+                <td>{{soItem.productName}}</td>
+                <td>{{soItem.price}}</td>
+                <td>{{soItem.quantity}}</td>
+                <td>{{soItem.version}}</td>
+                <td>{{soItem.dr}}</td>
+                <td>{{soItem.ts | date:'medium'}}</td>
+                <td>{{soItem.creator}}</td>
+                <td>{{soItem.timeCreated | date:'medium'}}</td>
+                <td>{{soItem.modifier}}</td>
+                <td>{{soItem.timeModified | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="soItem.soItemStateId">
+                        <a [routerLink]="['../so-state', soItem.soItemStateId  ]" >{{soItem.soItemStateName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="soItem.saleOrderId">
+                        <a [routerLink]="['../sale-order', soItem.saleOrderId  ]" >{{soItem.saleOrderCode}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../so-item', soItem.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'so-item/'+ soItem.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'so-item/'+ soItem.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="soItems && soItems.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

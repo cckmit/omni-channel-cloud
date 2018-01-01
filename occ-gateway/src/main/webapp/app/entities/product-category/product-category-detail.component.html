@@ -1,0 +1,66 @@
+
+<div *ngIf="productCategory">
+    <h2><span jhiTranslate="occGatewayApp.productCategory.detail.title">Product Category</span> {{productCategory.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.productCategory.code">Code</span></dt>
+        <dd>
+            <span>{{productCategory.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.name">Name</span></dt>
+        <dd>
+            <span>{{productCategory.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.desc">Desc</span></dt>
+        <dd>
+            <span>{{productCategory.desc}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.isEnabled">Is Enabled</span></dt>
+        <dd>
+            <span>{{productCategory.isEnabled}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.version">Version</span></dt>
+        <dd>
+            <span>{{productCategory.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.dr">Dr</span></dt>
+        <dd>
+            <span>{{productCategory.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.ts">Ts</span></dt>
+        <dd>
+            <span>{{productCategory.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.creator">Creator</span></dt>
+        <dd>
+            <span>{{productCategory.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{productCategory.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{productCategory.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.productCategory.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{productCategory.timeModified | date:'medium'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'product-category/'+ productCategory.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "soState" : {
+            "home": {
+                "title": "So States",
+                "createLabel": "Create a new So State",
+                "createOrEditLabel": "Create or edit a So State"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete So State {{ id }}?"
+            },
+            "detail": {
+                "title": "So State"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "soState" : {
+            "created": "A new So State is created with identifier {{ param }}",
+            "updated": "A So State is updated with identifier {{ param }}",
+            "deleted": "A So State is deleted with identifier {{ param }}"
+        }
+    }
+}

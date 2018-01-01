@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "soType" : {
+            "home": {
+                "title": "So Types",
+                "createLabel": "Create a new So Type",
+                "createOrEditLabel": "Create or edit a So Type"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete So Type {{ id }}?"
+            },
+            "detail": {
+                "title": "So Type"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "soType" : {
+            "created": "A new So Type is created with identifier {{ param }}",
+            "updated": "A So Type is updated with identifier {{ param }}",
+            "deleted": "A So Type is deleted with identifier {{ param }}"
+        }
+    }
+}

@@ -1,0 +1,40 @@
+entity ProductCategory(pro_product_category) {
+    code String maxlength(40),
+	name String maxlength(40),
+    desc String maxlength(200),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+entity Product(pro_product) {
+	code String maxlength(40),
+	name String maxlength(40),
+    desc String maxlength(200),
+    price BigDecimal min(0),
+    isEnabled Boolean,
+    version Integer,
+    dr Integer,
+    ts ZonedDateTime,
+    creator String maxlength(40),
+    timeCreated ZonedDateTime,
+    modifier String maxlength(40),
+    timeModified ZonedDateTime
+}
+
+relationship ManyToOne {
+    Product{productCategory(name) required} to ProductCategory
+}
+
+// Set pagination options
+paginate * with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass

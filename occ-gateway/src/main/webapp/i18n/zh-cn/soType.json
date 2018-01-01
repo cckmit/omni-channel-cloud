@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "soType" : {
+            "home": {
+                "title": "So Types",
+                "createLabel": "创建新 So Type",
+                "createOrEditLabel": "创建或编辑 So Type"
+            },
+            "delete": {
+                "question": "你确定要删除 So Type {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "So Type"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "soType" : {
+            "created": "So Type {{ param }} 创建成功",
+            "updated": "So Type {{ param }} 更新成功",
+            "deleted": "So Type {{ param }} 删除成功"
+        }
+    }
+}

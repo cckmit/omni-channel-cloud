@@ -1,0 +1,43 @@
+{
+    "occGatewayApp": {
+        "saleOrder" : {
+            "home": {
+                "title": "Sale Orders",
+                "createLabel": "Create a new Sale Order",
+                "createOrEditLabel": "Create or edit a Sale Order"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Sale Order {{ id }}?"
+            },
+            "detail": {
+                "title": "Sale Order"
+            },
+            "code": "Code",
+            "orderDate": "Order Date",
+            "totalAmount": "Total Amount",
+            "customerId": "Customer Id",
+            "customerCode": "Customer Code",
+            "customerName": "Customer Name",
+            "accountId": "Account Id",
+            "accountCode": "Account Code",
+            "accountName": "Account Name",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "soItem": "So Item",
+            "soType": "So Type",
+            "soState": "So State"
+        }
+    },
+    "occMsOrderApp": {
+        "saleOrder" : {
+            "created": "A new Sale Order is created with identifier {{ param }}",
+            "updated": "A Sale Order is updated with identifier {{ param }}",
+            "deleted": "A Sale Order is deleted with identifier {{ param }}"
+        }
+    }
+}

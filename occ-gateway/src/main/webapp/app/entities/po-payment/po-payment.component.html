@@ -1,0 +1,92 @@
+<div>
+    <h2>
+        <span jhiTranslate="occGatewayApp.poPayment.home.title">Po Payments</span>
+        <button class="btn btn-primary float-right jh-create-entity create-po-payment" [routerLink]="['/', { outlets: { popup: ['po-payment-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="occGatewayApp.poPayment.home.createLabel">
+            Create new Po Payment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="poPayments">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="amount"><span jhiTranslate="occGatewayApp.poPayment.amount">Amount</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="paymentSuccessful"><span jhiTranslate="occGatewayApp.poPayment.paymentSuccessful">Payment Successful</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="failedReason"><span jhiTranslate="occGatewayApp.poPayment.failedReason">Failed Reason</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timePaid"><span jhiTranslate="occGatewayApp.poPayment.timePaid">Time Paid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="version"><span jhiTranslate="occGatewayApp.poPayment.version">Version</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dr"><span jhiTranslate="occGatewayApp.poPayment.dr">Dr</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ts"><span jhiTranslate="occGatewayApp.poPayment.ts">Ts</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="creator"><span jhiTranslate="occGatewayApp.poPayment.creator">Creator</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeCreated"><span jhiTranslate="occGatewayApp.poPayment.timeCreated">Time Created</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modifier"><span jhiTranslate="occGatewayApp.poPayment.modifier">Modifier</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeModified"><span jhiTranslate="occGatewayApp.poPayment.timeModified">Time Modified</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="purchaseOrderCode"><span jhiTranslate="occGatewayApp.poPayment.purchaseOrder">Purchase Order</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let poPayment of poPayments ;trackBy: trackId">
+                <td><a [routerLink]="['../po-payment', poPayment.id ]">{{poPayment.id}}</a></td>
+                <td>{{poPayment.amount}}</td>
+                <td>{{poPayment.paymentSuccessful}}</td>
+                <td>{{poPayment.failedReason}}</td>
+                <td>{{poPayment.timePaid | date:'medium'}}</td>
+                <td>{{poPayment.version}}</td>
+                <td>{{poPayment.dr}}</td>
+                <td>{{poPayment.ts | date:'medium'}}</td>
+                <td>{{poPayment.creator}}</td>
+                <td>{{poPayment.timeCreated | date:'medium'}}</td>
+                <td>{{poPayment.modifier}}</td>
+                <td>{{poPayment.timeModified | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="poPayment.purchaseOrderId">
+                        <a [routerLink]="['../purchase-order', poPayment.purchaseOrderId  ]" >{{poPayment.purchaseOrderCode}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../po-payment', poPayment.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'po-payment/'+ poPayment.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'po-payment/'+ poPayment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="poPayments && poPayments.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

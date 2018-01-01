@@ -1,0 +1,98 @@
+
+<div *ngIf="saleOrder">
+    <h2><span jhiTranslate="occGatewayApp.saleOrder.detail.title">Sale Order</span> {{saleOrder.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.code">Code</span></dt>
+        <dd>
+            <span>{{saleOrder.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.orderDate">Order Date</span></dt>
+        <dd>
+            <span>{{saleOrder.orderDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.totalAmount">Total Amount</span></dt>
+        <dd>
+            <span>{{saleOrder.totalAmount}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.customerId">Customer Id</span></dt>
+        <dd>
+            <span>{{saleOrder.customerId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.customerCode">Customer Code</span></dt>
+        <dd>
+            <span>{{saleOrder.customerCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.customerName">Customer Name</span></dt>
+        <dd>
+            <span>{{saleOrder.customerName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.accountId">Account Id</span></dt>
+        <dd>
+            <span>{{saleOrder.accountId}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.accountCode">Account Code</span></dt>
+        <dd>
+            <span>{{saleOrder.accountCode}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.accountName">Account Name</span></dt>
+        <dd>
+            <span>{{saleOrder.accountName}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.version">Version</span></dt>
+        <dd>
+            <span>{{saleOrder.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.dr">Dr</span></dt>
+        <dd>
+            <span>{{saleOrder.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.ts">Ts</span></dt>
+        <dd>
+            <span>{{saleOrder.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.creator">Creator</span></dt>
+        <dd>
+            <span>{{saleOrder.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{saleOrder.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{saleOrder.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{saleOrder.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.soType">So Type</span></dt>
+        <dd>
+            <div *ngIf="saleOrder.soTypeId">
+                <a [routerLink]="['/so-type', saleOrder.soTypeId]">{{saleOrder.soTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.saleOrder.soState">So State</span></dt>
+        <dd>
+            <div *ngIf="saleOrder.soStateId">
+                <a [routerLink]="['/so-state', saleOrder.soStateId]">{{saleOrder.soStateName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'sale-order/'+ saleOrder.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,66 @@
+
+<div *ngIf="operationLog">
+    <h2><span jhiTranslate="occGatewayApp.operationLog.detail.title">Operation Log</span> {{operationLog.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="occGatewayApp.operationLog.operationQuantity">Operation Quantity</span></dt>
+        <dd>
+            <span>{{operationLog.operationQuantity}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.version">Version</span></dt>
+        <dd>
+            <span>{{operationLog.version}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.dr">Dr</span></dt>
+        <dd>
+            <span>{{operationLog.dr}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.ts">Ts</span></dt>
+        <dd>
+            <span>{{operationLog.ts | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.creator">Creator</span></dt>
+        <dd>
+            <span>{{operationLog.creator}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.timeCreated">Time Created</span></dt>
+        <dd>
+            <span>{{operationLog.timeCreated | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.modifier">Modifier</span></dt>
+        <dd>
+            <span>{{operationLog.modifier}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.timeModified">Time Modified</span></dt>
+        <dd>
+            <span>{{operationLog.timeModified | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.operationType">Operation Type</span></dt>
+        <dd>
+            <div *ngIf="operationLog.operationTypeId">
+                <a [routerLink]="['/operation-type', operationLog.operationTypeId]">{{operationLog.operationTypeName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="occGatewayApp.operationLog.inventory">Inventory</span></dt>
+        <dd>
+            <div *ngIf="operationLog.inventoryId">
+                <a [routerLink]="['/inventory', operationLog.inventoryId]">{{operationLog.inventoryProductName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'operation-log/'+ operationLog.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

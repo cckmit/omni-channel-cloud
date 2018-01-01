@@ -1,0 +1,33 @@
+{
+    "occGatewayApp": {
+        "lockLog" : {
+            "home": {
+                "title": "Lock Logs",
+                "createLabel": "Create a new Lock Log",
+                "createOrEditLabel": "Create or edit a Lock Log"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Lock Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Lock Log"
+            },
+            "lockedQuantity": "Locked Quantity",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "inventory": "Inventory"
+        }
+    },
+    "occMsInventoryApp": {
+        "lockLog" : {
+            "created": "A new Lock Log is created with identifier {{ param }}",
+            "updated": "A Lock Log is updated with identifier {{ param }}",
+            "deleted": "A Lock Log is deleted with identifier {{ param }}"
+        }
+    }
+}

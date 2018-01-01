@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "orderCtrlRule" : {
+            "home": {
+                "title": "Order Ctrl Rules",
+                "createLabel": "Create a new Order Ctrl Rule",
+                "createOrEditLabel": "Create or edit a Order Ctrl Rule"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Order Ctrl Rule {{ id }}?"
+            },
+            "detail": {
+                "title": "Order Ctrl Rule"
+            },
+            "autoPoToSo": "Auto Po To So",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified",
+            "poType": "Po Type",
+            "soType": "So Type"
+        }
+    },
+    "occMsOrderApp": {
+        "orderCtrlRule" : {
+            "created": "A new Order Ctrl Rule is created with identifier {{ param }}",
+            "updated": "A Order Ctrl Rule is updated with identifier {{ param }}",
+            "deleted": "A Order Ctrl Rule is deleted with identifier {{ param }}"
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "occGatewayApp": {
+        "soState" : {
+            "home": {
+                "title": "So States",
+                "createLabel": "创建新 So State",
+                "createOrEditLabel": "创建或编辑 So State"
+            },
+            "delete": {
+                "question": "你确定要删除 So State {{ id }} 吗？"
+            },
+            "detail": {
+                "title": "So State"
+            },
+            "code": "Code",
+            "name": "Name",
+            "desc": "Desc",
+            "isEnabled": "Is Enabled",
+            "version": "Version",
+            "dr": "Dr",
+            "ts": "Ts",
+            "creator": "Creator",
+            "timeCreated": "Time Created",
+            "modifier": "Modifier",
+            "timeModified": "Time Modified"
+        }
+    },
+    "occMsOrderApp": {
+        "soState" : {
+            "created": "So State {{ param }} 创建成功",
+            "updated": "So State {{ param }} 更新成功",
+            "deleted": "So State {{ param }} 删除成功"
+        }
+    }
+}
