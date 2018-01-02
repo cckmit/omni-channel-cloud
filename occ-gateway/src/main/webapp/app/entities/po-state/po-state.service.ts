@@ -31,7 +31,7 @@ export class PoStateService {
         });
     }
 
-    find(id: number): Observable<PoState> {
+    find(id: string): Observable<PoState> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -44,7 +44,7 @@ export class PoStateService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
+    delete(id: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 

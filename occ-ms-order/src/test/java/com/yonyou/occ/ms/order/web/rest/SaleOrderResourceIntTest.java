@@ -1,18 +1,23 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.order.domain.SaleOrder;
-import com.yonyou.occ.ms.order.domain.SoType;
 import com.yonyou.occ.ms.order.domain.SoState;
+import com.yonyou.occ.ms.order.domain.SoType;
 import com.yonyou.occ.ms.order.repository.SaleOrderRepository;
 import com.yonyou.occ.ms.order.service.SaleOrderService;
 import com.yonyou.occ.ms.order.service.dto.SaleOrderDTO;
 import com.yonyou.occ.ms.order.service.mapper.SaleOrderMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,20 +32,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the SaleOrderResource REST controller.
@@ -217,7 +219,7 @@ public class SaleOrderResourceIntTest {
         int databaseSizeBeforeCreate = saleOrderRepository.findAll().size();
 
         // Create the SaleOrder with an existing ID
-        saleOrder.setId(1L);
+        saleOrder.setId("1L");
         SaleOrderDTO saleOrderDTO = saleOrderMapper.toDto(saleOrder);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -241,7 +243,7 @@ public class SaleOrderResourceIntTest {
         restSaleOrderMockMvc.perform(get("/api/sale-orders?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(saleOrder.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(saleOrder.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(sameInstant(DEFAULT_ORDER_DATE))))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.intValue())))
@@ -270,7 +272,7 @@ public class SaleOrderResourceIntTest {
         restSaleOrderMockMvc.perform(get("/api/sale-orders/{id}", saleOrder.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(saleOrder.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(saleOrder.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.orderDate").value(sameInstant(DEFAULT_ORDER_DATE)))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.intValue()))
@@ -395,11 +397,11 @@ public class SaleOrderResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(SaleOrder.class);
         SaleOrder saleOrder1 = new SaleOrder();
-        saleOrder1.setId(1L);
+        saleOrder1.setId("1L");
         SaleOrder saleOrder2 = new SaleOrder();
         saleOrder2.setId(saleOrder1.getId());
         assertThat(saleOrder1).isEqualTo(saleOrder2);
-        saleOrder2.setId(2L);
+        saleOrder2.setId("2L");
         assertThat(saleOrder1).isNotEqualTo(saleOrder2);
         saleOrder1.setId(null);
         assertThat(saleOrder1).isNotEqualTo(saleOrder2);
@@ -410,12 +412,12 @@ public class SaleOrderResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(SaleOrderDTO.class);
         SaleOrderDTO saleOrderDTO1 = new SaleOrderDTO();
-        saleOrderDTO1.setId(1L);
+        saleOrderDTO1.setId("1L");
         SaleOrderDTO saleOrderDTO2 = new SaleOrderDTO();
         assertThat(saleOrderDTO1).isNotEqualTo(saleOrderDTO2);
         saleOrderDTO2.setId(saleOrderDTO1.getId());
         assertThat(saleOrderDTO1).isEqualTo(saleOrderDTO2);
-        saleOrderDTO2.setId(2L);
+        saleOrderDTO2.setId("2L");
         assertThat(saleOrderDTO1).isNotEqualTo(saleOrderDTO2);
         saleOrderDTO1.setId(null);
         assertThat(saleOrderDTO1).isNotEqualTo(saleOrderDTO2);
@@ -424,7 +426,7 @@ public class SaleOrderResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(saleOrderMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(saleOrderMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(saleOrderMapper.fromId(null)).isNull();
     }
 }

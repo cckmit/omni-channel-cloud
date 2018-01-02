@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class SoType implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public code?: string,
         public name?: string,
         public desc?: string,

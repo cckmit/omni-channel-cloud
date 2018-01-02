@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface PoStateMapper extends EntityMapper<PoStateDTO, PoState> {
 
-    
 
-    
 
-    default PoState fromId(Long id) {
+
+
+    default PoState fromId(String id) {
         if (id == null) {
             return null;
         }

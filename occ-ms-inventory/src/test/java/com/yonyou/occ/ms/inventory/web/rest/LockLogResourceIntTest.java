@@ -1,16 +1,21 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.inventory.OccMsInventoryApp;
-
 import com.yonyou.occ.ms.inventory.config.SecurityBeanOverrideConfiguration;
-
-import com.yonyou.occ.ms.inventory.domain.LockLog;
 import com.yonyou.occ.ms.inventory.domain.Inventory;
+import com.yonyou.occ.ms.inventory.domain.LockLog;
 import com.yonyou.occ.ms.inventory.repository.LockLogRepository;
 import com.yonyou.occ.ms.inventory.service.dto.LockLogDTO;
 import com.yonyou.occ.ms.inventory.service.mapper.LockLogMapper;
 import com.yonyou.occ.ms.inventory.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,20 +30,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the LockLogResource REST controller.
@@ -167,7 +169,7 @@ public class LockLogResourceIntTest {
         int databaseSizeBeforeCreate = lockLogRepository.findAll().size();
 
         // Create the LockLog with an existing ID
-        lockLog.setId(1L);
+        lockLog.setId("1L");
         LockLogDTO lockLogDTO = lockLogMapper.toDto(lockLog);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -191,7 +193,7 @@ public class LockLogResourceIntTest {
         restLockLogMockMvc.perform(get("/api/lock-logs?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(lockLog.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(lockLog.getId())))
             .andExpect(jsonPath("$.[*].lockedQuantity").value(hasItem(DEFAULT_LOCKED_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION)))
             .andExpect(jsonPath("$.[*].dr").value(hasItem(DEFAULT_DR)))
@@ -212,7 +214,7 @@ public class LockLogResourceIntTest {
         restLockLogMockMvc.perform(get("/api/lock-logs/{id}", lockLog.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(lockLog.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(lockLog.getId()))
             .andExpect(jsonPath("$.lockedQuantity").value(DEFAULT_LOCKED_QUANTITY.intValue()))
             .andExpect(jsonPath("$.version").value(DEFAULT_VERSION))
             .andExpect(jsonPath("$.dr").value(DEFAULT_DR))
@@ -313,11 +315,11 @@ public class LockLogResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(LockLog.class);
         LockLog lockLog1 = new LockLog();
-        lockLog1.setId(1L);
+        lockLog1.setId("1L");
         LockLog lockLog2 = new LockLog();
         lockLog2.setId(lockLog1.getId());
         assertThat(lockLog1).isEqualTo(lockLog2);
-        lockLog2.setId(2L);
+        lockLog2.setId("2L");
         assertThat(lockLog1).isNotEqualTo(lockLog2);
         lockLog1.setId(null);
         assertThat(lockLog1).isNotEqualTo(lockLog2);
@@ -328,12 +330,12 @@ public class LockLogResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(LockLogDTO.class);
         LockLogDTO lockLogDTO1 = new LockLogDTO();
-        lockLogDTO1.setId(1L);
+        lockLogDTO1.setId("1L");
         LockLogDTO lockLogDTO2 = new LockLogDTO();
         assertThat(lockLogDTO1).isNotEqualTo(lockLogDTO2);
         lockLogDTO2.setId(lockLogDTO1.getId());
         assertThat(lockLogDTO1).isEqualTo(lockLogDTO2);
-        lockLogDTO2.setId(2L);
+        lockLogDTO2.setId("2L");
         assertThat(lockLogDTO1).isNotEqualTo(lockLogDTO2);
         lockLogDTO1.setId(null);
         assertThat(lockLogDTO1).isNotEqualTo(lockLogDTO2);
@@ -342,7 +344,7 @@ public class LockLogResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(lockLogMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(lockLogMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(lockLogMapper.fromId(null)).isNull();
     }
 }

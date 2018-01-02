@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.inventory.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.inventory.domain.OperationType;
 import com.yonyou.occ.ms.inventory.repository.OperationTypeRepository;
 import com.yonyou.occ.ms.inventory.service.dto.OperationTypeDTO;
@@ -39,6 +41,7 @@ public class OperationTypeService {
     public OperationTypeDTO save(OperationTypeDTO operationTypeDTO) {
         log.debug("Request to save OperationType : {}", operationTypeDTO);
         OperationType operationType = operationTypeMapper.toEntity(operationTypeDTO);
+        operationType.setId(UUID.randomUUID().toString());
         operationType = operationTypeRepository.save(operationType);
         return operationTypeMapper.toDto(operationType);
     }
@@ -63,7 +66,7 @@ public class OperationTypeService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public OperationTypeDTO findOne(Long id) {
+    public OperationTypeDTO findOne(String id) {
         log.debug("Request to get OperationType : {}", id);
         OperationType operationType = operationTypeRepository.findOne(id);
         return operationTypeMapper.toDto(operationType);
@@ -74,7 +77,7 @@ public class OperationTypeService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete OperationType : {}", id);
         operationTypeRepository.delete(id);
     }

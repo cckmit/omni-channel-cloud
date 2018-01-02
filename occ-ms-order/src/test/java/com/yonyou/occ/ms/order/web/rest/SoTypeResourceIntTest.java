@@ -1,16 +1,20 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.order.domain.SoType;
 import com.yonyou.occ.ms.order.repository.SoTypeRepository;
 import com.yonyou.occ.ms.order.service.SoTypeService;
 import com.yonyou.occ.ms.order.service.dto.SoTypeDTO;
 import com.yonyou.occ.ms.order.service.mapper.SoTypeMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +29,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the SoTypeResource REST controller.
@@ -179,7 +181,7 @@ public class SoTypeResourceIntTest {
         int databaseSizeBeforeCreate = soTypeRepository.findAll().size();
 
         // Create the SoType with an existing ID
-        soType.setId(1L);
+        soType.setId("1L");
         SoTypeDTO soTypeDTO = soTypeMapper.toDto(soType);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -203,7 +205,7 @@ public class SoTypeResourceIntTest {
         restSoTypeMockMvc.perform(get("/api/so-types?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(soType.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(soType.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
@@ -227,7 +229,7 @@ public class SoTypeResourceIntTest {
         restSoTypeMockMvc.perform(get("/api/so-types/{id}", soType.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(soType.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(soType.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
@@ -337,11 +339,11 @@ public class SoTypeResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(SoType.class);
         SoType soType1 = new SoType();
-        soType1.setId(1L);
+        soType1.setId("1L");
         SoType soType2 = new SoType();
         soType2.setId(soType1.getId());
         assertThat(soType1).isEqualTo(soType2);
-        soType2.setId(2L);
+        soType2.setId("2L");
         assertThat(soType1).isNotEqualTo(soType2);
         soType1.setId(null);
         assertThat(soType1).isNotEqualTo(soType2);
@@ -352,12 +354,12 @@ public class SoTypeResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(SoTypeDTO.class);
         SoTypeDTO soTypeDTO1 = new SoTypeDTO();
-        soTypeDTO1.setId(1L);
+        soTypeDTO1.setId("1L");
         SoTypeDTO soTypeDTO2 = new SoTypeDTO();
         assertThat(soTypeDTO1).isNotEqualTo(soTypeDTO2);
         soTypeDTO2.setId(soTypeDTO1.getId());
         assertThat(soTypeDTO1).isEqualTo(soTypeDTO2);
-        soTypeDTO2.setId(2L);
+        soTypeDTO2.setId("2L");
         assertThat(soTypeDTO1).isNotEqualTo(soTypeDTO2);
         soTypeDTO1.setId(null);
         assertThat(soTypeDTO1).isNotEqualTo(soTypeDTO2);
@@ -366,7 +368,7 @@ public class SoTypeResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(soTypeMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(soTypeMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(soTypeMapper.fromId(null)).isNull();
     }
 }

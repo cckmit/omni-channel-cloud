@@ -15,13 +15,13 @@ public interface OrderCtrlRuleMapper extends EntityMapper<OrderCtrlRuleDTO, Orde
     @Mapping(source = "poType.name", target = "poTypeName")
     @Mapping(source = "soType.id", target = "soTypeId")
     @Mapping(source = "soType.name", target = "soTypeName")
-    OrderCtrlRuleDTO toDto(OrderCtrlRule orderCtrlRule); 
+    OrderCtrlRuleDTO toDto(OrderCtrlRule orderCtrlRule);
 
     @Mapping(source = "poTypeId", target = "poType")
     @Mapping(source = "soTypeId", target = "soType")
     OrderCtrlRule toEntity(OrderCtrlRuleDTO orderCtrlRuleDTO);
 
-    default OrderCtrlRule fromId(Long id) {
+    default OrderCtrlRule fromId(String id) {
         if (id == null) {
             return null;
         }

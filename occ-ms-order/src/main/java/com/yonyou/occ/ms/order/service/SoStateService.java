@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.SoState;
 import com.yonyou.occ.ms.order.repository.SoStateRepository;
 import com.yonyou.occ.ms.order.service.dto.SoStateDTO;
@@ -39,6 +41,7 @@ public class SoStateService {
     public SoStateDTO save(SoStateDTO soStateDTO) {
         log.debug("Request to save SoState : {}", soStateDTO);
         SoState soState = soStateMapper.toEntity(soStateDTO);
+        soState.setId(UUID.randomUUID().toString());
         soState = soStateRepository.save(soState);
         return soStateMapper.toDto(soState);
     }
@@ -63,7 +66,7 @@ public class SoStateService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public SoStateDTO findOne(Long id) {
+    public SoStateDTO findOne(String id) {
         log.debug("Request to get SoState : {}", id);
         SoState soState = soStateRepository.findOne(id);
         return soStateMapper.toDto(soState);
@@ -74,7 +77,7 @@ public class SoStateService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete SoState : {}", id);
         soStateRepository.delete(id);
     }

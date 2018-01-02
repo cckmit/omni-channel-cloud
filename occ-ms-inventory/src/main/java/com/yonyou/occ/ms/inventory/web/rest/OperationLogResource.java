@@ -1,14 +1,20 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.validation.Valid;
+
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.inventory.domain.OperationLog;
-
 import com.yonyou.occ.ms.inventory.repository.OperationLogRepository;
+import com.yonyou.occ.ms.inventory.service.dto.OperationLogDTO;
+import com.yonyou.occ.ms.inventory.service.mapper.OperationLogMapper;
 import com.yonyou.occ.ms.inventory.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.inventory.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.inventory.web.rest.util.PaginationUtil;
-import com.yonyou.occ.ms.inventory.service.dto.OperationLogDTO;
-import com.yonyou.occ.ms.inventory.service.mapper.OperationLogMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,14 +23,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing OperationLog.
@@ -61,6 +67,7 @@ public class OperationLogResource {
             throw new BadRequestAlertException("A new operationLog cannot already have an ID", ENTITY_NAME, "idexists");
         }
         OperationLog operationLog = operationLogMapper.toEntity(operationLogDTO);
+        operationLog.setId(UUID.randomUUID().toString());
         operationLog = operationLogRepository.save(operationLog);
         OperationLogDTO result = operationLogMapper.toDto(operationLog);
         return ResponseEntity.created(new URI("/api/operation-logs/" + result.getId()))
@@ -115,7 +122,7 @@ public class OperationLogResource {
      */
     @GetMapping("/operation-logs/{id}")
     @Timed
-    public ResponseEntity<OperationLogDTO> getOperationLog(@PathVariable Long id) {
+    public ResponseEntity<OperationLogDTO> getOperationLog(@PathVariable String id) {
         log.debug("REST request to get OperationLog : {}", id);
         OperationLog operationLog = operationLogRepository.findOne(id);
         OperationLogDTO operationLogDTO = operationLogMapper.toDto(operationLog);
@@ -130,7 +137,7 @@ public class OperationLogResource {
      */
     @DeleteMapping("/operation-logs/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOperationLog(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOperationLog(@PathVariable String id) {
         log.debug("REST request to delete OperationLog : {}", id);
         operationLogRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

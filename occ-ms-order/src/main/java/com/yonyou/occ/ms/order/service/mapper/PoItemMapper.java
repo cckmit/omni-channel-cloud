@@ -15,13 +15,13 @@ public interface PoItemMapper extends EntityMapper<PoItemDTO, PoItem> {
     @Mapping(source = "poItemState.name", target = "poItemStateName")
     @Mapping(source = "purchaseOrder.id", target = "purchaseOrderId")
     @Mapping(source = "purchaseOrder.code", target = "purchaseOrderCode")
-    PoItemDTO toDto(PoItem poItem); 
+    PoItemDTO toDto(PoItem poItem);
 
     @Mapping(source = "poItemStateId", target = "poItemState")
     @Mapping(source = "purchaseOrderId", target = "purchaseOrder")
     PoItem toEntity(PoItemDTO poItemDTO);
 
-    default PoItem fromId(Long id) {
+    default PoItem fromId(String id) {
         if (id == null) {
             return null;
         }

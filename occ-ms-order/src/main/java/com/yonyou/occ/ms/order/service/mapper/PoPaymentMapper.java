@@ -13,12 +13,12 @@ public interface PoPaymentMapper extends EntityMapper<PoPaymentDTO, PoPayment> {
 
     @Mapping(source = "purchaseOrder.id", target = "purchaseOrderId")
     @Mapping(source = "purchaseOrder.code", target = "purchaseOrderCode")
-    PoPaymentDTO toDto(PoPayment poPayment); 
+    PoPaymentDTO toDto(PoPayment poPayment);
 
     @Mapping(source = "purchaseOrderId", target = "purchaseOrder")
     PoPayment toEntity(PoPaymentDTO poPaymentDTO);
 
-    default PoPayment fromId(Long id) {
+    default PoPayment fromId(String id) {
         if (id == null) {
             return null;
         }

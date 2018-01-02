@@ -15,7 +15,7 @@ public interface PurchaseOrderMapper extends EntityMapper<PurchaseOrderDTO, Purc
     @Mapping(source = "poType.name", target = "poTypeName")
     @Mapping(source = "poState.id", target = "poStateId")
     @Mapping(source = "poState.name", target = "poStateName")
-    PurchaseOrderDTO toDto(PurchaseOrder purchaseOrder); 
+    PurchaseOrderDTO toDto(PurchaseOrder purchaseOrder);
 
     @Mapping(target = "poItems", ignore = true)
     @Mapping(target = "poPayments", ignore = true)
@@ -23,7 +23,7 @@ public interface PurchaseOrderMapper extends EntityMapper<PurchaseOrderDTO, Purc
     @Mapping(source = "poStateId", target = "poState")
     PurchaseOrder toEntity(PurchaseOrderDTO purchaseOrderDTO);
 
-    default PurchaseOrder fromId(Long id) {
+    default PurchaseOrder fromId(String id) {
         if (id == null) {
             return null;
         }

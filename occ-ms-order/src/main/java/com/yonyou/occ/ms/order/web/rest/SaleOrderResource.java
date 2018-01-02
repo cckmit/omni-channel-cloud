@@ -105,7 +105,7 @@ public class SaleOrderResource {
      */
     @GetMapping("/sale-orders/{id}")
     @Timed
-    public ResponseEntity<SaleOrderDTO> getSaleOrder(@PathVariable Long id) {
+    public ResponseEntity<SaleOrderDTO> getSaleOrder(@PathVariable String id) {
         log.debug("REST request to get SaleOrder : {}", id);
         SaleOrderDTO saleOrderDTO = saleOrderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(saleOrderDTO));
@@ -119,7 +119,7 @@ public class SaleOrderResource {
      */
     @DeleteMapping("/sale-orders/{id}")
     @Timed
-    public ResponseEntity<Void> deleteSaleOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSaleOrder(@PathVariable String id) {
         log.debug("REST request to delete SaleOrder : {}", id);
         saleOrderService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

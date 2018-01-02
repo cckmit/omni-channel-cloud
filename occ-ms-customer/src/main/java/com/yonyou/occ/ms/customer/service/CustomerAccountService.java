@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.customer.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.customer.domain.CustomerAccount;
 import com.yonyou.occ.ms.customer.repository.CustomerAccountRepository;
 import com.yonyou.occ.ms.customer.service.dto.CustomerAccountDTO;
@@ -40,6 +42,7 @@ public class CustomerAccountService {
         log.debug("Request to save CustomerAccount : {}", customerAccountDTO);
         CustomerAccount customerAccount = customerAccountMapper.toEntity(customerAccountDTO);
         customerAccount = customerAccountRepository.save(customerAccount);
+        customerAccount.setId(UUID.randomUUID().toString());
         return customerAccountMapper.toDto(customerAccount);
     }
 
@@ -63,7 +66,7 @@ public class CustomerAccountService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public CustomerAccountDTO findOne(Long id) {
+    public CustomerAccountDTO findOne(String id) {
         log.debug("Request to get CustomerAccount : {}", id);
         CustomerAccount customerAccount = customerAccountRepository.findOne(id);
         return customerAccountMapper.toDto(customerAccount);
@@ -74,7 +77,7 @@ public class CustomerAccountService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete CustomerAccount : {}", id);
         customerAccountRepository.delete(id);
     }

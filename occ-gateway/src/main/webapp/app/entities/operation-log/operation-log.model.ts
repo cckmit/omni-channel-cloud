@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class OperationLog implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public operationQuantity?: number,
         public version?: number,
         public dr?: number,
@@ -11,8 +11,8 @@ export class OperationLog implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public operationTypeId?: number,
-        public inventoryId?: number,
+        public operationTypeId?: string,
+        public inventoryId?: string,
     ) {
     }
 }

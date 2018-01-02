@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class PoPaymentDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @DecimalMin(value = "0")
     private BigDecimal amount;
@@ -42,15 +42,15 @@ public class PoPaymentDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long purchaseOrderId;
+    private String purchaseOrderId;
 
     private String purchaseOrderCode;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -142,11 +142,11 @@ public class PoPaymentDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getPurchaseOrderId() {
+    public String getPurchaseOrderId() {
         return purchaseOrderId;
     }
 
-    public void setPurchaseOrderId(Long purchaseOrderId) {
+    public void setPurchaseOrderId(String purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
     }
 

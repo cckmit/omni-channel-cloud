@@ -1,20 +1,18 @@
 package com.yonyou.occ.ms.inventory.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the OperationLog entity.
  */
 public class OperationLogDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     private BigDecimal operationQuantity;
 
@@ -34,19 +32,19 @@ public class OperationLogDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long operationTypeId;
+    private String operationTypeId;
 
     private String operationTypeName;
 
-    private Long inventoryId;
+    private String inventoryId;
 
     private String inventoryProductName;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -114,11 +112,11 @@ public class OperationLogDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getOperationTypeId() {
+    public String getOperationTypeId() {
         return operationTypeId;
     }
 
-    public void setOperationTypeId(Long operationTypeId) {
+    public void setOperationTypeId(String operationTypeId) {
         this.operationTypeId = operationTypeId;
     }
 
@@ -130,11 +128,11 @@ public class OperationLogDTO implements Serializable {
         this.operationTypeName = operationTypeName;
     }
 
-    public Long getInventoryId() {
+    public String getInventoryId() {
         return inventoryId;
     }
 
-    public void setInventoryId(Long inventoryId) {
+    public void setInventoryId(String inventoryId) {
         this.inventoryId = inventoryId;
     }
 

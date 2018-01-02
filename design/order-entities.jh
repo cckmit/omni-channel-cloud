@@ -177,4 +177,4 @@ paginate * with pagination
 dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceClass except PoItem, SoItem
+service all with serviceClass except PoItem, PoPayment, SoItem

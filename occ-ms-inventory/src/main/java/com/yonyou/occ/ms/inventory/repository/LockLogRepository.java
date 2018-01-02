@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface LockLogRepository extends JpaRepository<LockLog, Long> {
+public interface LockLogRepository extends JpaRepository<LockLog, String> {
 
 }

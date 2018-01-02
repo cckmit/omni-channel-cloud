@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.OrderCtrlRule;
 import com.yonyou.occ.ms.order.repository.OrderCtrlRuleRepository;
 import com.yonyou.occ.ms.order.service.dto.OrderCtrlRuleDTO;
@@ -39,6 +41,7 @@ public class OrderCtrlRuleService {
     public OrderCtrlRuleDTO save(OrderCtrlRuleDTO orderCtrlRuleDTO) {
         log.debug("Request to save OrderCtrlRule : {}", orderCtrlRuleDTO);
         OrderCtrlRule orderCtrlRule = orderCtrlRuleMapper.toEntity(orderCtrlRuleDTO);
+        orderCtrlRule.setId(UUID.randomUUID().toString());
         orderCtrlRule = orderCtrlRuleRepository.save(orderCtrlRule);
         return orderCtrlRuleMapper.toDto(orderCtrlRule);
     }
@@ -63,7 +66,7 @@ public class OrderCtrlRuleService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public OrderCtrlRuleDTO findOne(Long id) {
+    public OrderCtrlRuleDTO findOne(String id) {
         log.debug("Request to get OrderCtrlRule : {}", id);
         OrderCtrlRule orderCtrlRule = orderCtrlRuleRepository.findOne(id);
         return orderCtrlRuleMapper.toDto(orderCtrlRule);
@@ -74,7 +77,7 @@ public class OrderCtrlRuleService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete OrderCtrlRule : {}", id);
         orderCtrlRuleRepository.delete(id);
     }

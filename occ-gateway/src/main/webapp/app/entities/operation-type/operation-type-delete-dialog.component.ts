@@ -27,7 +27,7 @@ export class OperationTypeDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.operationTypeService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'operationTypeListModification',

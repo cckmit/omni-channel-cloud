@@ -15,14 +15,14 @@ public interface SaleOrderMapper extends EntityMapper<SaleOrderDTO, SaleOrder> {
     @Mapping(source = "soType.name", target = "soTypeName")
     @Mapping(source = "soState.id", target = "soStateId")
     @Mapping(source = "soState.name", target = "soStateName")
-    SaleOrderDTO toDto(SaleOrder saleOrder); 
+    SaleOrderDTO toDto(SaleOrder saleOrder);
 
     @Mapping(target = "soItems", ignore = true)
     @Mapping(source = "soTypeId", target = "soType")
     @Mapping(source = "soStateId", target = "soState")
     SaleOrder toEntity(SaleOrderDTO saleOrderDTO);
 
-    default SaleOrder fromId(Long id) {
+    default SaleOrder fromId(String id) {
         if (id == null) {
             return null;
         }

@@ -1,16 +1,20 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.inventory.OccMsInventoryApp;
-
 import com.yonyou.occ.ms.inventory.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.inventory.domain.OperationType;
 import com.yonyou.occ.ms.inventory.repository.OperationTypeRepository;
 import com.yonyou.occ.ms.inventory.service.OperationTypeService;
 import com.yonyou.occ.ms.inventory.service.dto.OperationTypeDTO;
 import com.yonyou.occ.ms.inventory.service.mapper.OperationTypeMapper;
 import com.yonyou.occ.ms.inventory.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +29,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the OperationTypeResource REST controller.
@@ -179,7 +181,7 @@ public class OperationTypeResourceIntTest {
         int databaseSizeBeforeCreate = operationTypeRepository.findAll().size();
 
         // Create the OperationType with an existing ID
-        operationType.setId(1L);
+        operationType.setId("1L");
         OperationTypeDTO operationTypeDTO = operationTypeMapper.toDto(operationType);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -203,7 +205,7 @@ public class OperationTypeResourceIntTest {
         restOperationTypeMockMvc.perform(get("/api/operation-types?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(operationType.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(operationType.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
@@ -227,7 +229,7 @@ public class OperationTypeResourceIntTest {
         restOperationTypeMockMvc.perform(get("/api/operation-types/{id}", operationType.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(operationType.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(operationType.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
@@ -337,11 +339,11 @@ public class OperationTypeResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(OperationType.class);
         OperationType operationType1 = new OperationType();
-        operationType1.setId(1L);
+        operationType1.setId("1L");
         OperationType operationType2 = new OperationType();
         operationType2.setId(operationType1.getId());
         assertThat(operationType1).isEqualTo(operationType2);
-        operationType2.setId(2L);
+        operationType2.setId("2L");
         assertThat(operationType1).isNotEqualTo(operationType2);
         operationType1.setId(null);
         assertThat(operationType1).isNotEqualTo(operationType2);
@@ -352,12 +354,12 @@ public class OperationTypeResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(OperationTypeDTO.class);
         OperationTypeDTO operationTypeDTO1 = new OperationTypeDTO();
-        operationTypeDTO1.setId(1L);
+        operationTypeDTO1.setId("1L");
         OperationTypeDTO operationTypeDTO2 = new OperationTypeDTO();
         assertThat(operationTypeDTO1).isNotEqualTo(operationTypeDTO2);
         operationTypeDTO2.setId(operationTypeDTO1.getId());
         assertThat(operationTypeDTO1).isEqualTo(operationTypeDTO2);
-        operationTypeDTO2.setId(2L);
+        operationTypeDTO2.setId("2L");
         assertThat(operationTypeDTO1).isNotEqualTo(operationTypeDTO2);
         operationTypeDTO1.setId(null);
         assertThat(operationTypeDTO1).isNotEqualTo(operationTypeDTO2);
@@ -366,7 +368,7 @@ public class OperationTypeResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(operationTypeMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(operationTypeMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(operationTypeMapper.fromId(null)).isNull();
     }
 }

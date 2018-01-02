@@ -105,7 +105,7 @@ public class PoTypeResource {
      */
     @GetMapping("/po-types/{id}")
     @Timed
-    public ResponseEntity<PoTypeDTO> getPoType(@PathVariable Long id) {
+    public ResponseEntity<PoTypeDTO> getPoType(@PathVariable String id) {
         log.debug("REST request to get PoType : {}", id);
         PoTypeDTO poTypeDTO = poTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(poTypeDTO));
@@ -119,7 +119,7 @@ public class PoTypeResource {
      */
     @DeleteMapping("/po-types/{id}")
     @Timed
-    public ResponseEntity<Void> deletePoType(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePoType(@PathVariable String id) {
         log.debug("REST request to delete PoType : {}", id);
         poTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

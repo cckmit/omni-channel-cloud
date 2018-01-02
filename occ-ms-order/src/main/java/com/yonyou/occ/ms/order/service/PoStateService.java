@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.PoState;
 import com.yonyou.occ.ms.order.repository.PoStateRepository;
 import com.yonyou.occ.ms.order.service.dto.PoStateDTO;
@@ -39,6 +41,7 @@ public class PoStateService {
     public PoStateDTO save(PoStateDTO poStateDTO) {
         log.debug("Request to save PoState : {}", poStateDTO);
         PoState poState = poStateMapper.toEntity(poStateDTO);
+        poState.setId(UUID.randomUUID().toString());
         poState = poStateRepository.save(poState);
         return poStateMapper.toDto(poState);
     }
@@ -63,7 +66,7 @@ public class PoStateService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public PoStateDTO findOne(Long id) {
+    public PoStateDTO findOne(String id) {
         log.debug("Request to get PoState : {}", id);
         PoState poState = poStateRepository.findOne(id);
         return poStateMapper.toDto(poState);
@@ -74,7 +77,7 @@ public class PoStateService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete PoState : {}", id);
         poStateRepository.delete(id);
     }

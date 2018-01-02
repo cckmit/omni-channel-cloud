@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class PoPayment implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public amount?: number,
         public paymentSuccessful?: boolean,
         public failedReason?: string,
@@ -14,7 +14,7 @@ export class PoPayment implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public purchaseOrderId?: number,
+        public purchaseOrderId?: string,
     ) {
         this.paymentSuccessful = false;
     }

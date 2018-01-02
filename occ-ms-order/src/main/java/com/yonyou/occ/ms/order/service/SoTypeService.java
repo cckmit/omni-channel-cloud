@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.SoType;
 import com.yonyou.occ.ms.order.repository.SoTypeRepository;
 import com.yonyou.occ.ms.order.service.dto.SoTypeDTO;
@@ -39,6 +41,7 @@ public class SoTypeService {
     public SoTypeDTO save(SoTypeDTO soTypeDTO) {
         log.debug("Request to save SoType : {}", soTypeDTO);
         SoType soType = soTypeMapper.toEntity(soTypeDTO);
+        soType.setId(UUID.randomUUID().toString());
         soType = soTypeRepository.save(soType);
         return soTypeMapper.toDto(soType);
     }
@@ -63,7 +66,7 @@ public class SoTypeService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public SoTypeDTO findOne(Long id) {
+    public SoTypeDTO findOne(String id) {
         log.debug("Request to get SoType : {}", id);
         SoType soType = soTypeRepository.findOne(id);
         return soTypeMapper.toDto(soType);
@@ -74,7 +77,7 @@ public class SoTypeService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete SoType : {}", id);
         soTypeRepository.delete(id);
     }

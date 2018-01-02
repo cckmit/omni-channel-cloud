@@ -31,7 +31,7 @@ export class PoItemService {
         });
     }
 
-    find(id: number): Observable<PoItem> {
+    find(id: string): Observable<PoItem> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -44,7 +44,7 @@ export class PoItemService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
+    delete(id: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 

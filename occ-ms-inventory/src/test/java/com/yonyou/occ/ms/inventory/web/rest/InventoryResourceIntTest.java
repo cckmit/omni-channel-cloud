@@ -1,16 +1,21 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.inventory.OccMsInventoryApp;
-
 import com.yonyou.occ.ms.inventory.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.inventory.domain.Inventory;
 import com.yonyou.occ.ms.inventory.repository.InventoryRepository;
 import com.yonyou.occ.ms.inventory.service.InventoryService;
 import com.yonyou.occ.ms.inventory.service.dto.InventoryDTO;
 import com.yonyou.occ.ms.inventory.service.mapper.InventoryMapper;
 import com.yonyou.occ.ms.inventory.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,20 +30,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the InventoryResource REST controller.
@@ -195,7 +197,7 @@ public class InventoryResourceIntTest {
         int databaseSizeBeforeCreate = inventoryRepository.findAll().size();
 
         // Create the Inventory with an existing ID
-        inventory.setId(1L);
+        inventory.setId("1L");
         InventoryDTO inventoryDTO = inventoryMapper.toDto(inventory);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -219,7 +221,7 @@ public class InventoryResourceIntTest {
         restInventoryMockMvc.perform(get("/api/inventories?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(inventory.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(inventory.getId())))
             .andExpect(jsonPath("$.[*].productId").value(hasItem(DEFAULT_PRODUCT_ID.toString())))
             .andExpect(jsonPath("$.[*].productCode").value(hasItem(DEFAULT_PRODUCT_CODE.toString())))
             .andExpect(jsonPath("$.[*].productName").value(hasItem(DEFAULT_PRODUCT_NAME.toString())))
@@ -246,7 +248,7 @@ public class InventoryResourceIntTest {
         restInventoryMockMvc.perform(get("/api/inventories/{id}", inventory.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(inventory.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(inventory.getId()))
             .andExpect(jsonPath("$.productId").value(DEFAULT_PRODUCT_ID.toString()))
             .andExpect(jsonPath("$.productCode").value(DEFAULT_PRODUCT_CODE.toString()))
             .andExpect(jsonPath("$.productName").value(DEFAULT_PRODUCT_NAME.toString()))
@@ -365,11 +367,11 @@ public class InventoryResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Inventory.class);
         Inventory inventory1 = new Inventory();
-        inventory1.setId(1L);
+        inventory1.setId("1L");
         Inventory inventory2 = new Inventory();
         inventory2.setId(inventory1.getId());
         assertThat(inventory1).isEqualTo(inventory2);
-        inventory2.setId(2L);
+        inventory2.setId("2L");
         assertThat(inventory1).isNotEqualTo(inventory2);
         inventory1.setId(null);
         assertThat(inventory1).isNotEqualTo(inventory2);
@@ -380,12 +382,12 @@ public class InventoryResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(InventoryDTO.class);
         InventoryDTO inventoryDTO1 = new InventoryDTO();
-        inventoryDTO1.setId(1L);
+        inventoryDTO1.setId("1L");
         InventoryDTO inventoryDTO2 = new InventoryDTO();
         assertThat(inventoryDTO1).isNotEqualTo(inventoryDTO2);
         inventoryDTO2.setId(inventoryDTO1.getId());
         assertThat(inventoryDTO1).isEqualTo(inventoryDTO2);
-        inventoryDTO2.setId(2L);
+        inventoryDTO2.setId("2L");
         assertThat(inventoryDTO1).isNotEqualTo(inventoryDTO2);
         inventoryDTO1.setId(null);
         assertThat(inventoryDTO1).isNotEqualTo(inventoryDTO2);
@@ -394,7 +396,7 @@ public class InventoryResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(inventoryMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(inventoryMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(inventoryMapper.fromId(null)).isNull();
     }
 }

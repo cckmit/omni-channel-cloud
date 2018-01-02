@@ -27,7 +27,7 @@ export class OrderCtrlRuleDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.orderCtrlRuleService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'orderCtrlRuleListModification',

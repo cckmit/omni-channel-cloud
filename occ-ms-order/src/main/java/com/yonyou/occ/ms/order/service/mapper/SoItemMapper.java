@@ -15,13 +15,13 @@ public interface SoItemMapper extends EntityMapper<SoItemDTO, SoItem> {
     @Mapping(source = "soItemState.name", target = "soItemStateName")
     @Mapping(source = "saleOrder.id", target = "saleOrderId")
     @Mapping(source = "saleOrder.code", target = "saleOrderCode")
-    SoItemDTO toDto(SoItem soItem); 
+    SoItemDTO toDto(SoItem soItem);
 
     @Mapping(source = "soItemStateId", target = "soItemState")
     @Mapping(source = "saleOrderId", target = "saleOrder")
     SoItem toEntity(SoItemDTO soItemDTO);
 
-    default SoItem fromId(Long id) {
+    default SoItem fromId(String id) {
         if (id == null) {
             return null;
         }

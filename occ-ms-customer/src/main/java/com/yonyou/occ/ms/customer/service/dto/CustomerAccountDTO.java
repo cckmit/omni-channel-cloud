@@ -1,20 +1,19 @@
 package com.yonyou.occ.ms.customer.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the CustomerAccount entity.
  */
 public class CustomerAccountDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 40)
     private String code;
@@ -43,15 +42,15 @@ public class CustomerAccountDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long customerId;
+    private String customerId;
 
     private String customerName;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -143,11 +142,11 @@ public class CustomerAccountDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

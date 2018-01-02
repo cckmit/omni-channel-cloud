@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.PoType;
 import com.yonyou.occ.ms.order.repository.PoTypeRepository;
 import com.yonyou.occ.ms.order.service.dto.PoTypeDTO;
@@ -39,6 +41,7 @@ public class PoTypeService {
     public PoTypeDTO save(PoTypeDTO poTypeDTO) {
         log.debug("Request to save PoType : {}", poTypeDTO);
         PoType poType = poTypeMapper.toEntity(poTypeDTO);
+        poType.setId(UUID.randomUUID().toString());
         poType = poTypeRepository.save(poType);
         return poTypeMapper.toDto(poType);
     }
@@ -63,7 +66,7 @@ public class PoTypeService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public PoTypeDTO findOne(Long id) {
+    public PoTypeDTO findOne(String id) {
         log.debug("Request to get PoType : {}", id);
         PoType poType = poTypeRepository.findOne(id);
         return poTypeMapper.toDto(poType);
@@ -74,7 +77,7 @@ public class PoTypeService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete PoType : {}", id);
         poTypeRepository.delete(id);
     }

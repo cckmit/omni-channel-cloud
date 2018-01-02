@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class SoItem implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public productCategoryId?: string,
         public productCategoryCode?: string,
         public productCategoryName?: string,
@@ -18,8 +18,8 @@ export class SoItem implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public soItemStateId?: number,
-        public saleOrderId?: number,
+        public soItemStateId?: string,
+        public saleOrderId?: string,
     ) {
     }
 }

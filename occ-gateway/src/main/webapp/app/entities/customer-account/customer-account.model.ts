@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class CustomerAccount implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public code?: string,
         public name?: string,
         public credit?: number,
@@ -14,7 +14,7 @@ export class CustomerAccount implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public customerId?: number,
+        public customerId?: string,
     ) {
         this.isEnabled = false;
     }

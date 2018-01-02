@@ -1,17 +1,21 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.order.domain.PoPayment;
 import com.yonyou.occ.ms.order.domain.PurchaseOrder;
 import com.yonyou.occ.ms.order.repository.PoPaymentRepository;
-import com.yonyou.occ.ms.order.service.PoPaymentService;
 import com.yonyou.occ.ms.order.service.dto.PoPaymentDTO;
 import com.yonyou.occ.ms.order.service.mapper.PoPaymentMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,20 +30,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the PoPaymentResource REST controller.
@@ -90,9 +91,6 @@ public class PoPaymentResourceIntTest {
     private PoPaymentMapper poPaymentMapper;
 
     @Autowired
-    private PoPaymentService poPaymentService;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -111,7 +109,7 @@ public class PoPaymentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PoPaymentResource poPaymentResource = new PoPaymentResource(poPaymentService);
+        final PoPaymentResource poPaymentResource = new PoPaymentResource(poPaymentRepository, poPaymentMapper);
         this.restPoPaymentMockMvc = MockMvcBuilders.standaloneSetup(poPaymentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,7 +184,7 @@ public class PoPaymentResourceIntTest {
         int databaseSizeBeforeCreate = poPaymentRepository.findAll().size();
 
         // Create the PoPayment with an existing ID
-        poPayment.setId(1L);
+        poPayment.setId("1L");
         PoPaymentDTO poPaymentDTO = poPaymentMapper.toDto(poPayment);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -210,7 +208,7 @@ public class PoPaymentResourceIntTest {
         restPoPaymentMockMvc.perform(get("/api/po-payments?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(poPayment.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(poPayment.getId())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].paymentSuccessful").value(hasItem(DEFAULT_PAYMENT_SUCCESSFUL.booleanValue())))
             .andExpect(jsonPath("$.[*].failedReason").value(hasItem(DEFAULT_FAILED_REASON.toString())))
@@ -234,7 +232,7 @@ public class PoPaymentResourceIntTest {
         restPoPaymentMockMvc.perform(get("/api/po-payments/{id}", poPayment.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(poPayment.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(poPayment.getId()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
             .andExpect(jsonPath("$.paymentSuccessful").value(DEFAULT_PAYMENT_SUCCESSFUL.booleanValue()))
             .andExpect(jsonPath("$.failedReason").value(DEFAULT_FAILED_REASON.toString()))
@@ -344,11 +342,11 @@ public class PoPaymentResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PoPayment.class);
         PoPayment poPayment1 = new PoPayment();
-        poPayment1.setId(1L);
+        poPayment1.setId("1L");
         PoPayment poPayment2 = new PoPayment();
         poPayment2.setId(poPayment1.getId());
         assertThat(poPayment1).isEqualTo(poPayment2);
-        poPayment2.setId(2L);
+        poPayment2.setId("2L");
         assertThat(poPayment1).isNotEqualTo(poPayment2);
         poPayment1.setId(null);
         assertThat(poPayment1).isNotEqualTo(poPayment2);
@@ -359,12 +357,12 @@ public class PoPaymentResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(PoPaymentDTO.class);
         PoPaymentDTO poPaymentDTO1 = new PoPaymentDTO();
-        poPaymentDTO1.setId(1L);
+        poPaymentDTO1.setId("1L");
         PoPaymentDTO poPaymentDTO2 = new PoPaymentDTO();
         assertThat(poPaymentDTO1).isNotEqualTo(poPaymentDTO2);
         poPaymentDTO2.setId(poPaymentDTO1.getId());
         assertThat(poPaymentDTO1).isEqualTo(poPaymentDTO2);
-        poPaymentDTO2.setId(2L);
+        poPaymentDTO2.setId("2L");
         assertThat(poPaymentDTO1).isNotEqualTo(poPaymentDTO2);
         poPaymentDTO1.setId(null);
         assertThat(poPaymentDTO1).isNotEqualTo(poPaymentDTO2);
@@ -373,7 +371,7 @@ public class PoPaymentResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(poPaymentMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(poPaymentMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(poPaymentMapper.fromId(null)).isNull();
     }
 }

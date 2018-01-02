@@ -1,17 +1,22 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
+import com.yonyou.occ.ms.order.domain.SaleOrder;
 import com.yonyou.occ.ms.order.domain.SoItem;
 import com.yonyou.occ.ms.order.domain.SoState;
-import com.yonyou.occ.ms.order.domain.SaleOrder;
 import com.yonyou.occ.ms.order.repository.SoItemRepository;
 import com.yonyou.occ.ms.order.service.dto.SoItemDTO;
 import com.yonyou.occ.ms.order.service.mapper.SoItemMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,20 +31,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the SoItemResource REST controller.
@@ -208,7 +210,7 @@ public class SoItemResourceIntTest {
         int databaseSizeBeforeCreate = soItemRepository.findAll().size();
 
         // Create the SoItem with an existing ID
-        soItem.setId(1L);
+        soItem.setId("1L");
         SoItemDTO soItemDTO = soItemMapper.toDto(soItem);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -232,7 +234,7 @@ public class SoItemResourceIntTest {
         restSoItemMockMvc.perform(get("/api/so-items?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(soItem.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(soItem.getId())))
             .andExpect(jsonPath("$.[*].productCategoryId").value(hasItem(DEFAULT_PRODUCT_CATEGORY_ID.toString())))
             .andExpect(jsonPath("$.[*].productCategoryCode").value(hasItem(DEFAULT_PRODUCT_CATEGORY_CODE.toString())))
             .andExpect(jsonPath("$.[*].productCategoryName").value(hasItem(DEFAULT_PRODUCT_CATEGORY_NAME.toString())))
@@ -260,7 +262,7 @@ public class SoItemResourceIntTest {
         restSoItemMockMvc.perform(get("/api/so-items/{id}", soItem.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(soItem.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(soItem.getId()))
             .andExpect(jsonPath("$.productCategoryId").value(DEFAULT_PRODUCT_CATEGORY_ID.toString()))
             .andExpect(jsonPath("$.productCategoryCode").value(DEFAULT_PRODUCT_CATEGORY_CODE.toString()))
             .andExpect(jsonPath("$.productCategoryName").value(DEFAULT_PRODUCT_CATEGORY_NAME.toString()))
@@ -382,11 +384,11 @@ public class SoItemResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(SoItem.class);
         SoItem soItem1 = new SoItem();
-        soItem1.setId(1L);
+        soItem1.setId("1L");
         SoItem soItem2 = new SoItem();
         soItem2.setId(soItem1.getId());
         assertThat(soItem1).isEqualTo(soItem2);
-        soItem2.setId(2L);
+        soItem2.setId("2L");
         assertThat(soItem1).isNotEqualTo(soItem2);
         soItem1.setId(null);
         assertThat(soItem1).isNotEqualTo(soItem2);
@@ -397,12 +399,12 @@ public class SoItemResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(SoItemDTO.class);
         SoItemDTO soItemDTO1 = new SoItemDTO();
-        soItemDTO1.setId(1L);
+        soItemDTO1.setId("1L");
         SoItemDTO soItemDTO2 = new SoItemDTO();
         assertThat(soItemDTO1).isNotEqualTo(soItemDTO2);
         soItemDTO2.setId(soItemDTO1.getId());
         assertThat(soItemDTO1).isEqualTo(soItemDTO2);
-        soItemDTO2.setId(2L);
+        soItemDTO2.setId("2L");
         assertThat(soItemDTO1).isNotEqualTo(soItemDTO2);
         soItemDTO1.setId(null);
         assertThat(soItemDTO1).isNotEqualTo(soItemDTO2);
@@ -411,7 +413,7 @@ public class SoItemResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(soItemMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(soItemMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(soItemMapper.fromId(null)).isNull();
     }
 }

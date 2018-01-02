@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PoTypeRepository extends JpaRepository<PoType, Long> {
+public interface PoTypeRepository extends JpaRepository<PoType, String> {
 
 }

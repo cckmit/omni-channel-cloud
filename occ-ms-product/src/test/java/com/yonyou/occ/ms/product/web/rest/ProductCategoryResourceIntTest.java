@@ -1,16 +1,20 @@
 package com.yonyou.occ.ms.product.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.product.OccMsProductApp;
-
 import com.yonyou.occ.ms.product.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.product.domain.ProductCategory;
 import com.yonyou.occ.ms.product.repository.ProductCategoryRepository;
 import com.yonyou.occ.ms.product.service.ProductCategoryService;
 import com.yonyou.occ.ms.product.service.dto.ProductCategoryDTO;
 import com.yonyou.occ.ms.product.service.mapper.ProductCategoryMapper;
 import com.yonyou.occ.ms.product.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +29,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.product.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.product.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.product.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the ProductCategoryResource REST controller.
@@ -179,7 +181,7 @@ public class ProductCategoryResourceIntTest {
         int databaseSizeBeforeCreate = productCategoryRepository.findAll().size();
 
         // Create the ProductCategory with an existing ID
-        productCategory.setId(1L);
+        productCategory.setId("1L");
         ProductCategoryDTO productCategoryDTO = productCategoryMapper.toDto(productCategory);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -203,7 +205,7 @@ public class ProductCategoryResourceIntTest {
         restProductCategoryMockMvc.perform(get("/api/product-categories?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(productCategory.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(productCategory.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
@@ -227,7 +229,7 @@ public class ProductCategoryResourceIntTest {
         restProductCategoryMockMvc.perform(get("/api/product-categories/{id}", productCategory.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(productCategory.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(productCategory.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
@@ -337,11 +339,11 @@ public class ProductCategoryResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(ProductCategory.class);
         ProductCategory productCategory1 = new ProductCategory();
-        productCategory1.setId(1L);
+        productCategory1.setId("1L");
         ProductCategory productCategory2 = new ProductCategory();
         productCategory2.setId(productCategory1.getId());
         assertThat(productCategory1).isEqualTo(productCategory2);
-        productCategory2.setId(2L);
+        productCategory2.setId("2L");
         assertThat(productCategory1).isNotEqualTo(productCategory2);
         productCategory1.setId(null);
         assertThat(productCategory1).isNotEqualTo(productCategory2);
@@ -352,12 +354,12 @@ public class ProductCategoryResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(ProductCategoryDTO.class);
         ProductCategoryDTO productCategoryDTO1 = new ProductCategoryDTO();
-        productCategoryDTO1.setId(1L);
+        productCategoryDTO1.setId("1L");
         ProductCategoryDTO productCategoryDTO2 = new ProductCategoryDTO();
         assertThat(productCategoryDTO1).isNotEqualTo(productCategoryDTO2);
         productCategoryDTO2.setId(productCategoryDTO1.getId());
         assertThat(productCategoryDTO1).isEqualTo(productCategoryDTO2);
-        productCategoryDTO2.setId(2L);
+        productCategoryDTO2.setId("2L");
         assertThat(productCategoryDTO1).isNotEqualTo(productCategoryDTO2);
         productCategoryDTO1.setId(null);
         assertThat(productCategoryDTO1).isNotEqualTo(productCategoryDTO2);
@@ -366,7 +368,7 @@ public class ProductCategoryResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(productCategoryMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(productCategoryMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(productCategoryMapper.fromId(null)).isNull();
     }
 }

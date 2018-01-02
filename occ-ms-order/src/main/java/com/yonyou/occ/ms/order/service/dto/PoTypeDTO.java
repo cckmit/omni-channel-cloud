@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class PoTypeDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 10)
     private String code;
@@ -40,11 +40,11 @@ public class PoTypeDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

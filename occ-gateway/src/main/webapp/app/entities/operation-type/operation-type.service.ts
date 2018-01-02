@@ -31,7 +31,7 @@ export class OperationTypeService {
         });
     }
 
-    find(id: number): Observable<OperationType> {
+    find(id: string): Observable<OperationType> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
@@ -44,7 +44,7 @@ export class OperationTypeService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
+    delete(id: string): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 

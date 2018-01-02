@@ -19,7 +19,7 @@
     -->
     <changeSet id="20180101072928-1" author="jhipster">
         <createTable tableName="ord_so_state">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(40)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="code" type="varchar(10)">
@@ -71,7 +71,7 @@
         <dropDefaultValue tableName="ord_so_state" columnName="ts" columnDataType="datetime"/>
         <dropDefaultValue tableName="ord_so_state" columnName="time_created" columnDataType="datetime"/>
         <dropDefaultValue tableName="ord_so_state" columnName="time_modified" columnDataType="datetime"/>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

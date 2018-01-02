@@ -27,7 +27,7 @@ export class OperationLogDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.operationLogService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'operationLogListModification',

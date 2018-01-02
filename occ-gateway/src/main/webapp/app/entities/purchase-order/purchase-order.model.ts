@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class PurchaseOrder implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public code?: string,
         public orderDate?: any,
         public totalAmount?: number,
@@ -21,8 +21,8 @@ export class PurchaseOrder implements BaseEntity {
         public timeModified?: any,
         public poItems?: BaseEntity[],
         public poPayments?: BaseEntity[],
-        public poTypeId?: number,
-        public poStateId?: number,
+        public poTypeId?: string,
+        public poStateId?: string,
     ) {
     }
 }

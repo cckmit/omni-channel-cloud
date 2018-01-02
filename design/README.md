@@ -10,11 +10,11 @@
 2. Product (CRUD)
     - ProductCategory
     - Product
-3. Inventory (DDD - CQRS)
-    - Inventory
-    - LockLog
-    - OperationType
-    - OperationLog
+3. Inventory (Hybrid)
+    - Inventory (DDD - CQRS)
+    - LockLog (DDD - CQRS)
+    - OperationType (CRUD)
+    - OperationLog (DDD - CQRS)
 4. Order (Hybrid)
     - PoType (CRUD)
     - PoState (CRUD)

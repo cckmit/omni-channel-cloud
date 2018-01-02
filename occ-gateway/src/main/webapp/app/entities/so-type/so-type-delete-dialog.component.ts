@@ -27,7 +27,7 @@ export class SoTypeDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.soTypeService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'soTypeListModification',

@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface SoStateMapper extends EntityMapper<SoStateDTO, SoState> {
 
-    
 
-    
 
-    default SoState fromId(Long id) {
+
+
+    default SoState fromId(String id) {
         if (id == null) {
             return null;
         }

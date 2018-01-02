@@ -105,7 +105,7 @@ public class SoTypeResource {
      */
     @GetMapping("/so-types/{id}")
     @Timed
-    public ResponseEntity<SoTypeDTO> getSoType(@PathVariable Long id) {
+    public ResponseEntity<SoTypeDTO> getSoType(@PathVariable String id) {
         log.debug("REST request to get SoType : {}", id);
         SoTypeDTO soTypeDTO = soTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(soTypeDTO));
@@ -119,7 +119,7 @@ public class SoTypeResource {
      */
     @DeleteMapping("/so-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteSoType(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSoType(@PathVariable String id) {
         log.debug("REST request to delete SoType : {}", id);
         soTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

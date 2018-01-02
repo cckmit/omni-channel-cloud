@@ -13,12 +13,12 @@ public interface LockLogMapper extends EntityMapper<LockLogDTO, LockLog> {
 
     @Mapping(source = "inventory.id", target = "inventoryId")
     @Mapping(source = "inventory.productName", target = "inventoryProductName")
-    LockLogDTO toDto(LockLog lockLog); 
+    LockLogDTO toDto(LockLog lockLog);
 
     @Mapping(source = "inventoryId", target = "inventory")
     LockLog toEntity(LockLogDTO lockLogDTO);
 
-    default LockLog fromId(Long id) {
+    default LockLog fromId(String id) {
         if (id == null) {
             return null;
         }

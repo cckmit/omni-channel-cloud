@@ -19,7 +19,7 @@
     -->
     <changeSet id="20180101072929-1" author="jhipster">
         <createTable tableName="ord_order_ctrl_rule">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(40)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="auto_po_to_so" type="bit">
@@ -58,11 +58,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="po_type_id" type="bigint">
+            <column name="po_type_id" type="varchar(40)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="so_type_id" type="bigint">
+            <column name="so_type_id" type="varchar(40)">
                 <constraints nullable="false" />
             </column>
 
@@ -71,7 +71,7 @@
         <dropDefaultValue tableName="ord_order_ctrl_rule" columnName="ts" columnDataType="datetime"/>
         <dropDefaultValue tableName="ord_order_ctrl_rule" columnName="time_created" columnDataType="datetime"/>
         <dropDefaultValue tableName="ord_order_ctrl_rule" columnName="time_modified" columnDataType="datetime"/>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

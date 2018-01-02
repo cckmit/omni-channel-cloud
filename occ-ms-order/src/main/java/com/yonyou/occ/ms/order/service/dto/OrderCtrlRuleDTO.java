@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class OrderCtrlRuleDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     private Boolean autoPoToSo;
 
@@ -35,19 +35,19 @@ public class OrderCtrlRuleDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long poTypeId;
+    private String poTypeId;
 
     private String poTypeName;
 
-    private Long soTypeId;
+    private String soTypeId;
 
     private String soTypeName;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -123,11 +123,11 @@ public class OrderCtrlRuleDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getPoTypeId() {
+    public String getPoTypeId() {
         return poTypeId;
     }
 
-    public void setPoTypeId(Long poTypeId) {
+    public void setPoTypeId(String poTypeId) {
         this.poTypeId = poTypeId;
     }
 
@@ -139,11 +139,11 @@ public class OrderCtrlRuleDTO implements Serializable {
         this.poTypeName = poTypeName;
     }
 
-    public Long getSoTypeId() {
+    public String getSoTypeId() {
         return soTypeId;
     }
 
-    public void setSoTypeId(Long soTypeId) {
+    public void setSoTypeId(String soTypeId) {
         this.soTypeId = soTypeId;
     }
 

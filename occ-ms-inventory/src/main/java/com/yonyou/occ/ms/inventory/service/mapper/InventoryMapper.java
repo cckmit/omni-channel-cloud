@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface InventoryMapper extends EntityMapper<InventoryDTO, Inventory> {
 
-    
 
-    
 
-    default Inventory fromId(Long id) {
+
+
+    default Inventory fromId(String id) {
         if (id == null) {
             return null;
         }

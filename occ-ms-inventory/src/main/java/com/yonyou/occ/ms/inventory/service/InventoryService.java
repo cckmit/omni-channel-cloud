@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.inventory.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.inventory.domain.Inventory;
 import com.yonyou.occ.ms.inventory.repository.InventoryRepository;
 import com.yonyou.occ.ms.inventory.service.dto.InventoryDTO;
@@ -39,6 +41,7 @@ public class InventoryService {
     public InventoryDTO save(InventoryDTO inventoryDTO) {
         log.debug("Request to save Inventory : {}", inventoryDTO);
         Inventory inventory = inventoryMapper.toEntity(inventoryDTO);
+        inventory.setId(UUID.randomUUID().toString());
         inventory = inventoryRepository.save(inventory);
         return inventoryMapper.toDto(inventory);
     }
@@ -63,7 +66,7 @@ public class InventoryService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public InventoryDTO findOne(Long id) {
+    public InventoryDTO findOne(String id) {
         log.debug("Request to get Inventory : {}", id);
         Inventory inventory = inventoryRepository.findOne(id);
         return inventoryMapper.toDto(inventory);
@@ -74,7 +77,7 @@ public class InventoryService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Inventory : {}", id);
         inventoryRepository.delete(id);
     }

@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface PoTypeMapper extends EntityMapper<PoTypeDTO, PoType> {
 
-    
 
-    
 
-    default PoType fromId(Long id) {
+
+
+    default PoType fromId(String id) {
         if (id == null) {
             return null;
         }

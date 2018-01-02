@@ -19,7 +19,7 @@
     -->
     <changeSet id="20180101071656-1" author="jhipster">
         <createTable tableName="inv_lock_log">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(40)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="locked_quantity" type="decimal(10,2)">
@@ -54,7 +54,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="inventory_id" type="bigint">
+            <column name="inventory_id" type="varchar(40)">
                 <constraints nullable="false" />
             </column>
 
@@ -63,7 +63,7 @@
         <dropDefaultValue tableName="inv_lock_log" columnName="ts" columnDataType="datetime"/>
         <dropDefaultValue tableName="inv_lock_log" columnName="time_created" columnDataType="datetime"/>
         <dropDefaultValue tableName="inv_lock_log" columnName="time_modified" columnDataType="datetime"/>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

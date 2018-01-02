@@ -1,16 +1,20 @@
 package com.yonyou.occ.ms.customer.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.customer.OccMsCustomerApp;
-
 import com.yonyou.occ.ms.customer.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.customer.domain.Customer;
 import com.yonyou.occ.ms.customer.repository.CustomerRepository;
 import com.yonyou.occ.ms.customer.service.CustomerService;
 import com.yonyou.occ.ms.customer.service.dto.CustomerDTO;
 import com.yonyou.occ.ms.customer.service.mapper.CustomerMapper;
 import com.yonyou.occ.ms.customer.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +29,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.customer.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.customer.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.customer.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the CustomerResource REST controller.
@@ -174,7 +176,7 @@ public class CustomerResourceIntTest {
         int databaseSizeBeforeCreate = customerRepository.findAll().size();
 
         // Create the Customer with an existing ID
-        customer.setId(1L);
+        customer.setId("1L");
         CustomerDTO customerDTO = customerMapper.toDto(customer);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -198,7 +200,7 @@ public class CustomerResourceIntTest {
         restCustomerMockMvc.perform(get("/api/customers?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].isEnabled").value(hasItem(DEFAULT_IS_ENABLED.booleanValue())))
@@ -221,7 +223,7 @@ public class CustomerResourceIntTest {
         restCustomerMockMvc.perform(get("/api/customers/{id}", customer.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(customer.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(customer.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.isEnabled").value(DEFAULT_IS_ENABLED.booleanValue()))
@@ -328,11 +330,11 @@ public class CustomerResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Customer.class);
         Customer customer1 = new Customer();
-        customer1.setId(1L);
+        customer1.setId("1L");
         Customer customer2 = new Customer();
         customer2.setId(customer1.getId());
         assertThat(customer1).isEqualTo(customer2);
-        customer2.setId(2L);
+        customer2.setId("2L");
         assertThat(customer1).isNotEqualTo(customer2);
         customer1.setId(null);
         assertThat(customer1).isNotEqualTo(customer2);
@@ -343,12 +345,12 @@ public class CustomerResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(CustomerDTO.class);
         CustomerDTO customerDTO1 = new CustomerDTO();
-        customerDTO1.setId(1L);
+        customerDTO1.setId("1L");
         CustomerDTO customerDTO2 = new CustomerDTO();
         assertThat(customerDTO1).isNotEqualTo(customerDTO2);
         customerDTO2.setId(customerDTO1.getId());
         assertThat(customerDTO1).isEqualTo(customerDTO2);
-        customerDTO2.setId(2L);
+        customerDTO2.setId("2L");
         assertThat(customerDTO1).isNotEqualTo(customerDTO2);
         customerDTO1.setId(null);
         assertThat(customerDTO1).isNotEqualTo(customerDTO2);
@@ -357,7 +359,7 @@ public class CustomerResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(customerMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(customerMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(customerMapper.fromId(null)).isNull();
     }
 }

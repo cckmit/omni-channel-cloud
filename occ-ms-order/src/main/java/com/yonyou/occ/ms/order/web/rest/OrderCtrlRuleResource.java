@@ -105,7 +105,7 @@ public class OrderCtrlRuleResource {
      */
     @GetMapping("/order-ctrl-rules/{id}")
     @Timed
-    public ResponseEntity<OrderCtrlRuleDTO> getOrderCtrlRule(@PathVariable Long id) {
+    public ResponseEntity<OrderCtrlRuleDTO> getOrderCtrlRule(@PathVariable String id) {
         log.debug("REST request to get OrderCtrlRule : {}", id);
         OrderCtrlRuleDTO orderCtrlRuleDTO = orderCtrlRuleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(orderCtrlRuleDTO));
@@ -119,7 +119,7 @@ public class OrderCtrlRuleResource {
      */
     @DeleteMapping("/order-ctrl-rules/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOrderCtrlRule(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrderCtrlRule(@PathVariable String id) {
         log.debug("REST request to delete OrderCtrlRule : {}", id);
         orderCtrlRuleService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

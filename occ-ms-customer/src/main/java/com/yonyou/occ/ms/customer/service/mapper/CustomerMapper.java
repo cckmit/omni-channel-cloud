@@ -10,12 +10,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface CustomerMapper extends EntityMapper<CustomerDTO, Customer> {
-
-    
-
-    
-
-    default Customer fromId(Long id) {
+    default Customer fromId(String id) {
         if (id == null) {
             return null;
         }

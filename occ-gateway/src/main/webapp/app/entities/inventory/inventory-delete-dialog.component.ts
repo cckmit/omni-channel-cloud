@@ -27,7 +27,7 @@ export class InventoryDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.inventoryService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'inventoryListModification',

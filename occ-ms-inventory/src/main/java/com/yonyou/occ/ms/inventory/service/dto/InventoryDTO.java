@@ -1,18 +1,18 @@
 package com.yonyou.occ.ms.inventory.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the Inventory entity.
  */
 public class InventoryDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 40)
     private String productId;
@@ -47,11 +47,11 @@ public class InventoryDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

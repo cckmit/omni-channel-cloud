@@ -15,13 +15,13 @@ public interface OperationLogMapper extends EntityMapper<OperationLogDTO, Operat
     @Mapping(source = "operationType.name", target = "operationTypeName")
     @Mapping(source = "inventory.id", target = "inventoryId")
     @Mapping(source = "inventory.productName", target = "inventoryProductName")
-    OperationLogDTO toDto(OperationLog operationLog); 
+    OperationLogDTO toDto(OperationLog operationLog);
 
     @Mapping(source = "operationTypeId", target = "operationType")
     @Mapping(source = "inventoryId", target = "inventory")
     OperationLog toEntity(OperationLogDTO operationLogDTO);
 
-    default OperationLog fromId(Long id) {
+    default OperationLog fromId(String id) {
         if (id == null) {
             return null;
         }

@@ -1,11 +1,20 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.validation.Valid;
+
 import com.codahale.metrics.annotation.Timed;
-import com.yonyou.occ.ms.order.service.PoPaymentService;
+import com.yonyou.occ.ms.order.domain.PoPayment;
+import com.yonyou.occ.ms.order.repository.PoPaymentRepository;
+import com.yonyou.occ.ms.order.service.dto.PoPaymentDTO;
+import com.yonyou.occ.ms.order.service.mapper.PoPaymentMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.order.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.order.web.rest.util.PaginationUtil;
-import com.yonyou.occ.ms.order.service.dto.PoPaymentDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +23,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing PoPayment.
@@ -34,10 +43,13 @@ public class PoPaymentResource {
 
     private static final String ENTITY_NAME = "poPayment";
 
-    private final PoPaymentService poPaymentService;
+    private final PoPaymentRepository poPaymentRepository;
 
-    public PoPaymentResource(PoPaymentService poPaymentService) {
-        this.poPaymentService = poPaymentService;
+    private final PoPaymentMapper poPaymentMapper;
+
+    public PoPaymentResource(PoPaymentRepository poPaymentRepository, PoPaymentMapper poPaymentMapper) {
+        this.poPaymentRepository = poPaymentRepository;
+        this.poPaymentMapper = poPaymentMapper;
     }
 
     /**
@@ -54,7 +66,10 @@ public class PoPaymentResource {
         if (poPaymentDTO.getId() != null) {
             throw new BadRequestAlertException("A new poPayment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PoPaymentDTO result = poPaymentService.save(poPaymentDTO);
+        PoPayment poPayment = poPaymentMapper.toEntity(poPaymentDTO);
+        poPayment.setId(UUID.randomUUID().toString());
+        poPayment = poPaymentRepository.save(poPayment);
+        PoPaymentDTO result = poPaymentMapper.toDto(poPayment);
         return ResponseEntity.created(new URI("/api/po-payments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,7 +91,9 @@ public class PoPaymentResource {
         if (poPaymentDTO.getId() == null) {
             return createPoPayment(poPaymentDTO);
         }
-        PoPaymentDTO result = poPaymentService.save(poPaymentDTO);
+        PoPayment poPayment = poPaymentMapper.toEntity(poPaymentDTO);
+        poPayment = poPaymentRepository.save(poPayment);
+        PoPaymentDTO result = poPaymentMapper.toDto(poPayment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, poPaymentDTO.getId().toString()))
             .body(result);
@@ -92,9 +109,9 @@ public class PoPaymentResource {
     @Timed
     public ResponseEntity<List<PoPaymentDTO>> getAllPoPayments(Pageable pageable) {
         log.debug("REST request to get a page of PoPayments");
-        Page<PoPaymentDTO> page = poPaymentService.findAll(pageable);
+        Page<PoPayment> page = poPaymentRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/po-payments");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(poPaymentMapper.toDto(page.getContent()), headers, HttpStatus.OK);
     }
 
     /**
@@ -105,9 +122,10 @@ public class PoPaymentResource {
      */
     @GetMapping("/po-payments/{id}")
     @Timed
-    public ResponseEntity<PoPaymentDTO> getPoPayment(@PathVariable Long id) {
+    public ResponseEntity<PoPaymentDTO> getPoPayment(@PathVariable String id) {
         log.debug("REST request to get PoPayment : {}", id);
-        PoPaymentDTO poPaymentDTO = poPaymentService.findOne(id);
+        PoPayment poPayment = poPaymentRepository.findOne(id);
+        PoPaymentDTO poPaymentDTO = poPaymentMapper.toDto(poPayment);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(poPaymentDTO));
     }
 
@@ -119,9 +137,9 @@ public class PoPaymentResource {
      */
     @DeleteMapping("/po-payments/{id}")
     @Timed
-    public ResponseEntity<Void> deletePoPayment(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePoPayment(@PathVariable String id) {
         log.debug("REST request to delete PoPayment : {}", id);
-        poPaymentService.delete(id);
+        poPaymentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface ProductCategoryMapper extends EntityMapper<ProductCategoryDTO, ProductCategory> {
 
-    
 
-    
 
-    default ProductCategory fromId(Long id) {
+
+
+    default ProductCategory fromId(String id) {
         if (id == null) {
             return null;
         }

@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class PoItemDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 40)
     private String productCategoryId;
@@ -56,19 +56,19 @@ public class PoItemDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long poItemStateId;
+    private String poItemStateId;
 
     private String poItemStateName;
 
-    private Long purchaseOrderId;
+    private String purchaseOrderId;
 
     private String purchaseOrderCode;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -192,11 +192,11 @@ public class PoItemDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getPoItemStateId() {
+    public String getPoItemStateId() {
         return poItemStateId;
     }
 
-    public void setPoItemStateId(Long poStateId) {
+    public void setPoItemStateId(String poStateId) {
         this.poItemStateId = poStateId;
     }
 
@@ -208,11 +208,11 @@ public class PoItemDTO implements Serializable {
         this.poItemStateName = poStateName;
     }
 
-    public Long getPurchaseOrderId() {
+    public String getPurchaseOrderId() {
         return purchaseOrderId;
     }
 
-    public void setPurchaseOrderId(Long purchaseOrderId) {
+    public void setPurchaseOrderId(String purchaseOrderId) {
         this.purchaseOrderId = purchaseOrderId;
     }
 

@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class LockLog implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public lockedQuantity?: number,
         public version?: number,
         public dr?: number,
@@ -11,7 +11,7 @@ export class LockLog implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public inventoryId?: number,
+        public inventoryId?: string,
     ) {
     }
 }

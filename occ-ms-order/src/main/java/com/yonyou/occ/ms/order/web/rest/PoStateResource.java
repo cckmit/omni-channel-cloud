@@ -105,7 +105,7 @@ public class PoStateResource {
      */
     @GetMapping("/po-states/{id}")
     @Timed
-    public ResponseEntity<PoStateDTO> getPoState(@PathVariable Long id) {
+    public ResponseEntity<PoStateDTO> getPoState(@PathVariable String id) {
         log.debug("REST request to get PoState : {}", id);
         PoStateDTO poStateDTO = poStateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(poStateDTO));
@@ -119,7 +119,7 @@ public class PoStateResource {
      */
     @DeleteMapping("/po-states/{id}")
     @Timed
-    public ResponseEntity<Void> deletePoState(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePoState(@PathVariable String id) {
         log.debug("REST request to delete PoState : {}", id);
         poStateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

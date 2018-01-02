@@ -27,7 +27,7 @@ export class PurchaseOrderDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.purchaseOrderService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'purchaseOrderListModification',

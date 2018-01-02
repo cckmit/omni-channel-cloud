@@ -1,16 +1,20 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.order.domain.PoState;
 import com.yonyou.occ.ms.order.repository.PoStateRepository;
 import com.yonyou.occ.ms.order.service.PoStateService;
 import com.yonyou.occ.ms.order.service.dto.PoStateDTO;
 import com.yonyou.occ.ms.order.service.mapper.PoStateMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,19 +29,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the PoStateResource REST controller.
@@ -179,7 +181,7 @@ public class PoStateResourceIntTest {
         int databaseSizeBeforeCreate = poStateRepository.findAll().size();
 
         // Create the PoState with an existing ID
-        poState.setId(1L);
+        poState.setId("1L");
         PoStateDTO poStateDTO = poStateMapper.toDto(poState);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -203,7 +205,7 @@ public class PoStateResourceIntTest {
         restPoStateMockMvc.perform(get("/api/po-states?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(poState.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(poState.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
@@ -227,7 +229,7 @@ public class PoStateResourceIntTest {
         restPoStateMockMvc.perform(get("/api/po-states/{id}", poState.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(poState.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(poState.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
@@ -337,11 +339,11 @@ public class PoStateResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PoState.class);
         PoState poState1 = new PoState();
-        poState1.setId(1L);
+        poState1.setId("1L");
         PoState poState2 = new PoState();
         poState2.setId(poState1.getId());
         assertThat(poState1).isEqualTo(poState2);
-        poState2.setId(2L);
+        poState2.setId("2L");
         assertThat(poState1).isNotEqualTo(poState2);
         poState1.setId(null);
         assertThat(poState1).isNotEqualTo(poState2);
@@ -352,12 +354,12 @@ public class PoStateResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(PoStateDTO.class);
         PoStateDTO poStateDTO1 = new PoStateDTO();
-        poStateDTO1.setId(1L);
+        poStateDTO1.setId("1L");
         PoStateDTO poStateDTO2 = new PoStateDTO();
         assertThat(poStateDTO1).isNotEqualTo(poStateDTO2);
         poStateDTO2.setId(poStateDTO1.getId());
         assertThat(poStateDTO1).isEqualTo(poStateDTO2);
-        poStateDTO2.setId(2L);
+        poStateDTO2.setId("2L");
         assertThat(poStateDTO1).isNotEqualTo(poStateDTO2);
         poStateDTO1.setId(null);
         assertThat(poStateDTO1).isNotEqualTo(poStateDTO2);
@@ -366,7 +368,7 @@ public class PoStateResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(poStateMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(poStateMapper.fromId("42L").getId()).isEqualTo("42");
         assertThat(poStateMapper.fromId(null)).isNull();
     }
 }

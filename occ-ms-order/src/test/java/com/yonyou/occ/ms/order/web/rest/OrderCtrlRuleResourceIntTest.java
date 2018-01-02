@@ -1,9 +1,14 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
 import com.yonyou.occ.ms.order.domain.OrderCtrlRule;
 import com.yonyou.occ.ms.order.domain.PoType;
 import com.yonyou.occ.ms.order.domain.SoType;
@@ -12,7 +17,6 @@ import com.yonyou.occ.ms.order.service.OrderCtrlRuleService;
 import com.yonyou.occ.ms.order.service.dto.OrderCtrlRuleDTO;
 import com.yonyou.occ.ms.order.service.mapper.OrderCtrlRuleMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,19 +31,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the OrderCtrlRuleResource REST controller.
@@ -181,7 +183,7 @@ public class OrderCtrlRuleResourceIntTest {
         int databaseSizeBeforeCreate = orderCtrlRuleRepository.findAll().size();
 
         // Create the OrderCtrlRule with an existing ID
-        orderCtrlRule.setId(1L);
+        orderCtrlRule.setId("1L");
         OrderCtrlRuleDTO orderCtrlRuleDTO = orderCtrlRuleMapper.toDto(orderCtrlRule);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -205,7 +207,7 @@ public class OrderCtrlRuleResourceIntTest {
         restOrderCtrlRuleMockMvc.perform(get("/api/order-ctrl-rules?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(orderCtrlRule.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(orderCtrlRule.getId())))
             .andExpect(jsonPath("$.[*].autoPoToSo").value(hasItem(DEFAULT_AUTO_PO_TO_SO.booleanValue())))
             .andExpect(jsonPath("$.[*].isEnabled").value(hasItem(DEFAULT_IS_ENABLED.booleanValue())))
             .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION)))
@@ -227,7 +229,7 @@ public class OrderCtrlRuleResourceIntTest {
         restOrderCtrlRuleMockMvc.perform(get("/api/order-ctrl-rules/{id}", orderCtrlRule.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(orderCtrlRule.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(orderCtrlRule.getId()))
             .andExpect(jsonPath("$.autoPoToSo").value(DEFAULT_AUTO_PO_TO_SO.booleanValue()))
             .andExpect(jsonPath("$.isEnabled").value(DEFAULT_IS_ENABLED.booleanValue()))
             .andExpect(jsonPath("$.version").value(DEFAULT_VERSION))
@@ -331,11 +333,11 @@ public class OrderCtrlRuleResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(OrderCtrlRule.class);
         OrderCtrlRule orderCtrlRule1 = new OrderCtrlRule();
-        orderCtrlRule1.setId(1L);
+        orderCtrlRule1.setId("1L");
         OrderCtrlRule orderCtrlRule2 = new OrderCtrlRule();
         orderCtrlRule2.setId(orderCtrlRule1.getId());
         assertThat(orderCtrlRule1).isEqualTo(orderCtrlRule2);
-        orderCtrlRule2.setId(2L);
+        orderCtrlRule2.setId("2L");
         assertThat(orderCtrlRule1).isNotEqualTo(orderCtrlRule2);
         orderCtrlRule1.setId(null);
         assertThat(orderCtrlRule1).isNotEqualTo(orderCtrlRule2);
@@ -346,12 +348,12 @@ public class OrderCtrlRuleResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(OrderCtrlRuleDTO.class);
         OrderCtrlRuleDTO orderCtrlRuleDTO1 = new OrderCtrlRuleDTO();
-        orderCtrlRuleDTO1.setId(1L);
+        orderCtrlRuleDTO1.setId("1L");
         OrderCtrlRuleDTO orderCtrlRuleDTO2 = new OrderCtrlRuleDTO();
         assertThat(orderCtrlRuleDTO1).isNotEqualTo(orderCtrlRuleDTO2);
         orderCtrlRuleDTO2.setId(orderCtrlRuleDTO1.getId());
         assertThat(orderCtrlRuleDTO1).isEqualTo(orderCtrlRuleDTO2);
-        orderCtrlRuleDTO2.setId(2L);
+        orderCtrlRuleDTO2.setId("2L");
         assertThat(orderCtrlRuleDTO1).isNotEqualTo(orderCtrlRuleDTO2);
         orderCtrlRuleDTO1.setId(null);
         assertThat(orderCtrlRuleDTO1).isNotEqualTo(orderCtrlRuleDTO2);
@@ -360,7 +362,7 @@ public class OrderCtrlRuleResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(orderCtrlRuleMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(orderCtrlRuleMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(orderCtrlRuleMapper.fromId(null)).isNull();
     }
 }

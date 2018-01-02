@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.PurchaseOrder;
 import com.yonyou.occ.ms.order.repository.PurchaseOrderRepository;
 import com.yonyou.occ.ms.order.service.dto.PurchaseOrderDTO;
@@ -39,6 +41,7 @@ public class PurchaseOrderService {
     public PurchaseOrderDTO save(PurchaseOrderDTO purchaseOrderDTO) {
         log.debug("Request to save PurchaseOrder : {}", purchaseOrderDTO);
         PurchaseOrder purchaseOrder = purchaseOrderMapper.toEntity(purchaseOrderDTO);
+        purchaseOrder.setId(UUID.randomUUID().toString());
         purchaseOrder = purchaseOrderRepository.save(purchaseOrder);
         return purchaseOrderMapper.toDto(purchaseOrder);
     }
@@ -63,7 +66,7 @@ public class PurchaseOrderService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public PurchaseOrderDTO findOne(Long id) {
+    public PurchaseOrderDTO findOne(String id) {
         log.debug("Request to get PurchaseOrder : {}", id);
         PurchaseOrder purchaseOrder = purchaseOrderRepository.findOne(id);
         return purchaseOrderMapper.toDto(purchaseOrder);
@@ -74,7 +77,7 @@ public class PurchaseOrderService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete PurchaseOrder : {}", id);
         purchaseOrderRepository.delete(id);
     }

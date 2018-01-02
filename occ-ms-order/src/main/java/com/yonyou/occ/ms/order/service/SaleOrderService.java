@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.order.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.order.domain.SaleOrder;
 import com.yonyou.occ.ms.order.repository.SaleOrderRepository;
 import com.yonyou.occ.ms.order.service.dto.SaleOrderDTO;
@@ -39,6 +41,7 @@ public class SaleOrderService {
     public SaleOrderDTO save(SaleOrderDTO saleOrderDTO) {
         log.debug("Request to save SaleOrder : {}", saleOrderDTO);
         SaleOrder saleOrder = saleOrderMapper.toEntity(saleOrderDTO);
+        saleOrder.setId(UUID.randomUUID().toString());
         saleOrder = saleOrderRepository.save(saleOrder);
         return saleOrderMapper.toDto(saleOrder);
     }
@@ -63,7 +66,7 @@ public class SaleOrderService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public SaleOrderDTO findOne(Long id) {
+    public SaleOrderDTO findOne(String id) {
         log.debug("Request to get SaleOrder : {}", id);
         SaleOrder saleOrder = saleOrderRepository.findOne(id);
         return saleOrderMapper.toDto(saleOrder);
@@ -74,7 +77,7 @@ public class SaleOrderService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete SaleOrder : {}", id);
         saleOrderRepository.delete(id);
     }

@@ -1,17 +1,22 @@
 package com.yonyou.occ.ms.customer.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.customer.OccMsCustomerApp;
-
 import com.yonyou.occ.ms.customer.config.SecurityBeanOverrideConfiguration;
-
-import com.yonyou.occ.ms.customer.domain.CustomerAccount;
 import com.yonyou.occ.ms.customer.domain.Customer;
+import com.yonyou.occ.ms.customer.domain.CustomerAccount;
 import com.yonyou.occ.ms.customer.repository.CustomerAccountRepository;
 import com.yonyou.occ.ms.customer.service.CustomerAccountService;
 import com.yonyou.occ.ms.customer.service.dto.CustomerAccountDTO;
 import com.yonyou.occ.ms.customer.service.mapper.CustomerAccountMapper;
 import com.yonyou.occ.ms.customer.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,20 +31,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.customer.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.customer.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.customer.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the CustomerAccountResource REST controller.
@@ -186,7 +188,7 @@ public class CustomerAccountResourceIntTest {
         int databaseSizeBeforeCreate = customerAccountRepository.findAll().size();
 
         // Create the CustomerAccount with an existing ID
-        customerAccount.setId(1L);
+        customerAccount.setId("1L");
         CustomerAccountDTO customerAccountDTO = customerAccountMapper.toDto(customerAccount);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -210,7 +212,7 @@ public class CustomerAccountResourceIntTest {
         restCustomerAccountMockMvc.perform(get("/api/customer-accounts?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(customerAccount.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(customerAccount.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].credit").value(hasItem(DEFAULT_CREDIT.intValue())))
@@ -234,7 +236,7 @@ public class CustomerAccountResourceIntTest {
         restCustomerAccountMockMvc.perform(get("/api/customer-accounts/{id}", customerAccount.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(customerAccount.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(customerAccount.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.credit").value(DEFAULT_CREDIT.intValue()))
@@ -344,11 +346,11 @@ public class CustomerAccountResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(CustomerAccount.class);
         CustomerAccount customerAccount1 = new CustomerAccount();
-        customerAccount1.setId(1L);
+        customerAccount1.setId("1L");
         CustomerAccount customerAccount2 = new CustomerAccount();
         customerAccount2.setId(customerAccount1.getId());
         assertThat(customerAccount1).isEqualTo(customerAccount2);
-        customerAccount2.setId(2L);
+        customerAccount2.setId("2L");
         assertThat(customerAccount1).isNotEqualTo(customerAccount2);
         customerAccount1.setId(null);
         assertThat(customerAccount1).isNotEqualTo(customerAccount2);
@@ -359,12 +361,12 @@ public class CustomerAccountResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(CustomerAccountDTO.class);
         CustomerAccountDTO customerAccountDTO1 = new CustomerAccountDTO();
-        customerAccountDTO1.setId(1L);
+        customerAccountDTO1.setId("1L");
         CustomerAccountDTO customerAccountDTO2 = new CustomerAccountDTO();
         assertThat(customerAccountDTO1).isNotEqualTo(customerAccountDTO2);
         customerAccountDTO2.setId(customerAccountDTO1.getId());
         assertThat(customerAccountDTO1).isEqualTo(customerAccountDTO2);
-        customerAccountDTO2.setId(2L);
+        customerAccountDTO2.setId("2L");
         assertThat(customerAccountDTO1).isNotEqualTo(customerAccountDTO2);
         customerAccountDTO1.setId(null);
         assertThat(customerAccountDTO1).isNotEqualTo(customerAccountDTO2);
@@ -373,7 +375,7 @@ public class CustomerAccountResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(customerAccountMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(customerAccountMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(customerAccountMapper.fromId(null)).isNull();
     }
 }

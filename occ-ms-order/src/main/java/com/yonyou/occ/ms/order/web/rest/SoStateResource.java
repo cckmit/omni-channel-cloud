@@ -105,7 +105,7 @@ public class SoStateResource {
      */
     @GetMapping("/so-states/{id}")
     @Timed
-    public ResponseEntity<SoStateDTO> getSoState(@PathVariable Long id) {
+    public ResponseEntity<SoStateDTO> getSoState(@PathVariable String id) {
         log.debug("REST request to get SoState : {}", id);
         SoStateDTO soStateDTO = soStateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(soStateDTO));
@@ -119,7 +119,7 @@ public class SoStateResource {
      */
     @DeleteMapping("/so-states/{id}")
     @Timed
-    public ResponseEntity<Void> deleteSoState(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSoState(@PathVariable String id) {
         log.debug("REST request to delete SoState : {}", id);
         soStateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

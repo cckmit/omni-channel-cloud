@@ -27,7 +27,7 @@ export class PoItemDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.poItemService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'poItemListModification',

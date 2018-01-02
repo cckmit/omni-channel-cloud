@@ -1,18 +1,23 @@
 package com.yonyou.occ.ms.order.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.order.OccMsOrderApp;
-
 import com.yonyou.occ.ms.order.config.SecurityBeanOverrideConfiguration;
-
-import com.yonyou.occ.ms.order.domain.PurchaseOrder;
-import com.yonyou.occ.ms.order.domain.PoType;
 import com.yonyou.occ.ms.order.domain.PoState;
+import com.yonyou.occ.ms.order.domain.PoType;
+import com.yonyou.occ.ms.order.domain.PurchaseOrder;
 import com.yonyou.occ.ms.order.repository.PurchaseOrderRepository;
 import com.yonyou.occ.ms.order.service.PurchaseOrderService;
 import com.yonyou.occ.ms.order.service.dto.PurchaseOrderDTO;
 import com.yonyou.occ.ms.order.service.mapper.PurchaseOrderMapper;
 import com.yonyou.occ.ms.order.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,20 +32,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.order.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.order.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the PurchaseOrderResource REST controller.
@@ -217,7 +219,7 @@ public class PurchaseOrderResourceIntTest {
         int databaseSizeBeforeCreate = purchaseOrderRepository.findAll().size();
 
         // Create the PurchaseOrder with an existing ID
-        purchaseOrder.setId(1L);
+        purchaseOrder.setId("1L");
         PurchaseOrderDTO purchaseOrderDTO = purchaseOrderMapper.toDto(purchaseOrder);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -241,7 +243,7 @@ public class PurchaseOrderResourceIntTest {
         restPurchaseOrderMockMvc.perform(get("/api/purchase-orders?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(purchaseOrder.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(purchaseOrder.getId())))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(sameInstant(DEFAULT_ORDER_DATE))))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.intValue())))
@@ -270,7 +272,7 @@ public class PurchaseOrderResourceIntTest {
         restPurchaseOrderMockMvc.perform(get("/api/purchase-orders/{id}", purchaseOrder.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(purchaseOrder.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(purchaseOrder.getId()))
             .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.orderDate").value(sameInstant(DEFAULT_ORDER_DATE)))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.intValue()))
@@ -395,11 +397,11 @@ public class PurchaseOrderResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(PurchaseOrder.class);
         PurchaseOrder purchaseOrder1 = new PurchaseOrder();
-        purchaseOrder1.setId(1L);
+        purchaseOrder1.setId("1L");
         PurchaseOrder purchaseOrder2 = new PurchaseOrder();
         purchaseOrder2.setId(purchaseOrder1.getId());
         assertThat(purchaseOrder1).isEqualTo(purchaseOrder2);
-        purchaseOrder2.setId(2L);
+        purchaseOrder2.setId("2L");
         assertThat(purchaseOrder1).isNotEqualTo(purchaseOrder2);
         purchaseOrder1.setId(null);
         assertThat(purchaseOrder1).isNotEqualTo(purchaseOrder2);
@@ -410,12 +412,12 @@ public class PurchaseOrderResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(PurchaseOrderDTO.class);
         PurchaseOrderDTO purchaseOrderDTO1 = new PurchaseOrderDTO();
-        purchaseOrderDTO1.setId(1L);
+        purchaseOrderDTO1.setId("1L");
         PurchaseOrderDTO purchaseOrderDTO2 = new PurchaseOrderDTO();
         assertThat(purchaseOrderDTO1).isNotEqualTo(purchaseOrderDTO2);
         purchaseOrderDTO2.setId(purchaseOrderDTO1.getId());
         assertThat(purchaseOrderDTO1).isEqualTo(purchaseOrderDTO2);
-        purchaseOrderDTO2.setId(2L);
+        purchaseOrderDTO2.setId("2L");
         assertThat(purchaseOrderDTO1).isNotEqualTo(purchaseOrderDTO2);
         purchaseOrderDTO1.setId(null);
         assertThat(purchaseOrderDTO1).isNotEqualTo(purchaseOrderDTO2);
@@ -424,7 +426,7 @@ public class PurchaseOrderResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(purchaseOrderMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(purchaseOrderMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(purchaseOrderMapper.fromId(null)).isNull();
     }
 }

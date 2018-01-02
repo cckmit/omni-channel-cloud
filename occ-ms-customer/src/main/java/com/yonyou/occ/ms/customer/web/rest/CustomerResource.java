@@ -1,11 +1,17 @@
 package com.yonyou.occ.ms.customer.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import javax.validation.Valid;
+
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.customer.service.CustomerService;
+import com.yonyou.occ.ms.customer.service.dto.CustomerDTO;
 import com.yonyou.occ.ms.customer.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.customer.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.customer.web.rest.util.PaginationUtil;
-import com.yonyou.occ.ms.customer.service.dto.CustomerDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +20,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing Customer.
@@ -105,7 +111,7 @@ public class CustomerResource {
      */
     @GetMapping("/customers/{id}")
     @Timed
-    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String id) {
         log.debug("REST request to get Customer : {}", id);
         CustomerDTO customerDTO = customerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(customerDTO));
@@ -119,7 +125,7 @@ public class CustomerResource {
      */
     @DeleteMapping("/customers/{id}")
     @Timed
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
         log.debug("REST request to delete Customer : {}", id);
         customerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

@@ -1,17 +1,17 @@
 package com.yonyou.occ.ms.product.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the ProductCategory entity.
  */
 public class ProductCategoryDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 40)
     private String code;
@@ -40,11 +40,11 @@ public class ProductCategoryDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

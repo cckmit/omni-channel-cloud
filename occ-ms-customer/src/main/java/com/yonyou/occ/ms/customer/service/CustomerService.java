@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.customer.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.customer.domain.Customer;
 import com.yonyou.occ.ms.customer.repository.CustomerRepository;
 import com.yonyou.occ.ms.customer.service.dto.CustomerDTO;
@@ -39,6 +41,7 @@ public class CustomerService {
     public CustomerDTO save(CustomerDTO customerDTO) {
         log.debug("Request to save Customer : {}", customerDTO);
         Customer customer = customerMapper.toEntity(customerDTO);
+        customer.setId(UUID.randomUUID().toString());
         customer = customerRepository.save(customer);
         return customerMapper.toDto(customer);
     }
@@ -63,7 +66,7 @@ public class CustomerService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public CustomerDTO findOne(Long id) {
+    public CustomerDTO findOne(String id) {
         log.debug("Request to get Customer : {}", id);
         Customer customer = customerRepository.findOne(id);
         return customerMapper.toDto(customer);
@@ -74,7 +77,7 @@ public class CustomerService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Customer : {}", id);
         customerRepository.delete(id);
     }

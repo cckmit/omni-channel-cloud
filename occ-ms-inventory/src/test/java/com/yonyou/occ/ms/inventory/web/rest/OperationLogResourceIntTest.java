@@ -1,17 +1,22 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.EntityManager;
+
 import com.yonyou.occ.ms.inventory.OccMsInventoryApp;
-
 import com.yonyou.occ.ms.inventory.config.SecurityBeanOverrideConfiguration;
-
+import com.yonyou.occ.ms.inventory.domain.Inventory;
 import com.yonyou.occ.ms.inventory.domain.OperationLog;
 import com.yonyou.occ.ms.inventory.domain.OperationType;
-import com.yonyou.occ.ms.inventory.domain.Inventory;
 import com.yonyou.occ.ms.inventory.repository.OperationLogRepository;
 import com.yonyou.occ.ms.inventory.service.dto.OperationLogDTO;
 import com.yonyou.occ.ms.inventory.service.mapper.OperationLogMapper;
 import com.yonyou.occ.ms.inventory.web.rest.errors.ExceptionTranslator;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,20 +31,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.createFormattingConversionService;
+import static com.yonyou.occ.ms.inventory.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the OperationLogResource REST controller.
@@ -173,7 +175,7 @@ public class OperationLogResourceIntTest {
         int databaseSizeBeforeCreate = operationLogRepository.findAll().size();
 
         // Create the OperationLog with an existing ID
-        operationLog.setId(1L);
+        operationLog.setId("1L");
         OperationLogDTO operationLogDTO = operationLogMapper.toDto(operationLog);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -197,7 +199,7 @@ public class OperationLogResourceIntTest {
         restOperationLogMockMvc.perform(get("/api/operation-logs?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(operationLog.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(operationLog.getId())))
             .andExpect(jsonPath("$.[*].operationQuantity").value(hasItem(DEFAULT_OPERATION_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION)))
             .andExpect(jsonPath("$.[*].dr").value(hasItem(DEFAULT_DR)))
@@ -218,7 +220,7 @@ public class OperationLogResourceIntTest {
         restOperationLogMockMvc.perform(get("/api/operation-logs/{id}", operationLog.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(operationLog.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(operationLog.getId()))
             .andExpect(jsonPath("$.operationQuantity").value(DEFAULT_OPERATION_QUANTITY.intValue()))
             .andExpect(jsonPath("$.version").value(DEFAULT_VERSION))
             .andExpect(jsonPath("$.dr").value(DEFAULT_DR))
@@ -319,11 +321,11 @@ public class OperationLogResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(OperationLog.class);
         OperationLog operationLog1 = new OperationLog();
-        operationLog1.setId(1L);
+        operationLog1.setId("1L");
         OperationLog operationLog2 = new OperationLog();
         operationLog2.setId(operationLog1.getId());
         assertThat(operationLog1).isEqualTo(operationLog2);
-        operationLog2.setId(2L);
+        operationLog2.setId("2L");
         assertThat(operationLog1).isNotEqualTo(operationLog2);
         operationLog1.setId(null);
         assertThat(operationLog1).isNotEqualTo(operationLog2);
@@ -334,12 +336,12 @@ public class OperationLogResourceIntTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(OperationLogDTO.class);
         OperationLogDTO operationLogDTO1 = new OperationLogDTO();
-        operationLogDTO1.setId(1L);
+        operationLogDTO1.setId("1L");
         OperationLogDTO operationLogDTO2 = new OperationLogDTO();
         assertThat(operationLogDTO1).isNotEqualTo(operationLogDTO2);
         operationLogDTO2.setId(operationLogDTO1.getId());
         assertThat(operationLogDTO1).isEqualTo(operationLogDTO2);
-        operationLogDTO2.setId(2L);
+        operationLogDTO2.setId("2L");
         assertThat(operationLogDTO1).isNotEqualTo(operationLogDTO2);
         operationLogDTO1.setId(null);
         assertThat(operationLogDTO1).isNotEqualTo(operationLogDTO2);
@@ -348,7 +350,7 @@ public class OperationLogResourceIntTest {
     @Test
     @Transactional
     public void testEntityFromId() {
-        assertThat(operationLogMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(operationLogMapper.fromId("42L").getId()).isEqualTo("42L");
         assertThat(operationLogMapper.fromId(null)).isNull();
     }
 }

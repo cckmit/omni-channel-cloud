@@ -1,5 +1,7 @@
 package com.yonyou.occ.ms.product.service;
 
+import java.util.UUID;
+
 import com.yonyou.occ.ms.product.domain.ProductCategory;
 import com.yonyou.occ.ms.product.repository.ProductCategoryRepository;
 import com.yonyou.occ.ms.product.service.dto.ProductCategoryDTO;
@@ -39,6 +41,7 @@ public class ProductCategoryService {
     public ProductCategoryDTO save(ProductCategoryDTO productCategoryDTO) {
         log.debug("Request to save ProductCategory : {}", productCategoryDTO);
         ProductCategory productCategory = productCategoryMapper.toEntity(productCategoryDTO);
+        productCategory.setId(UUID.randomUUID().toString());
         productCategory = productCategoryRepository.save(productCategory);
         return productCategoryMapper.toDto(productCategory);
     }
@@ -63,7 +66,7 @@ public class ProductCategoryService {
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public ProductCategoryDTO findOne(Long id) {
+    public ProductCategoryDTO findOne(String id) {
         log.debug("Request to get ProductCategory : {}", id);
         ProductCategory productCategory = productCategoryRepository.findOne(id);
         return productCategoryMapper.toDto(productCategory);
@@ -74,7 +77,7 @@ public class ProductCategoryService {
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete ProductCategory : {}", id);
         productCategoryRepository.delete(id);
     }

@@ -27,7 +27,7 @@ export class PoPaymentDeleteDialogComponent {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete(id: number) {
+    confirmDelete(id: string) {
         this.poPaymentService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'poPaymentListModification',

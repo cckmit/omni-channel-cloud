@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class SaleOrderDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @Size(max = 40)
     private String code;
@@ -58,19 +58,19 @@ public class SaleOrderDTO implements Serializable {
 
     private ZonedDateTime timeModified;
 
-    private Long soTypeId;
+    private String soTypeId;
 
     private String soTypeName;
 
-    private Long soStateId;
+    private String soStateId;
 
     private String soStateName;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -202,11 +202,11 @@ public class SaleOrderDTO implements Serializable {
         this.timeModified = timeModified;
     }
 
-    public Long getSoTypeId() {
+    public String getSoTypeId() {
         return soTypeId;
     }
 
-    public void setSoTypeId(Long soTypeId) {
+    public void setSoTypeId(String soTypeId) {
         this.soTypeId = soTypeId;
     }
 
@@ -218,11 +218,11 @@ public class SaleOrderDTO implements Serializable {
         this.soTypeName = soTypeName;
     }
 
-    public Long getSoStateId() {
+    public String getSoStateId() {
         return soStateId;
     }
 
-    public void setSoStateId(Long soStateId) {
+    public void setSoStateId(String soStateId) {
         this.soStateId = soStateId;
     }
 

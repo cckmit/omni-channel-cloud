@@ -2,7 +2,7 @@ import { BaseEntity } from './../../shared';
 
 export class OrderCtrlRule implements BaseEntity {
     constructor(
-        public id?: number,
+        public id?: string,
         public autoPoToSo?: boolean,
         public isEnabled?: boolean,
         public version?: number,
@@ -12,8 +12,8 @@ export class OrderCtrlRule implements BaseEntity {
         public timeCreated?: any,
         public modifier?: string,
         public timeModified?: any,
-        public poTypeId?: number,
-        public soTypeId?: number,
+        public poTypeId?: string,
+        public soTypeId?: string,
     ) {
         this.autoPoToSo = false;
         this.isEnabled = false;

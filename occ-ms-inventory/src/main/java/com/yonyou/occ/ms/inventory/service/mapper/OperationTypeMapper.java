@@ -11,11 +11,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface OperationTypeMapper extends EntityMapper<OperationTypeDTO, OperationType> {
 
-    
 
-    
 
-    default OperationType fromId(Long id) {
+
+
+    default OperationType fromId(String id) {
         if (id == null) {
             return null;
         }
