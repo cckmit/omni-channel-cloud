@@ -32,14 +32,17 @@
 2. Create a account for the customer.
 3. Create a product category.
 4. Create two products in the category.
-5. Create a PoType.
-6. Create a SoType.
-7. Create a OrderCtrlRule.
-8. Create a purchase order failed, because the inventory of the product is not enough.
-9. Increase the inventory of the product.
-10. Create a purchase order successfully, lock the inventory of the product.
-11. Pay the purchase order failed, because the credit of member's account is not enough.
-12. Add credit of the member.
-13. Pay the purchase order successfully, subtract the credit of member account, then auto generate a sale order.
-14. Reject the sale order, then increase the credit and unlock the inventory.
-15. Approve the sale order, change the status of the order, then confirm the subtraction of the inventory.
+5. Create inventory for products.
+6. Create a PoType.
+7. Create a PoState.
+8. Create a SoType.
+9. Create a SoState.
+10. Create a OrderCtrlRule.
+11. Create a purchase order failed, because the inventory of the product is not enough.
+12. Increase the inventory of the product.
+13. Create a purchase order successfully, lock the inventory of the product.
+14. Pay the purchase order failed, because the credit of member's account is not enough.
+15. Add credit of the member.
+16. Pay the purchase order successfully, subtract the credit of member account, then auto generate a sale order.
+17. Reject the sale order, then increase the credit and unlock the inventory.
+18. Approve the sale order, change the status of the order, then confirm the subtraction of the inventory.

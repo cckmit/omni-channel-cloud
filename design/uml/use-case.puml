@@ -1,0 +1,38 @@
+@startuml
+
+left to right direction
+
+:[System]: as SYS
+
+:Customer Admin: as CA
+(Create customer) as (CC)
+(Create account for customer) as (CCA)
+CA ---> (CC)
+CA ---> (CCA)
+SYS ---> (Subtract the credit of member account)
+SYS ---> (Increase the credit of member account)
+
+:Product Admin: as PA
+PA ---> (Create product category)
+PA ---> (Create product in category)
+
+:Inventory Admin: as IA
+IA ---> (Increase inventory of product)
+SYS ---> (Lock inventory of product)
+SYS ---> (Unlock inventory of product)
+SYS ---> (Confirm subtraction of inventory)
+
+:Order Admin: as OA
+OA ---> (Create PoType)
+OA ---> (Create PoState)
+OA ---> (Create SoType)
+OA ---> (Create SoState)
+OA ---> (Create OrderCtrlRule)
+OA ---> (Create PurchaseOrder)
+OA ---> (Reject SaleOrder)
+OA ---> (Approve SaleOrder)
+
+:Customer: as C
+C ---> (Pay for purchase order)
+
+@enduml

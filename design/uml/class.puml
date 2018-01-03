@@ -1,0 +1,30 @@
+@startuml
+
+BaseEntity <|-- Customer
+BaseEntity <|-- CustomerAccount
+
+abstract class BaseEntity {
+    String id
+    Integer version
+    Boolean dr
+    ZonedDateTime ts
+    String creator
+    ZonedDateTime timeCreated
+    String modifier
+    ZonedDateTime timeModified
+}
+
+class Customer {
+    String code
+    String name
+    Boolean isEnabled
+}
+class CustomerAccount {
+    Customer customer
+    String code
+    String name
+    BigDecimal credit
+    Boolean isEnabled
+}
+
+@enduml
