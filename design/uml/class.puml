@@ -2,29 +2,40 @@
 
 BaseEntity <|-- Customer
 BaseEntity <|-- CustomerAccount
+CustomerAccount --> CreateCustomerAccountCommand
 
 abstract class BaseEntity {
-    String id
-    Integer version
-    Boolean dr
-    ZonedDateTime ts
-    String creator
-    ZonedDateTime timeCreated
-    String modifier
-    ZonedDateTime timeModified
+    #String id
+    #Integer version
+    #Boolean dr
+    #ZonedDateTime ts
+    #String creator
+    #ZonedDateTime timeCreated
+    #String modifier
+    #ZonedDateTime timeModified
 }
 
 class Customer {
-    String code
-    String name
-    Boolean isEnabled
+    -String code
+    -String name
+    -Boolean isEnabled
+}
+class CreateCustomerAccountCommand {
+    -String customerId
+    -String code
+    -String name
+    -BigDecimal credit
+    -Boolean isEnabled
 }
 class CustomerAccount {
-    Customer customer
-    String code
-    String name
-    BigDecimal credit
-    Boolean isEnabled
+    -Customer customer
+    -String code
+    -String name
+    -BigDecimal credit
+    -Boolean isEnabled
+    +CustomerAccount(CreateCustomerAccountCommand command)
+    +increaseCredit(BigDecimal quantity)
+    +subtractCredit(BigDecimal quantity)
 }
 
 @enduml

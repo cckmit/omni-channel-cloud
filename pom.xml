@@ -4,9 +4,98 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yonyou</groupId>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
+
+    <groupId>com.yonyou.occ</groupId>
     <artifactId>omni-channel-cloud</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0</version>
 
+    <modules>
+        <module>occ-common</module>
+        <module>jhipster-registry</module>
+        <module>occ-uaa</module>
+        <module>occ-ms-customer-common</module>
+        <module>occ-ms-customer</module>
+        <module>occ-ms-customer-command</module>
+        <module>occ-ms-product</module>
+        <module>occ-ms-inventory</module>
+        <module>occ-ms-order</module>
+        <module>occ-gateway</module>
+    </modules>
 
+    <properties>
+        <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+        <spring.version>4.3.13.RELEASE</spring.version>
+        <spring-data-commons.version>1.13.9.RELEASE</spring-data-commons.version>
+        <spring-amqp.version>1.7.4.RELEASE</spring-amqp.version>
+        <validation-api.version>1.1.0.Final</validation-api.version>
+        <lombok.version>1.16.18</lombok.version>
+        <xom.version>1.2.5</xom.version>
+        <axon.version>3.1.1</axon.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring-data-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-amqp</artifactId>
+                <version>${spring-amqp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validation-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>xom</groupId>
+                <artifactId>xom</artifactId>
+                <version>${xom.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-spring-boot-starter</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-core</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-mongo</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-amqp</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.axonframework</groupId>
+                <artifactId>axon-distributed-commandbus-springcloud</artifactId>
+                <version>${axon.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

@@ -18,6 +18,9 @@ logging:
         ROOT: DEBUG
         com.yonyou.occ.ms.customer: DEBUG
         io.github.jhipster: DEBUG
+        # Set logging level to prevent printing too many DEBUG log
+        org.mongodb: INFO
+        com.hazelcast: INFO
 
 eureka:
     instance:
@@ -76,6 +79,22 @@ spring:
         locator:
             discovery:
                 enabled: true
+    # RabbitMQ for Axon event bus
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+    data:
+        # MongoDB for Axon event store
+        mongodb:
+            host: localhost
+            port: 27017
+            database: occ_axon
+            domain-events-collection-name: domain_events
+            snapshot-events-collection-name: snapshot_events
+            sagas-collection-name: sagas
+            tracking-tokens-collection-name: tracking_tokens
 
 liquibase:
     contexts: dev
@@ -180,3 +199,12 @@ oauth2:
 # ===================================================================
 
 application:
+
+
+axon:
+    amqp:
+        exchange: occ-axon
+    eventhandling:
+        processors:
+            customeraccount:
+                source: customerAccountQueueMessageSource

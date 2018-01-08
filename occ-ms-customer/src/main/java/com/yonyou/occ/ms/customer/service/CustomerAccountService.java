@@ -41,8 +41,8 @@ public class CustomerAccountService {
     public CustomerAccountDTO save(CustomerAccountDTO customerAccountDTO) {
         log.debug("Request to save CustomerAccount : {}", customerAccountDTO);
         CustomerAccount customerAccount = customerAccountMapper.toEntity(customerAccountDTO);
-        customerAccount = customerAccountRepository.save(customerAccount);
         customerAccount.setId(UUID.randomUUID().toString());
+        customerAccount = customerAccountRepository.save(customerAccount);
         return customerAccountMapper.toDto(customerAccount);
     }
 

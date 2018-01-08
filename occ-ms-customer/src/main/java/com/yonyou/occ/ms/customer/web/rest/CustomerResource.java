@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.customer.service.CustomerService;
 import com.yonyou.occ.ms.customer.service.dto.CustomerDTO;
+import com.yonyou.occ.ms.customer.web.rest.api.CustomerRestApi;
 import com.yonyou.occ.ms.customer.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.customer.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.customer.web.rest.util.PaginationUtil;
@@ -34,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class CustomerResource {
+public class CustomerResource implements CustomerRestApi {
 
     private final Logger log = LoggerFactory.getLogger(CustomerResource.class);
 
@@ -96,6 +97,7 @@ public class CustomerResource {
      */
     @GetMapping("/customers")
     @Timed
+    @Override
     public ResponseEntity<List<CustomerDTO>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
         Page<CustomerDTO> page = customerService.findAll(pageable);
@@ -111,6 +113,7 @@ public class CustomerResource {
      */
     @GetMapping("/customers/{id}")
     @Timed
+    @Override
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String id) {
         log.debug("REST request to get Customer : {}", id);
         CustomerDTO customerDTO = customerService.findOne(id);

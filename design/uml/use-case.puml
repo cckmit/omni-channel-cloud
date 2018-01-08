@@ -11,16 +11,19 @@ CA ---> (CC)
 CA ---> (CCA)
 SYS ---> (Subtract the credit of member account)
 SYS ---> (Increase the credit of member account)
+CA ---> (Search product)
+CA ---> (Create PurchaseOrder)
 
 :Product Admin: as PA
 PA ---> (Create product category)
 PA ---> (Create product in category)
 
 :Inventory Admin: as IA
-IA ---> (Increase inventory of product)
+IA ---> (Search product)
+IA ---> (Increase inventory of product[in-stock])
 SYS ---> (Lock inventory of product)
 SYS ---> (Unlock inventory of product)
-SYS ---> (Confirm subtraction of inventory)
+SYS ---> (Confirm subtraction of inventory[out-stock])
 
 :Order Admin: as OA
 OA ---> (Create PoType)
@@ -28,7 +31,6 @@ OA ---> (Create PoState)
 OA ---> (Create SoType)
 OA ---> (Create SoState)
 OA ---> (Create OrderCtrlRule)
-OA ---> (Create PurchaseOrder)
 OA ---> (Reject SaleOrder)
 OA ---> (Approve SaleOrder)
 
