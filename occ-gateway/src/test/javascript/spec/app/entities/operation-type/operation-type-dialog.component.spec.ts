@@ -43,7 +43,7 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new OperationType(123);
+                        const entity = new OperationType("123");
                         spyOn(service, 'update').and.returnValue(Observable.of(entity));
                         comp.operationType = entity;
                         // WHEN

@@ -36,14 +36,14 @@ describe('Component Tests', () => {
             it('Should call load all on init', () => {
                 // GIVEN
 
-                spyOn(service, 'find').and.returnValue(Observable.of(new CustomerAccount(123)));
+                spyOn(service, 'find').and.returnValue(Observable.of(new CustomerAccount("123")));
 
                 // WHEN
                 comp.ngOnInit();
 
                 // THEN
-                expect(service.find).toHaveBeenCalledWith(123);
-                expect(comp.customerAccount).toEqual(jasmine.objectContaining({id: 123}));
+                expect(service.find).toHaveBeenCalledWith("123");
+                expect(comp.customerAccount).toEqual(jasmine.objectContaining({id: "123"}));
             });
         });
     });

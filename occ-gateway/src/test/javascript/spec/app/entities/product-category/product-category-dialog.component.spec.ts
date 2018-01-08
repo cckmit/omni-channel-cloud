@@ -43,7 +43,7 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new ProductCategory(123);
+                        const entity = new ProductCategory("123");
                         spyOn(service, 'update').and.returnValue(Observable.of(entity));
                         comp.productCategory = entity;
                         // WHEN

@@ -45,7 +45,7 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new PoPayment(123);
+                        const entity = new PoPayment("123");
                         spyOn(service, 'update').and.returnValue(Observable.of(entity));
                         comp.poPayment = entity;
                         // WHEN

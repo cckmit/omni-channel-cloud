@@ -40,32 +40,32 @@ describe('Service Tests', () => {
 
         describe('Service methods', () => {
             it('should call correct URL', () => {
-                service.find(123).subscribe(() => {});
+                service.find("123").subscribe(() => {});
 
                 expect(this.lastConnection).toBeDefined();
 
                 const resourceUrl = SERVER_API_URL + '/occmsinventory/api/inventories';
-                expect(this.lastConnection.request.url).toEqual(resourceUrl + '/' + 123);
+                expect(this.lastConnection.request.url).toEqual(resourceUrl + '/' + "123");
             });
             it('should return Inventory', () => {
 
                 let entity: Inventory;
-                service.find(123).subscribe((_entity: Inventory) => {
+                service.find("123").subscribe((_entity: Inventory) => {
                     entity = _entity;
                 });
 
                 this.lastConnection.mockRespond(new Response(new ResponseOptions({
-                    body: JSON.stringify({id: 123}),
+                    body: JSON.stringify({id: "123"}),
                 })));
 
                 expect(entity).toBeDefined();
-                expect(entity.id).toEqual(123);
+                expect(entity.id).toEqual("123");
             });
 
             it('should propagate not found response', () => {
 
                 let error: any;
-                service.find(123).subscribe(null, (_error: any) => {
+                service.find("123").subscribe(null, (_error: any) => {
                     error = _error;
                 });
 

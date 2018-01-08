@@ -47,7 +47,7 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new PoItem(123);
+                        const entity = new PoItem("123");
                         spyOn(service, 'update').and.returnValue(Observable.of(entity));
                         comp.poItem = entity;
                         // WHEN

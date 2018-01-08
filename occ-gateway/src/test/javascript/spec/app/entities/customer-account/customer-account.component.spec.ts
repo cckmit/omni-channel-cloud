@@ -39,7 +39,7 @@ describe('Component Tests', () => {
                 const headers = new Headers();
                 headers.append('link', 'link;link');
                 spyOn(service, 'query').and.returnValue(Observable.of({
-                    json: [new CustomerAccount(123)],
+                    json: [new CustomerAccount("123")],
                     headers
                 }));
 
@@ -48,7 +48,7 @@ describe('Component Tests', () => {
 
                 // THEN
                 expect(service.query).toHaveBeenCalled();
-                expect(comp.customerAccounts[0]).toEqual(jasmine.objectContaining({id: 123}));
+                expect(comp.customerAccounts[0]).toEqual(jasmine.objectContaining({id: "123"}));
             });
         });
     });

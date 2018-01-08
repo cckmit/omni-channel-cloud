@@ -39,7 +39,7 @@ describe('Component Tests', () => {
                 const headers = new Headers();
                 headers.append('link', 'link;link');
                 spyOn(service, 'query').and.returnValue(Observable.of({
-                    json: [new SoState(123)],
+                    json: [new SoState("123")],
                     headers
                 }));
 
@@ -48,7 +48,7 @@ describe('Component Tests', () => {
 
                 // THEN
                 expect(service.query).toHaveBeenCalled();
-                expect(comp.soStates[0]).toEqual(jasmine.objectContaining({id: 123}));
+                expect(comp.soStates[0]).toEqual(jasmine.objectContaining({id: "123"}));
             });
         });
     });
