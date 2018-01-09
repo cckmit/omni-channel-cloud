@@ -2,9 +2,8 @@ package com.yonyou.occ.ms.inventory.command.config;
 
 import com.yonyou.occ.ms.inventory.command.config.oauth2.OAuth2JwtAccessTokenConverter;
 import com.yonyou.occ.ms.inventory.command.config.oauth2.OAuth2Properties;
-import com.yonyou.occ.ms.inventory.command.security.oauth2.OAuth2SignatureVerifierClient;
 import com.yonyou.occ.ms.inventory.command.security.AuthoritiesConstants;
-
+import com.yonyou.occ.ms.inventory.command.security.oauth2.OAuth2SignatureVerifierClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +17,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
