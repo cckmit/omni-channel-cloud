@@ -25,7 +25,7 @@ public interface CustomerAccountRestApi {
      * @param customerId the id of the customer
      * @return the ResponseEntity with status 200 (OK) and the list of customerAccounts in body
      */
-    @GetMapping("/customers")
+    @GetMapping("/customer-accounts")
     ResponseEntity<List<CustomerAccountDTO>> getCustomerAccountsByCustomer(Pageable pageable,
             @RequestParam String customerId);
 
