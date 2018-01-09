@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.product.service.ProductService;
 import com.yonyou.occ.ms.product.service.dto.ProductDTO;
+import com.yonyou.occ.ms.product.web.rest.api.ProductRestApi;
 import com.yonyou.occ.ms.product.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.product.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.product.web.rest.util.PaginationUtil;
@@ -21,21 +22,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing Product.
  */
 @RestController
-@RequestMapping("/api")
-public class ProductResource {
-
+//@RequestMapping("/api")
+public class ProductResource implements ProductRestApi {
     private final Logger log = LoggerFactory.getLogger(ProductResource.class);
 
     private static final String ENTITY_NAME = "product";
@@ -94,8 +92,8 @@ public class ProductResource {
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of products in body
      */
-    @GetMapping("/products")
     @Timed
+    @Override
     public ResponseEntity<List<ProductDTO>> getAllProducts(Pageable pageable) {
         log.debug("REST request to get a page of Products");
         Page<ProductDTO> page = productService.findAll(pageable);
@@ -109,8 +107,8 @@ public class ProductResource {
      * @param id the id of the productDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the productDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/products/{id}")
     @Timed
+    @Override
     public ResponseEntity<ProductDTO> getProduct(@PathVariable String id) {
         log.debug("REST request to get Product : {}", id);
         ProductDTO productDTO = productService.findOne(id);

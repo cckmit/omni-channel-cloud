@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.product.service.ProductCategoryService;
 import com.yonyou.occ.ms.product.service.dto.ProductCategoryDTO;
+import com.yonyou.occ.ms.product.web.rest.api.ProductCategoryRestApi;
 import com.yonyou.occ.ms.product.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.product.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.product.web.rest.util.PaginationUtil;
@@ -21,7 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,8 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ProductCategoryResource {
-
+public class ProductCategoryResource implements ProductCategoryRestApi {
     private final Logger log = LoggerFactory.getLogger(ProductCategoryResource.class);
 
     private static final String ENTITY_NAME = "productCategory";
@@ -94,8 +93,8 @@ public class ProductCategoryResource {
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of productCategories in body
      */
-    @GetMapping("/product-categories")
     @Timed
+    @Override
     public ResponseEntity<List<ProductCategoryDTO>> getAllProductCategories(Pageable pageable) {
         log.debug("REST request to get a page of ProductCategories");
         Page<ProductCategoryDTO> page = productCategoryService.findAll(pageable);
@@ -109,8 +108,8 @@ public class ProductCategoryResource {
      * @param id the id of the productCategoryDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the productCategoryDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/product-categories/{id}")
     @Timed
+    @Override
     public ResponseEntity<ProductCategoryDTO> getProductCategory(@PathVariable String id) {
         log.debug("REST request to get ProductCategory : {}", id);
         ProductCategoryDTO productCategoryDTO = productCategoryService.findOne(id);
