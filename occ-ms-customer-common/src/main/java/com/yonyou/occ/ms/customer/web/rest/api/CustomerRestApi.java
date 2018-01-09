@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * The REST API for customer.
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author WangRui
  * @date 2018-01-05 09:22:42
  */
+@RequestMapping("/api")
 public interface CustomerRestApi {
     /**
      * GET  /customers : get all the customers.

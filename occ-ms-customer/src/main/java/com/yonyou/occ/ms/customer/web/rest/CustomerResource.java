@@ -27,16 +27,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing Customer.
  */
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class CustomerResource implements CustomerRestApi {
-
     private final Logger log = LoggerFactory.getLogger(CustomerResource.class);
 
     private static final String ENTITY_NAME = "customer";
@@ -51,20 +49,21 @@ public class CustomerResource implements CustomerRestApi {
      * POST  /customers : Create a new customer.
      *
      * @param customerDTO the customerDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new customerDTO, or with status 400 (Bad Request) if the customer has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new customerDTO, or with status 400
+     * (Bad Request) if the customer has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/customers")
     @Timed
-    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
+    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO)
+        throws URISyntaxException {
         log.debug("REST request to save Customer : {}", customerDTO);
         if (customerDTO.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         CustomerDTO result = customerService.save(customerDTO);
-        return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity.created(new URI("/api/customers/" + result.getId())).headers(
+            HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId())).body(result);
     }
 
     /**
@@ -78,15 +77,15 @@ public class CustomerResource implements CustomerRestApi {
      */
     @PutMapping("/customers")
     @Timed
-    public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
+    public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO)
+        throws URISyntaxException {
         log.debug("REST request to update Customer : {}", customerDTO);
         if (customerDTO.getId() == null) {
             return createCustomer(customerDTO);
         }
         CustomerDTO result = customerService.save(customerDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customerDTO.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, customerDTO.getId())).body(
+            result);
     }
 
     /**

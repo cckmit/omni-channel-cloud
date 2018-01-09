@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class CustomerAccountService {
-
     private final Logger log = LoggerFactory.getLogger(CustomerAccountService.class);
 
     private final CustomerAccountRepository customerAccountRepository;
 
     private final CustomerAccountMapper customerAccountMapper;
 
-    public CustomerAccountService(CustomerAccountRepository customerAccountRepository, CustomerAccountMapper customerAccountMapper) {
+    public CustomerAccountService(CustomerAccountRepository customerAccountRepository,
+        CustomerAccountMapper customerAccountMapper) {
         this.customerAccountRepository = customerAccountRepository;
         this.customerAccountMapper = customerAccountMapper;
     }
@@ -55,8 +55,13 @@ public class CustomerAccountService {
     @Transactional(readOnly = true)
     public Page<CustomerAccountDTO> findAll(Pageable pageable) {
         log.debug("Request to get all CustomerAccounts");
-        return customerAccountRepository.findAll(pageable)
-            .map(customerAccountMapper::toDto);
+        return customerAccountRepository.findAll(pageable).map(customerAccountMapper:: toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CustomerAccountDTO> findByCustomerId(Pageable pageable, String customerId) {
+        log.debug("Request to get CustomerAccounts by customer");
+        return customerAccountRepository.findByCustomerId(pageable, customerId).map(customerAccountMapper:: toDto);
     }
 
     /**
