@@ -101,15 +101,15 @@ public class CustomerAccountResource {
     }
 
     /**
-     * PUT  /customer-accounts/:id : Increase the credit of an existing customerAccount.
+     * PUT  /customer-accounts/:id/increase-credit : Increase the credit of an existing customerAccount.
      *
      * @param id the id of the customerAccountDTO to increase credit
      * @param quantity the quantity to increase credit
      * @return the ResponseEntity with status 200 (OK)
      */
-    @PutMapping("/customer-accounts/{id}")
+    @PutMapping("/customer-accounts/{id}/increase-credit")
     @Timed
-    public ResponseEntity<CustomerAccountDTO> increaseCustomerAccountCredit(@PathVariable String id,
+    public ResponseEntity<Void> increaseCustomerAccountCredit(@PathVariable String id,
         @RequestParam BigDecimal quantity) {
         log.debug("REST request to increase credit of CustomerAccount : {}", id);
 
