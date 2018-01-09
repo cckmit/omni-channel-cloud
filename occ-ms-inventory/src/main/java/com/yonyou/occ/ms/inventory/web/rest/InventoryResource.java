@@ -1,16 +1,12 @@
 package com.yonyou.occ.ms.inventory.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.Valid;
 
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.inventory.service.InventoryService;
 import com.yonyou.occ.ms.inventory.service.dto.InventoryDTO;
-import com.yonyou.occ.ms.inventory.web.rest.errors.BadRequestAlertException;
-import com.yonyou.occ.ms.inventory.web.rest.util.HeaderUtil;
+import com.yonyou.occ.ms.inventory.web.rest.api.InventoryRestApi;
 import com.yonyou.occ.ms.inventory.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -20,22 +16,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing Inventory.
  */
 @RestController
-@RequestMapping("/api")
-public class InventoryResource {
-
+//@RequestMapping("/api")
+public class InventoryResource implements InventoryRestApi {
     private final Logger log = LoggerFactory.getLogger(InventoryResource.class);
 
     private static final String ENTITY_NAME = "inventory";
@@ -47,55 +36,13 @@ public class InventoryResource {
     }
 
     /**
-     * POST  /inventories : Create a new inventory.
-     *
-     * @param inventoryDTO the inventoryDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new inventoryDTO, or with status 400 (Bad Request) if the inventory has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/inventories")
-    @Timed
-    public ResponseEntity<InventoryDTO> createInventory(@Valid @RequestBody InventoryDTO inventoryDTO) throws URISyntaxException {
-        log.debug("REST request to save Inventory : {}", inventoryDTO);
-        if (inventoryDTO.getId() != null) {
-            throw new BadRequestAlertException("A new inventory cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        InventoryDTO result = inventoryService.save(inventoryDTO);
-        return ResponseEntity.created(new URI("/api/inventories/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /inventories : Updates an existing inventory.
-     *
-     * @param inventoryDTO the inventoryDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated inventoryDTO,
-     * or with status 400 (Bad Request) if the inventoryDTO is not valid,
-     * or with status 500 (Internal Server Error) if the inventoryDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/inventories")
-    @Timed
-    public ResponseEntity<InventoryDTO> updateInventory(@Valid @RequestBody InventoryDTO inventoryDTO) throws URISyntaxException {
-        log.debug("REST request to update Inventory : {}", inventoryDTO);
-        if (inventoryDTO.getId() == null) {
-            return createInventory(inventoryDTO);
-        }
-        InventoryDTO result = inventoryService.save(inventoryDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, inventoryDTO.getId().toString()))
-            .body(result);
-    }
-
-    /**
      * GET  /inventories : get all the inventories.
      *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of inventories in body
      */
-    @GetMapping("/inventories")
     @Timed
+    @Override
     public ResponseEntity<List<InventoryDTO>> getAllInventories(Pageable pageable) {
         log.debug("REST request to get a page of Inventories");
         Page<InventoryDTO> page = inventoryService.findAll(pageable);
@@ -109,25 +56,11 @@ public class InventoryResource {
      * @param id the id of the inventoryDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the inventoryDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/inventories/{id}")
     @Timed
+    @Override
     public ResponseEntity<InventoryDTO> getInventory(@PathVariable String id) {
         log.debug("REST request to get Inventory : {}", id);
         InventoryDTO inventoryDTO = inventoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(inventoryDTO));
-    }
-
-    /**
-     * DELETE  /inventories/:id : delete the "id" inventory.
-     *
-     * @param id the id of the inventoryDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/inventories/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteInventory(@PathVariable String id) {
-        log.debug("REST request to delete Inventory : {}", id);
-        inventoryService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

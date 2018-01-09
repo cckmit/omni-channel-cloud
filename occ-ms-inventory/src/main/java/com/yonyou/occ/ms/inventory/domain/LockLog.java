@@ -31,6 +31,10 @@ public class LockLog implements Serializable {
     @Column(name = "locked_quantity", precision=10, scale=2)
     private BigDecimal lockedQuantity;
 
+    @Size(max = 40)
+    @Column(name = "po_item_id", length = 40)
+    private String poItemId;
+
     @Column(name = "version")
     private Integer version;
 
@@ -78,6 +82,19 @@ public class LockLog implements Serializable {
 
     public void setLockedQuantity(BigDecimal lockedQuantity) {
         this.lockedQuantity = lockedQuantity;
+    }
+
+    public String getPoItemId() {
+        return poItemId;
+    }
+
+    public LockLog poItemId(String poItemId) {
+        this.poItemId = poItemId;
+        return this;
+    }
+
+    public void setPoItemId(String poItemId) {
+        this.poItemId = poItemId;
     }
 
     public Integer getVersion() {

@@ -16,6 +16,9 @@ public class LockLogDTO implements Serializable {
 
     private BigDecimal lockedQuantity;
 
+    @Size(max = 40)
+    private String poItemId;
+
     private Integer version;
 
     private Integer dr;
@@ -50,6 +53,14 @@ public class LockLogDTO implements Serializable {
 
     public void setLockedQuantity(BigDecimal lockedQuantity) {
         this.lockedQuantity = lockedQuantity;
+    }
+
+    public String getPoItemId() {
+        return poItemId;
+    }
+
+    public void setPoItemId(String poItemId) {
+        this.poItemId = poItemId;
     }
 
     public Integer getVersion() {

@@ -1,9 +1,8 @@
 package com.yonyou.occ.ms.inventory.repository;
 
 import com.yonyou.occ.ms.inventory.domain.LockLog;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
 
 
 /**
@@ -12,5 +11,12 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface LockLogRepository extends JpaRepository<LockLog, String> {
-
+    /**
+     * Find one LockLog by inventory id and purchase order item id.
+     *
+     * @param inventoryId ID of inventory.
+     * @param poItemId ID of purchase order item.
+     * @return The LockLog.
+     */
+    LockLog findByInventoryIdAndPoItemId(String inventoryId, String poItemId);
 }

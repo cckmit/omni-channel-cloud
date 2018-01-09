@@ -51,7 +51,7 @@ public class MicroserviceSecurityConfiguration extends ResourceServerConfigurerA
     }
 
     @Bean
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
+    public TokenStore jwtTokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
     }
 

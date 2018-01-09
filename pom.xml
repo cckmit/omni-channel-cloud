@@ -22,8 +22,11 @@
         <module>occ-ms-customer-common</module>
         <module>occ-ms-customer</module>
         <module>occ-ms-customer-command</module>
+        <module>occ-ms-product-common</module>
         <module>occ-ms-product</module>
+        <module>occ-ms-inventory-common</module>
         <module>occ-ms-inventory</module>
+        <module>occ-ms-inventory-command</module>
         <module>occ-ms-order</module>
         <module>occ-gateway</module>
     </modules>

@@ -1,0 +1,34 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.yonyou.occ.ms.inventory.command"
+    },
+    "jhipsterVersion": "4.13.1",
+    "baseName": "occMsInventoryCommand",
+    "packageName": "com.yonyou.occ.ms.inventory.command",
+    "packageFolder": "com/yonyou/occ/ms/inventory/command",
+    "serverPort": "9082",
+    "authenticationType": "uaa",
+    "uaaBaseName": "occUaa",
+    "cacheProvider": "no",
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "8deabe9ae8e0eb0ce2d5b64e6e237700283f23f9",
+    "enableTranslation": false,
+    "applicationType": "microservice",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "clientPackageManager": "yarn",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import com.codahale.metrics.annotation.Timed;
 import com.yonyou.occ.ms.inventory.service.OperationTypeService;
 import com.yonyou.occ.ms.inventory.service.dto.OperationTypeDTO;
+import com.yonyou.occ.ms.inventory.web.rest.api.OperationTypeRestApi;
 import com.yonyou.occ.ms.inventory.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.inventory.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.inventory.web.rest.util.PaginationUtil;
@@ -21,7 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,8 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class OperationTypeResource {
-
+public class OperationTypeResource implements OperationTypeRestApi {
     private final Logger log = LoggerFactory.getLogger(OperationTypeResource.class);
 
     private static final String ENTITY_NAME = "operationType";
@@ -94,8 +93,8 @@ public class OperationTypeResource {
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of operationTypes in body
      */
-    @GetMapping("/operation-types")
     @Timed
+    @Override
     public ResponseEntity<List<OperationTypeDTO>> getAllOperationTypes(Pageable pageable) {
         log.debug("REST request to get a page of OperationTypes");
         Page<OperationTypeDTO> page = operationTypeService.findAll(pageable);
@@ -109,8 +108,8 @@ public class OperationTypeResource {
      * @param id the id of the operationTypeDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the operationTypeDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/operation-types/{id}")
     @Timed
+    @Override
     public ResponseEntity<OperationTypeDTO> getOperationType(@PathVariable String id) {
         log.debug("REST request to get OperationType : {}", id);
         OperationTypeDTO operationTypeDTO = operationTypeService.findOne(id);

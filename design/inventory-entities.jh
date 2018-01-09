@@ -17,6 +17,7 @@ entity Inventory(inv_inventory) {
 
 entity LockLog(inv_lock_log) {
     lockedQuantity BigDecimal,
+    poItemId String maxlength(40),
     version Integer,
     dr Integer,
     ts ZonedDateTime,
