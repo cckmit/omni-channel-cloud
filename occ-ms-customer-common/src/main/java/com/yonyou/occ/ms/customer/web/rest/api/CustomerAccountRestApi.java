@@ -27,7 +27,7 @@ public interface CustomerAccountRestApi {
      */
     @GetMapping("/customer-accounts")
     ResponseEntity<List<CustomerAccountDTO>> getCustomerAccountsByCustomer(Pageable pageable,
-            @RequestParam String customerId);
+            @RequestParam("customerId") String customerId);
 
     /**
      * GET  /customer-accounts/:id : get the "id" customerAccount.
@@ -37,5 +37,5 @@ public interface CustomerAccountRestApi {
      * Found)
      */
     @GetMapping("/customer-accounts/{id}")
-    ResponseEntity<CustomerAccountDTO> getCustomerAccount(@PathVariable String id);
+    ResponseEntity<CustomerAccountDTO> getCustomerAccount(@PathVariable("id") String id);
 }

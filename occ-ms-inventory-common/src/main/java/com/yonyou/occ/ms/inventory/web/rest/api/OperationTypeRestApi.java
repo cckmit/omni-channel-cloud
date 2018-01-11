@@ -32,5 +32,5 @@ public interface OperationTypeRestApi {
      * Found)
      */
     @GetMapping("/operation-types/{id}")
-    ResponseEntity<OperationTypeDTO> getOperationType(@PathVariable String id);
+    ResponseEntity<OperationTypeDTO> getOperationType(@PathVariable("id") String id);
 }

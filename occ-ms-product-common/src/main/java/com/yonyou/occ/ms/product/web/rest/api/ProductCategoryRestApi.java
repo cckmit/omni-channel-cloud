@@ -31,5 +31,5 @@ public interface ProductCategoryRestApi {
      * @return the ResponseEntity with status 200 (OK) and with body the productCategoryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/product-categories/{id}")
-    public ResponseEntity<ProductCategoryDTO> getProductCategory(@PathVariable String id);
+    public ResponseEntity<ProductCategoryDTO> getProductCategory(@PathVariable("id") String id);
 }

@@ -33,5 +33,5 @@ public interface InventoryRestApi {
      * @return the ResponseEntity with status 200 (OK) and with body the inventoryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/inventories/{id}")
-    ResponseEntity<InventoryDTO> getInventory(@PathVariable String id);
+    ResponseEntity<InventoryDTO> getInventory(@PathVariable("id") String id);
 }

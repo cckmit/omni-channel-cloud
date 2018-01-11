@@ -33,5 +33,5 @@ public interface CustomerRestApi {
      * @return the ResponseEntity with status 200 (OK) and with body the customerDTO, or with status 404 (Not Found)
      */
     @GetMapping("/customers/{id}")
-    ResponseEntity<CustomerDTO> getCustomer(@PathVariable String id);
+    ResponseEntity<CustomerDTO> getCustomer(@PathVariable("id") String id);
 }
