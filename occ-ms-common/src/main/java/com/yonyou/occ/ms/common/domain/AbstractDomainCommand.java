@@ -1,4 +1,4 @@
-package com.yonyou.occ.common.domain;
+package com.yonyou.occ.ms.common.domain;
 
 /**
  * Domain command abstract class.

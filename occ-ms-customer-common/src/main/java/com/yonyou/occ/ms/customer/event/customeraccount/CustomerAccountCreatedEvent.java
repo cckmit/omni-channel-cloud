@@ -2,9 +2,9 @@ package com.yonyou.occ.ms.customer.event.customeraccount;
 
 import java.math.BigDecimal;
 
-import com.yonyou.occ.common.domain.AbstractDomainEvent;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
-import com.yonyou.occ.ms.customer.vo.CustomerId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainEvent;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerId;
 import lombok.Value;
 
 /**

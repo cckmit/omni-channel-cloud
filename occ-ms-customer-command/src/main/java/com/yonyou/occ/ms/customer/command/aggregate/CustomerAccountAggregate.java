@@ -2,14 +2,15 @@ package com.yonyou.occ.ms.customer.command.aggregate;
 
 import java.math.BigDecimal;
 
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerId;
+import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
 import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountCreatedEvent;
 import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountCreditDecreasedEvent;
 import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountCreditIncreasedEvent;
+import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountCreditNotEnoughEvent;
 import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountDeletedEvent;
 import com.yonyou.occ.ms.customer.event.customeraccount.CustomerAccountUpdatedEvent;
-import com.yonyou.occ.ms.customer.command.exception.NotEnoughCreditException;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
-import com.yonyou.occ.ms.customer.vo.CustomerId;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
@@ -41,28 +42,27 @@ public class CustomerAccountAggregate {
     private BigDecimal credit;
 
     public CustomerAccountAggregate(CustomerAccountId id, CustomerId customerId, String code, String name,
-            BigDecimal credit) {
+        BigDecimal credit) {
         apply(new CustomerAccountCreatedEvent(id, customerId, code, name, credit));
     }
 
-    public void update(CustomerAccountId id, String code, String name) {
+    public void update(String code, String name) {
         apply(new CustomerAccountUpdatedEvent(id, code, name));
     }
 
-    public void increaseCredit(CustomerAccountId id, BigDecimal amount) {
+    public void increaseCredit(BigDecimal amount) {
         apply(new CustomerAccountCreditIncreasedEvent(id, amount));
     }
 
-    public void decreaseCredit(CustomerAccountId id, BigDecimal amount) {
+    public void decreaseCredit(PurchaseOrderId purchaseOrderId, BigDecimal amount) {
         if (credit.compareTo(amount) < 0) {
-            throw new NotEnoughCreditException(
-                    "Credit of the customer's account(" + id + ") is not enough to subtract");
+            apply(new CustomerAccountCreditNotEnoughEvent(id, purchaseOrderId));
+        } else {
+            apply(new CustomerAccountCreditDecreasedEvent(id, purchaseOrderId, amount));
         }
-
-        apply(new CustomerAccountCreditDecreasedEvent(id, amount));
     }
 
-    public void delete(CustomerAccountId id) {
+    public void delete() {
         // Marks this aggregate as deleted, instructing a repository to remove that aggregate at an appropriate time.
         markDeleted();
 
@@ -77,7 +77,7 @@ public class CustomerAccountAggregate {
         name = event.getName();
         credit = event.getCredit();
 
-        log.info("Applied: 'CustomerAccountCreatedEvent' [{}]", event);
+        log.debug("Applied: 'CustomerAccountCreatedEvent' [{}]", event);
     }
 
     @EventSourcingHandler
@@ -85,27 +85,27 @@ public class CustomerAccountAggregate {
         code = event.getCode();
         name = event.getName();
 
-        log.info("Applied: 'CustomerAccountUpdatedEvent' [{}]", event);
+        log.debug("Applied: 'CustomerAccountUpdatedEvent' [{}]", event);
     }
 
     @EventSourcingHandler
     private void on(CustomerAccountCreditIncreasedEvent event) {
         credit = credit.add(event.getAmount());
 
-        log.info("Applied: 'CustomerAccountCreditIncreasedEvent' [{}]", event);
+        log.debug("Applied: 'CustomerAccountCreditIncreasedEvent' [{}]", event);
     }
 
     @EventSourcingHandler
     private void on(CustomerAccountCreditDecreasedEvent event) {
         credit = credit.subtract(event.getAmount());
 
-        log.info("Applied: 'CustomerAccountCreditDecreasedEvent' [{}]", event);
+        log.debug("Applied: 'CustomerAccountCreditDecreasedEvent' [{}]", event);
     }
 
     @EventSourcingHandler
     private void on(CustomerAccountDeletedEvent event) {
         this.id = event.getId();
 
-        log.info("Applied: 'CustomerAccountDeletedEvent' [{}]", event);
+        log.debug("Applied: 'CustomerAccountDeletedEvent' [{}]", event);
     }
 }

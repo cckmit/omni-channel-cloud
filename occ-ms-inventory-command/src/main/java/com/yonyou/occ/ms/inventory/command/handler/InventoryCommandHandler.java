@@ -34,24 +34,24 @@ public class InventoryCommandHandler {
     @CommandHandler
     public void handle(IncreaseInventoryCommand command) {
         Aggregate<InventoryAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.increase(command.getId(), command.getQuantity()));
+        aggregate.execute(a -> a.increase(command.getQuantity()));
     }
 
     @CommandHandler
     public void handle(LockInventoryCommand command) {
         Aggregate<InventoryAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.lock(command.getId(), command.getPoItemId(), command.getQuantity()));
+        aggregate.execute(a -> a.lock(command.getPoItemId(), command.getQuantity()));
     }
 
     @CommandHandler
     public void handle(RevertLockInventoryCommand command) {
         Aggregate<InventoryAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.revertLock(command.getId(), command.getPoItemId()));
+        aggregate.execute(a -> a.revertLock(command.getPoItemId()));
     }
 
     @CommandHandler
     public void handle(ConfirmLockInventoryCommand command) {
         Aggregate<InventoryAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.confirmLock(command.getId(), command.getPoItemId()));
+        aggregate.execute(a -> a.confirmLock(command.getPoItemId()));
     }
 }

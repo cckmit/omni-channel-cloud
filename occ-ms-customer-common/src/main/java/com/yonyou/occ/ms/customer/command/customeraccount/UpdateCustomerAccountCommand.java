@@ -1,7 +1,7 @@
 package com.yonyou.occ.ms.customer.command.customeraccount;
 
-import com.yonyou.occ.common.domain.AbstractDomainCommand;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;

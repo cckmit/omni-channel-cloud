@@ -1,4 +1,4 @@
-package com.yonyou.occ.ms.inventory.vo;
+package com.yonyou.occ.ms.common.domain.vo.product;
 
 import lombok.Value;
 

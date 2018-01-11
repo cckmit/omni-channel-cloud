@@ -123,6 +123,7 @@ public class InventoryEventHandler {
         LockLog lockLog = new LockLog();
         lockLog.setId(UUID.randomUUID().toString());
         lockLog.setInventory(inventory);
+        lockLog.setPoItemId(event.getPoItemId().getId());
         lockLog.setLockedQuantity(event.getQuantity());
         lockLogRepository.save(lockLog);
 

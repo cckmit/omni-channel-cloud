@@ -14,8 +14,8 @@ import com.yonyou.occ.ms.customer.command.customeraccount.UpdateCustomerAccountC
 import com.yonyou.occ.ms.customer.command.web.rest.errors.BadRequestAlertException;
 import com.yonyou.occ.ms.customer.command.web.rest.util.HeaderUtil;
 import com.yonyou.occ.ms.customer.service.dto.CustomerAccountDTO;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
-import com.yonyou.occ.ms.customer.vo.CustomerId;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerId;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

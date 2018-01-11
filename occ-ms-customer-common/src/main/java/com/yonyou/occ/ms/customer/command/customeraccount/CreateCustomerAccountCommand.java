@@ -2,9 +2,9 @@ package com.yonyou.occ.ms.customer.command.customeraccount;
 
 import java.math.BigDecimal;
 
-import com.yonyou.occ.common.domain.AbstractDomainCommand;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
-import com.yonyou.occ.ms.customer.vo.CustomerId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;

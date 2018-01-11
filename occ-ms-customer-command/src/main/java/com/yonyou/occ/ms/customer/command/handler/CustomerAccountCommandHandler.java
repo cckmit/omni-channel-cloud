@@ -28,31 +28,31 @@ public class CustomerAccountCommandHandler {
     @CommandHandler
     public void handle(CreateCustomerAccountCommand command) throws Exception {
         repository.newInstance(
-                () -> new CustomerAccountAggregate(command.getId(), command.getCustomerId(), command.getCode(),
-                        command.getName(), command.getCredit()));
+            () -> new CustomerAccountAggregate(command.getId(), command.getCustomerId(), command.getCode(),
+                command.getName(), command.getCredit()));
     }
 
     @CommandHandler
     public void handle(UpdateCustomerAccountCommand command) {
         Aggregate<CustomerAccountAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.update(command.getId(), command.getCode(), command.getName()));
+        aggregate.execute(a -> a.update(command.getCode(), command.getName()));
     }
 
     @CommandHandler
     public void handle(IncreaseCustomerAccountCreditCommand command) {
         Aggregate<CustomerAccountAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.increaseCredit(command.getId(), command.getAmount()));
+        aggregate.execute(a -> a.increaseCredit(command.getAmount()));
     }
 
     @CommandHandler
     public void handle(DecreaseCustomerAccountCreditCommand command) {
         Aggregate<CustomerAccountAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.decreaseCredit(command.getId(), command.getAmount()));
+        aggregate.execute(a -> a.decreaseCredit(command.getPurchaseOrderId(), command.getAmount()));
     }
 
     @CommandHandler
     public void handle(DeleteCustomerAccountCommand command) {
         Aggregate<CustomerAccountAggregate> aggregate = repository.load(command.getId().toString());
-        aggregate.execute(a -> a.delete(command.getId()));
+        aggregate.execute(a -> a.delete());
     }
 }

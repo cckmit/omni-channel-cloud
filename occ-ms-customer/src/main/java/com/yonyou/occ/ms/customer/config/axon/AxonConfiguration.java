@@ -1,6 +1,6 @@
 package com.yonyou.occ.ms.customer.config.axon;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -56,16 +56,15 @@ public class AxonConfiguration {
     @Bean
     public MongoClient mongoClient() {
         MongoFactory mongoFactory = new MongoFactory();
-        mongoFactory.setMongoAddresses(Arrays.asList(new ServerAddress(mongoHost, mongoPort)));
+        mongoFactory.setMongoAddresses(Collections.singletonList(new ServerAddress(mongoHost, mongoPort)));
         return mongoFactory.createMongo();
     }
 
     @Bean(name = "axonMongoTemplate")
     public MongoTemplate axonMongoTemplate() {
-        MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongoClient(), mongoDatabase).withDomainEventsCollection(
+        return new DefaultMongoTemplate(mongoClient(), mongoDatabase).withDomainEventsCollection(
             domainEventsCollectionName).withSnapshotCollection(snapshotEventsCollectionName).withSagasCollection(
             sagasCollectionName).withTrackingTokenCollection(trackingTokensCollectionName);
-        return mongoTemplate;
     }
 
     @Bean

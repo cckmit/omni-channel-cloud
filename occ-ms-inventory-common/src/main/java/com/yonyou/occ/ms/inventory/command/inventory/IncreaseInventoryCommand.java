@@ -2,8 +2,8 @@ package com.yonyou.occ.ms.inventory.command.inventory;
 
 import java.math.BigDecimal;
 
-import com.yonyou.occ.common.domain.AbstractDomainCommand;
-import com.yonyou.occ.ms.inventory.vo.InventoryId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
+import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;

@@ -1,23 +1,20 @@
 package com.yonyou.occ.ms.customer.event.customeraccount;
 
-import java.math.BigDecimal;
-
 import com.yonyou.occ.ms.common.domain.AbstractDomainEvent;
 import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
 import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
 import lombok.Value;
 
 /**
- * The event occurs when the credit of a customer's account is decreased.
+ * The event occurs when the credit of a customer's account is not enough to decrease.
  *
  * @author WangRui
- * @date 2018-01-05 08:54:26
+ * @date 2018-01-10 11:31:35
  */
 @Value
-public class CustomerAccountCreditDecreasedEvent extends AbstractDomainEvent {
+public class CustomerAccountCreditNotEnoughEvent extends AbstractDomainEvent {
     private final CustomerAccountId id;
 
     private final PurchaseOrderId purchaseOrderId;
 
-    private final BigDecimal amount;
 }

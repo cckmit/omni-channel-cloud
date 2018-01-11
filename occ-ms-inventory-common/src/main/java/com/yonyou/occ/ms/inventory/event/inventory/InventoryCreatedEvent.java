@@ -2,9 +2,9 @@ package com.yonyou.occ.ms.inventory.event.inventory;
 
 import java.math.BigDecimal;
 
-import com.yonyou.occ.common.domain.AbstractDomainEvent;
-import com.yonyou.occ.ms.inventory.vo.InventoryId;
-import com.yonyou.occ.ms.inventory.vo.ProductId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainEvent;
+import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
+import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
 import lombok.Value;
 
 /**

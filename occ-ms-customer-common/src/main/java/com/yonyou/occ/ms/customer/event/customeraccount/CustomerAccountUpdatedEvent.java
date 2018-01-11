@@ -1,7 +1,7 @@
 package com.yonyou.occ.ms.customer.event.customeraccount;
 
-import com.yonyou.occ.common.domain.AbstractDomainEvent;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainEvent;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
 import lombok.Value;
 
 /**

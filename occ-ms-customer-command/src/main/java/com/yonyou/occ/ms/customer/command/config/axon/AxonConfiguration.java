@@ -1,6 +1,6 @@
 package com.yonyou.occ.ms.customer.command.config.axon;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -67,9 +67,6 @@ public class AxonConfiguration {
     @Autowired
     private EventStore eventStore;
 
-    @Autowired
-    private AggregateFactory<CustomerAccountAggregate> customerAccountAggregateFactory;
-
     @Bean
     public Serializer axonSerializer() {
         return new JacksonSerializer();
@@ -78,16 +75,15 @@ public class AxonConfiguration {
     @Bean
     public MongoClient mongoClient() {
         MongoFactory mongoFactory = new MongoFactory();
-        mongoFactory.setMongoAddresses(Arrays.asList(new ServerAddress(mongoHost, mongoPort)));
+        mongoFactory.setMongoAddresses(Collections.singletonList(new ServerAddress(mongoHost, mongoPort)));
         return mongoFactory.createMongo();
     }
 
     @Bean(name = "axonMongoTemplate")
     public MongoTemplate axonMongoTemplate() {
-        MongoTemplate mongoTemplate = new DefaultMongoTemplate(mongoClient(), mongoDatabase).withDomainEventsCollection(
+        return new DefaultMongoTemplate(mongoClient(), mongoDatabase).withDomainEventsCollection(
             domainEventsCollectionName).withSnapshotCollection(snapshotEventsCollectionName).withSagasCollection(
             sagasCollectionName).withTrackingTokenCollection(trackingTokensCollectionName);
-        return mongoTemplate;
     }
 
     @Bean
@@ -109,7 +105,7 @@ public class AxonConfiguration {
 
     @Bean
     public Snapshotter snapshotter() {
-        return new AggregateSnapshotter(eventStore, customerAccountAggregateFactory);
+        return new AggregateSnapshotter(eventStore, customerAccountAggregateFactory());
     }
 
     @Primary
@@ -136,9 +132,7 @@ public class AxonConfiguration {
     public Repository<CustomerAccountAggregate> customerAccountAggregateRepository() {
         EventCountSnapshotTriggerDefinition snapshotTriggerDefinition = new EventCountSnapshotTriggerDefinition(
             snapshotter(), 10);
-        EventSourcingRepository<CustomerAccountAggregate> repository = new EventSourcingRepository<>(
-            customerAccountAggregateFactory(), eventStore, snapshotTriggerDefinition);
-        return repository;
+        return new EventSourcingRepository<>(customerAccountAggregateFactory(), eventStore, snapshotTriggerDefinition);
     }
 
     @Bean

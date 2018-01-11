@@ -2,8 +2,9 @@ package com.yonyou.occ.ms.customer.command.customeraccount;
 
 import java.math.BigDecimal;
 
-import com.yonyou.occ.common.domain.AbstractDomainCommand;
-import com.yonyou.occ.ms.customer.vo.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
+import com.yonyou.occ.ms.common.domain.vo.customer.CustomerAccountId;
+import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
@@ -19,6 +20,8 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
 public class DecreaseCustomerAccountCreditCommand extends AbstractDomainCommand {
     @TargetAggregateIdentifier
     private CustomerAccountId id;
+
+    private PurchaseOrderId purchaseOrderId;
 
     private BigDecimal amount;
 }
