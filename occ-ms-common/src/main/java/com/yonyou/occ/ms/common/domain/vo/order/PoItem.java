@@ -3,6 +3,7 @@ package com.yonyou.occ.ms.common.domain.vo.order;
 import java.math.BigDecimal;
 
 import com.yonyou.occ.ms.common.domain.vo.product.Product;
+import com.yonyou.occ.ms.common.domain.vo.product.ProductCategory;
 import lombok.Value;
 
 /**
@@ -14,6 +15,8 @@ import lombok.Value;
 @Value
 public class PoItem {
     private final PoItemId id;
+
+    private final ProductCategory productCategory;
 
     private final Product product;
 
