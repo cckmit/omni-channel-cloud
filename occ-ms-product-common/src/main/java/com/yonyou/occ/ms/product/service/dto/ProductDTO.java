@@ -47,6 +47,8 @@ public class ProductDTO implements Serializable {
 
     private String productCategoryId;
 
+    private String productCategoryCode;
+
     private String productCategoryName;
 
     public String getId() {
@@ -161,6 +163,14 @@ public class ProductDTO implements Serializable {
         this.productCategoryId = productCategoryId;
     }
 
+    public String getProductCategoryCode() {
+        return productCategoryCode;
+    }
+
+    public void setProductCategoryCode(String productCategoryCode) {
+        this.productCategoryCode = productCategoryCode;
+    }
+
     public String getProductCategoryName() {
         return productCategoryName;
     }
@@ -179,7 +189,7 @@ public class ProductDTO implements Serializable {
         }
 
         ProductDTO productDTO = (ProductDTO) o;
-        if(productDTO.getId() == null || getId() == null) {
+        if (productDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), productDTO.getId());
@@ -192,20 +202,10 @@ public class ProductDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ProductDTO{" +
-            "id=" + getId() +
-            ", code='" + getCode() + "'" +
-            ", name='" + getName() + "'" +
-            ", desc='" + getDesc() + "'" +
-            ", price=" + getPrice() +
-            ", isEnabled='" + isIsEnabled() + "'" +
-            ", version=" + getVersion() +
-            ", dr=" + getDr() +
-            ", ts='" + getTs() + "'" +
-            ", creator='" + getCreator() + "'" +
-            ", timeCreated='" + getTimeCreated() + "'" +
-            ", modifier='" + getModifier() + "'" +
-            ", timeModified='" + getTimeModified() + "'" +
-            "}";
+        return "ProductDTO{" + "id=" + getId() + ", code='" + getCode() + "'" + ", name='" + getName() + "'" +
+                ", desc='" + getDesc() + "'" + ", price=" + getPrice() + ", isEnabled='" + isIsEnabled() + "'" +
+                ", version=" + getVersion() + ", dr=" + getDr() + ", ts='" + getTs() + "'" + ", creator='" +
+                getCreator() + "'" + ", timeCreated='" + getTimeCreated() + "'" + ", modifier='" + getModifier() + "'" +
+                ", timeModified='" + getTimeModified() + "'" + "}";
     }
 }

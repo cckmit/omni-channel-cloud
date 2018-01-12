@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 public interface ProductMapper extends EntityMapper<ProductDTO, Product> {
     @Override
     @Mapping(source = "productCategory.id", target = "productCategoryId")
+    @Mapping(source = "productCategory.code", target = "productCategoryCode")
     @Mapping(source = "productCategory.name", target = "productCategoryName")
     ProductDTO toDto(Product product);
 
