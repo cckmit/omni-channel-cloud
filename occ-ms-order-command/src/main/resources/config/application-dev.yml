@@ -16,7 +16,7 @@
 logging:
     level:
         ROOT: DEBUG
-        com.yonyou.occ.ms.order: DEBUG
+        com.yonyou.occ.ms.order.command: DEBUG
         io.github.jhipster: DEBUG
         # Set logging level to prevent printing too many DEBUG log
         org.mongodb: INFO
@@ -40,30 +40,6 @@ spring:
             enabled: false # we use gulp + BrowserSync for livereload
     jackson:
         serialization.indent_output: true
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/occ-ms-order?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
-        hikari:
-            data-source-properties:
-                cachePrepStmts: true
-                prepStmtCacheSize: 250
-                prepStmtCacheSqlLimit: 2048
-                useServerPrepStmts: true
-    jpa:
-        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        database: MYSQL
-        show-sql: true
-        properties:
-            hibernate.id.new_generator_mappings: true
-            hibernate.cache.use_second_level_cache: true
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-            hibernate.cache.hazelcast.instance_name: occMsOrder
-            hibernate.cache.use_minimal_puts: true
-            hibernate.cache.hazelcast.use_lite_member: true
     mail:
         host: localhost
         port: 25
@@ -96,12 +72,9 @@ spring:
             sagas-collection-name: sagas
             tracking-tokens-collection-name: tracking_tokens
 
-liquibase:
-    contexts: dev
-
 # ===================================================================
 # To enable SSL, generate a certificate using:
-# keytool -genkey -alias occMsOrder -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+# keytool -genkey -alias occMsOrderCommand -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
 #
 # You can also use Let's Encrypt:
 # https://maximilian-boehm.com/hp2121/Create-a-Java-Keystore-JKS-from-Let-s-Encrypt-Certificates.htm
@@ -114,10 +87,10 @@ liquibase:
 #        key-store: keystore.p12
 #        key-store-password: <your-password>
 #        key-store-type: PKCS12
-#        key-alias: occMsOrder
+#        key-alias: occMsOrderCommand
 # ===================================================================
 server:
-    port: 8082
+    port: 9083
 
 # ===================================================================
 # JHipster specific properties
@@ -128,14 +101,6 @@ server:
 jhipster:
     http:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
-    cache: # Cache configuration
-        hazelcast: # Hazelcast distributed cache
-            time-to-live-seconds: 3600
-            backup-count: 1
-            management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
-                enabled: false
-                update-interval: 3
-                url: http://localhost:8180/mancenter
     # CORS is disabled by default on microservices, as you should access them through a gateway.
     # If you want to enable it, please uncomment the configuration below.
     # cors:
@@ -152,15 +117,15 @@ jhipster:
             client-id: internal
             client-secret: internal
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: occMsOrder@localhost
-        base-url: http://127.0.0.1:8082
+        from: occMsOrderCommand@localhost
+        base-url: http://127.0.0.1:9083
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies
             enabled: false
             host: localhost
             port: 2003
-            prefix: occMsOrder
+            prefix: occMsOrderCommand
         prometheus: # Use the "prometheus" Maven profile to have the Prometheus dependencies
             enabled: false
             endpoint: /prometheusMetrics
@@ -204,7 +169,7 @@ application:
 axon:
     amqp:
         exchange: occ-axon
-    eventhandling:
-        processors:
-            order:
-                source: orderQueueMessageSource
+    distributed:
+        enabled: true
+        spring-cloud:
+            fallback-to-http-get: false

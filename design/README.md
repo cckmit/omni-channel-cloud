@@ -41,8 +41,9 @@
 11. Create a purchase order.
 12. Pay the purchase order failed, because the credit of customer's account is not enough.
 13. Increase credit of the customer's account.
-14. Pay the purchase order successfully, subtract the credit of customer account, lock the inventory of the product failed, because the inventory of the product is not enough.
-15. Increase the inventory of the product.
-16. Lock the inventory of the product successfully, then auto generate a sale order.
-17. Reject the sale order, then increase the credit and unlock the inventory.
-18. Approve the sale order, change the status of the order, then confirm the subtraction of the inventory(out-stock).
+14. Pay the purchase order successfully, subtract the credit of customer account.
+15. Submit the purchase order. Lock the inventory of the product failed, because the inventory of the product is not enough.
+16. Increase the inventory of the product.
+17. Submit the purchase order. Lock the inventory of the product successfully, then auto generate a sale order.
+18. Reject the sale order, then increase the credit and unlock the inventory.
+19. Approve the sale order, change the state of the sale order, then confirm the subtraction of the inventory.

@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface PoStateRepository extends JpaRepository<PoState, String> {
-
+    PoState findByCode(String code);
 }
