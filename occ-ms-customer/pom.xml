@@ -405,10 +405,6 @@
             <groupId>org.axonframework</groupId>
             <artifactId>axon-amqp</artifactId>
         </dependency>
-        <dependency>
-            <groupId>xom</groupId>
-            <artifactId>xom</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.yonyou.occ</groupId>
