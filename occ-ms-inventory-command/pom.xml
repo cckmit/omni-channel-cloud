@@ -328,6 +328,10 @@
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
         </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.yonyou.occ</groupId>
