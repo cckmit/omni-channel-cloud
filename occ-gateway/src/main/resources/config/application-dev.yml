@@ -94,7 +94,7 @@ liquibase:
 #        key-alias: occGateway
 # ===================================================================
 server:
-    port: 8080
+    port: 9080
 
 # ===================================================================
 # JHipster specific properties
@@ -136,7 +136,7 @@ jhipster:
             client-secret: internal
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: occGateway@localhost
-        base-url: http://127.0.0.1:8080
+        base-url: http://127.0.0.1:9080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies

@@ -9,7 +9,7 @@
     "baseName": "occGateway",
     "packageName": "com.yonyou.occ.gateway",
     "packageFolder": "com/yonyou/occ/gateway",
-    "serverPort": "8080",
+    "serverPort": "9080",
     "authenticationType": "uaa",
     "uaaBaseName": "occUaa",
     "cacheProvider": "hazelcast",
