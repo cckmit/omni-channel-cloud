@@ -474,6 +474,12 @@
                             <version>${hibernate.version}</version>
                         </path>
 
+                        <!-- For lombok code generation -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
