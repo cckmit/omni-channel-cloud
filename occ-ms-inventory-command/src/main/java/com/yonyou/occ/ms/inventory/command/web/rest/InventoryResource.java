@@ -6,15 +6,11 @@ import java.net.URISyntaxException;
 import java.util.UUID;
 
 import com.codahale.metrics.annotation.Timed;
-import com.yonyou.occ.ms.inventory.command.inventory.ConfirmLockInventoryCommand;
+import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
+import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
 import com.yonyou.occ.ms.inventory.command.inventory.CreateInventoryCommand;
 import com.yonyou.occ.ms.inventory.command.inventory.IncreaseInventoryCommand;
-import com.yonyou.occ.ms.inventory.command.inventory.LockInventoryCommand;
-import com.yonyou.occ.ms.inventory.command.inventory.RevertLockInventoryCommand;
 import com.yonyou.occ.ms.inventory.command.web.rest.util.HeaderUtil;
-import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
-import com.yonyou.occ.ms.common.domain.vo.order.PoItemId;
-import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,64 +75,6 @@ public class InventoryResource {
         log.debug("REST request to increase quantity of Inventory : {}", id);
 
         IncreaseInventoryCommand command = new IncreaseInventoryCommand(new InventoryId(id), quantity);
-        commandGateway.sendAndWait(command);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * PUT  /inventories/:id/lock : Lock the quantity of an existing inventory.
-     *
-     * @param id the id of the inventoryDTO to increase quantity
-     * @param poItemId the id of the purchase order item
-     * @param quantity the quantity to lock
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @PutMapping("/inventories/{id}/lock")
-    @Timed
-    public ResponseEntity<Void> lockInventory(@PathVariable String id, @RequestParam String poItemId,
-        @RequestParam BigDecimal quantity) {
-        log.debug("REST request to lock quantity of Inventory : {}", id);
-
-        LockInventoryCommand command = new LockInventoryCommand(new InventoryId(id), new PoItemId(poItemId), quantity);
-        commandGateway.sendAndWait(command);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * PUT  /inventories/:id/revert-lock : Revert lock the quantity of an existing inventory.
-     *
-     * @param id the id of the inventoryDTO to increase quantity
-     * @param poItemId the id of the purchase order item
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @PutMapping("/inventories/{id}/revert-lock")
-    @Timed
-    public ResponseEntity<Void> revertLockInventory(@PathVariable String id, @RequestParam String poItemId) {
-        log.debug("REST request to revert lock quantity of Inventory : {}", id);
-
-        RevertLockInventoryCommand command = new RevertLockInventoryCommand(new InventoryId(id),
-            new PoItemId(poItemId));
-        commandGateway.sendAndWait(command);
-
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();
-    }
-
-    /**
-     * PUT  /inventories/:id/confirm-lock : Confirm lock the quantity of an existing inventory.
-     *
-     * @param id the id of the inventoryDTO to increase quantity
-     * @param poItemId the id of the purchase order item
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @PutMapping("/inventories/{id}/confirm-lock")
-    @Timed
-    public ResponseEntity<Void> confirmLockInventory(@PathVariable String id, @RequestParam String poItemId) {
-        log.debug("REST request to confirm lock quantity of Inventory : {}", id);
-
-        ConfirmLockInventoryCommand command = new ConfirmLockInventoryCommand(new InventoryId(id),
-            new PoItemId(poItemId));
         commandGateway.sendAndWait(command);
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();

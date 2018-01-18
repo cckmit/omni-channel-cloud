@@ -8,14 +8,15 @@ import java.util.Map;
 
 import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
 import com.yonyou.occ.ms.common.domain.vo.order.PoItemId;
+import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
 import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
-import com.yonyou.occ.ms.inventory.command.exception.InventoryNotEnoughException;
 import com.yonyou.occ.ms.inventory.enums.OperationTypeEnum;
 import com.yonyou.occ.ms.inventory.event.inventory.InventoryCreatedEvent;
 import com.yonyou.occ.ms.inventory.event.inventory.InventoryIncreasedEvent;
 import com.yonyou.occ.ms.inventory.event.inventory.InventoryLockConfirmedEvent;
 import com.yonyou.occ.ms.inventory.event.inventory.InventoryLockRevertedEvent;
 import com.yonyou.occ.ms.inventory.event.inventory.InventoryLockedEvent;
+import com.yonyou.occ.ms.inventory.event.inventory.InventoryNotEnoughEvent;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
@@ -62,20 +63,20 @@ public class InventoryAggregate {
         apply(new InventoryIncreasedEvent(id, quantity));
     }
 
-    public void lock(PoItemId poItemId, BigDecimal quantity) {
+    public void lock(PurchaseOrderId purchaseOrderId, PoItemId poItemId, BigDecimal quantity) {
         if (toSellQuantity.compareTo(quantity) < 0) {
-            throw new InventoryNotEnoughException("The product's inventory(" + id + ") is not enough to lock.");
+            apply(new InventoryNotEnoughEvent(id, purchaseOrderId, poItemId, productId));
+        } else {
+            apply(new InventoryLockedEvent(id, poItemId, quantity));
         }
-
-        apply(new InventoryLockedEvent(id, poItemId, quantity));
     }
 
-    public void revertLock(PoItemId poItemId) {
-        apply(new InventoryLockRevertedEvent(id, poItemId));
+    public void revertLock(PurchaseOrderId purchaseOrderId, PoItemId poItemId) {
+        apply(new InventoryLockRevertedEvent(id, purchaseOrderId, poItemId, productId));
     }
 
-    public void confirmLock(PoItemId poItemId) {
-        apply(new InventoryLockConfirmedEvent(id, poItemId));
+    public void confirmLock(PurchaseOrderId purchaseOrderId, PoItemId poItemId) {
+        apply(new InventoryLockConfirmedEvent(id, purchaseOrderId, poItemId));
     }
 
     @EventSourcingHandler

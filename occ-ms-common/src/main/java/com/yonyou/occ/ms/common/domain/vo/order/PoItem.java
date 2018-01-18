@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import com.yonyou.occ.ms.common.domain.vo.product.Product;
 import com.yonyou.occ.ms.common.domain.vo.product.ProductCategory;
-import lombok.Value;
+import lombok.Data;
 
 /**
  * The value object represents a purchase order item.
@@ -12,7 +12,7 @@ import lombok.Value;
  * @author WangRui
  * @date 2018-01-10 09:20:58
  */
-@Value
+@Data
 public class PoItem {
     private final PoItemId id;
 
@@ -23,4 +23,6 @@ public class PoItem {
     private final BigDecimal price;
 
     private final BigDecimal quantity;
+
+    private boolean inventoryLocked;
 }

@@ -20,7 +20,9 @@ import com.yonyou.occ.ms.order.command.aggregate.PurchaseOrderAggregate;
 import com.yonyou.occ.ms.order.command.po.CreatePurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.DeletePurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.FailPayPurchaseOrderCommand;
+import com.yonyou.occ.ms.order.command.po.RollbackSubmitPurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.StartPayPurchaseOrderCommand;
+import com.yonyou.occ.ms.order.command.po.SubmitPurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.SuccessPayPurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.web.rest.CustomerAccountService;
 import com.yonyou.occ.ms.order.command.web.rest.CustomerService;
@@ -99,6 +101,18 @@ public class PurchaseOrderCommandHandler {
     public void handle(SuccessPayPurchaseOrderCommand command) {
         Aggregate<PurchaseOrderAggregate> aggregate = repository.load(command.getId().toString());
         aggregate.execute(a -> a.successPay(command.getPoPaymentId()));
+    }
+
+    @CommandHandler
+    public void handle(SubmitPurchaseOrderCommand command) {
+        Aggregate<PurchaseOrderAggregate> aggregate = repository.load(command.getId().toString());
+        aggregate.execute(a -> a.submit());
+    }
+
+    @CommandHandler
+    public void handle(RollbackSubmitPurchaseOrderCommand command) {
+        Aggregate<PurchaseOrderAggregate> aggregate = repository.load(command.getId().toString());
+        aggregate.execute(a -> a.rollbackSubmit());
     }
 
     @CommandHandler

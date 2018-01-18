@@ -348,6 +348,11 @@
             <artifactId>occ-ms-product-common</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.yonyou.occ</groupId>
+            <artifactId>occ-ms-inventory-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

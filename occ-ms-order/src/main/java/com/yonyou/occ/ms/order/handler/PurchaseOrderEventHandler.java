@@ -17,6 +17,9 @@ import com.yonyou.occ.ms.order.event.po.PurchaseOrderCreatedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderDeletedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderPayFailedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderPaySuccessfulEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmitConfirmedEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmitRollbackedEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmittedEvent;
 import com.yonyou.occ.ms.order.repository.PoStateRepository;
 import com.yonyou.occ.ms.order.repository.PurchaseOrderRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -123,11 +126,36 @@ public class PurchaseOrderEventHandler {
     }
 
     @EventHandler
+    public void handle(PurchaseOrderSubmittedEvent event) {
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findOne(event.getId().getId());
+        PoState poState = poStateRepository.findByCode(PoStateEnum.SUBMITTED.getCode());
+        purchaseOrder.setPoState(poState);
+        purchaseOrder = purchaseOrderRepository.save(purchaseOrder);
+
+        log.debug("PurchaseOrder {} is submitted.", purchaseOrder);
+    }
+
+    @EventHandler
+    public void handle(PurchaseOrderSubmitRollbackedEvent event) {
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findOne(event.getId().getId());
+        PoState poState = poStateRepository.findByCode(PoStateEnum.PAID.getCode());
+        purchaseOrder.setPoState(poState);
+        purchaseOrder = purchaseOrderRepository.save(purchaseOrder);
+
+        log.debug("PurchaseOrder submit {} is rollbacked.", purchaseOrder);
+    }
+
+    @EventHandler
+    public void handle(PurchaseOrderSubmitConfirmedEvent event) {
+        log.debug("PurchaseOrder submit {} is confirmed.", event.getId());
+    }
+
+    @EventHandler
     public void handle(PurchaseOrderDeletedEvent event) {
         PurchaseOrder purchaseOrder = purchaseOrderRepository.findOne(event.getId().getId());
         purchaseOrder.setDr(1);
         purchaseOrder = purchaseOrderRepository.save(purchaseOrder);
 
-        log.info("PurchaseOrder {} is deleted.", purchaseOrder);
+        log.debug("PurchaseOrder {} is deleted.", purchaseOrder);
     }
 }

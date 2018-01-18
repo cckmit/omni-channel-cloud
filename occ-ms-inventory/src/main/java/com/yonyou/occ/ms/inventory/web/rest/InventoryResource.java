@@ -63,4 +63,18 @@ public class InventoryResource implements InventoryRestApi {
         InventoryDTO inventoryDTO = inventoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(inventoryDTO));
     }
+
+    /**
+     * GET  /inventories/productId/:productId : get the "productId" inventory.
+     *
+     * @param productId the id of the product
+     * @return the ResponseEntity with status 200 (OK) and with body the inventoryDTO, or with status 404 (Not Found)
+     */
+    @Timed
+    @Override
+    public ResponseEntity<InventoryDTO> getInventoryByProduct(@PathVariable String productId) {
+        log.debug("REST request to get Inventory by productId: {}", productId);
+        InventoryDTO inventoryDTO = inventoryService.findByProductId(productId);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(inventoryDTO));
+    }
 }

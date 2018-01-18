@@ -8,13 +8,13 @@ import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
 import lombok.Value;
 
 /**
- * The event occurs when the lock of inventory is failed.
+ * The event occurs when the inventory is not enough to be locked.
  *
  * @author WangRui
- * @date 2018-01-17 10:54:35
+ * @date 2018-01-17 10:10:35
  */
 @Value
-public class InventoryLockRevertedEvent extends AbstractDomainEvent {
+public class InventoryNotEnoughEvent extends AbstractDomainEvent {
     private final InventoryId id;
 
     private final PurchaseOrderId purchaseOrderId;

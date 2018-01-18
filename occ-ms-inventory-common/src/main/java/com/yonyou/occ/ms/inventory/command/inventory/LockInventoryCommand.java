@@ -5,8 +5,9 @@ import java.math.BigDecimal;
 import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
 import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
 import com.yonyou.occ.ms.common.domain.vo.order.PoItemId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
+import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
+import lombok.Value;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 /**
@@ -15,22 +16,31 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
  * @author WangRui
  * @date 2018-01-08 14:05:16
  */
-@Data
-@AllArgsConstructor
+@Value
 public class LockInventoryCommand extends AbstractDomainCommand {
     /**
      * The ID of the inventory aggregate.
      */
     @TargetAggregateIdentifier
-    private InventoryId id;
+    private final InventoryId id;
+
+    /**
+     * The ID of the purchase order.
+     */
+    private final PurchaseOrderId purchaseOrderId;
 
     /**
      * The ID of the purchase order item.
      */
-    private PoItemId poItemId;
+    private final PoItemId poItemId;
+
+    /**
+     * The ID of the product.
+     */
+    private final ProductId productId;
 
     /**
      * The quantity of the inventory to lock.
      */
-    private BigDecimal quantity;
+    private final BigDecimal quantity;
 }

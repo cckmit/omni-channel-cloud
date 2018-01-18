@@ -17,6 +17,7 @@ import com.yonyou.occ.ms.common.domain.vo.product.ProductId;
 import com.yonyou.occ.ms.order.command.po.CreatePurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.DeletePurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.po.StartPayPurchaseOrderCommand;
+import com.yonyou.occ.ms.order.command.po.SubmitPurchaseOrderCommand;
 import com.yonyou.occ.ms.order.command.web.rest.dto.CreatePurchaseOrderRequestDTO;
 import com.yonyou.occ.ms.order.command.web.rest.util.HeaderUtil;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -55,8 +56,7 @@ public class PurchaseOrderResource {
      * POST  /purchase-orders : Create a new purchaseOrder.
      *
      * @param requestDTO the request DTO to create a purchaseOrder
-     * @return the ResponseEntity with status 201 (Created) and with body the new requestDTO, or with status 400 (Bad
-     * Request) if the purchaseOrder has already an ID
+     * @return the ResponseEntity with status 201 (Created)
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/purchase-orders")
@@ -90,6 +90,23 @@ public class PurchaseOrderResource {
         log.debug("REST request to pay a purchaseOrder : {}", id);
 
         StartPayPurchaseOrderCommand command = new StartPayPurchaseOrderCommand(new PurchaseOrderId(id));
+        commandGateway.sendAndWait(command);
+
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();
+    }
+
+    /**
+     * PUT  /purchase-orders/:id/submit : Submit an existing purchaseOrder.
+     *
+     * @param id the id of the purchaseOrderDTO to submit
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @PutMapping("/purchase-orders/{id}/submit")
+    @Timed
+    public ResponseEntity<Void> submitPurchaseOrder(@PathVariable String id) {
+        log.debug("REST request to pay a purchaseOrder : {}", id);
+
+        SubmitPurchaseOrderCommand command = new SubmitPurchaseOrderCommand(new PurchaseOrderId(id));
         commandGateway.sendAndWait(command);
 
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id)).build();

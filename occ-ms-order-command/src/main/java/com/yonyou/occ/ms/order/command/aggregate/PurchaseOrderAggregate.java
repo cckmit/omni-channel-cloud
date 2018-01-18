@@ -17,6 +17,9 @@ import com.yonyou.occ.ms.order.event.po.PurchaseOrderDeletedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderPayFailedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderPayStartedEvent;
 import com.yonyou.occ.ms.order.event.po.PurchaseOrderPaySuccessfulEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmitConfirmedEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmitRollbackedEvent;
+import com.yonyou.occ.ms.order.event.po.PurchaseOrderSubmittedEvent;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
@@ -79,6 +82,18 @@ public class PurchaseOrderAggregate {
         apply(new PurchaseOrderPaySuccessfulEvent(id, poPaymentId, customerAccount, totalAmount));
     }
 
+    public void submit() {
+        apply(new PurchaseOrderSubmittedEvent(id, poItems));
+    }
+
+    public void rollbackSubmit() {
+        apply(new PurchaseOrderSubmitRollbackedEvent(id));
+    }
+
+    public void confirmSubmit() {
+        apply(new PurchaseOrderSubmitConfirmedEvent(id));
+    }
+
     public void delete() {
         // Marks this aggregate as deleted, instructing a repository to remove that aggregate at an appropriate time.
         markDeleted();
@@ -125,6 +140,27 @@ public class PurchaseOrderAggregate {
         poPayments.add(poPayment);
 
         log.debug("Applied: 'PurchaseOrderPaySuccessfulEvent' [{}]", event);
+    }
+
+    @EventSourcingHandler
+    private void on(PurchaseOrderSubmittedEvent event) {
+        poState = PoStateEnum.SUBMITTED;
+
+        log.debug("Applied: 'PurchaseOrderSubmittedEvent' [{}]", event);
+    }
+
+    @EventSourcingHandler
+    private void on(PurchaseOrderSubmitRollbackedEvent event) {
+        poState = PoStateEnum.PAID;
+
+        log.debug("Applied: 'PurchaseOrderSubmitRollbackedEvent' [{}]", event);
+    }
+
+    @EventSourcingHandler
+    private void on(PurchaseOrderSubmitConfirmedEvent event) {
+        poState = PoStateEnum.SUBMITTED;
+
+        log.debug("Applied: 'PurchaseOrderSubmitConfirmedEvent' [{}]", event);
     }
 
     @EventSourcingHandler

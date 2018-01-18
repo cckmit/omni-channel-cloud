@@ -3,8 +3,8 @@ package com.yonyou.occ.ms.inventory.command.inventory;
 import com.yonyou.occ.ms.common.domain.AbstractDomainCommand;
 import com.yonyou.occ.ms.common.domain.vo.inventory.InventoryId;
 import com.yonyou.occ.ms.common.domain.vo.order.PoItemId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.yonyou.occ.ms.common.domain.vo.order.PurchaseOrderId;
+import lombok.Value;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 /**
@@ -13,11 +13,12 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
  * @author WangRui
  * @date 2018-01-08 14:05:16
  */
-@Data
-@AllArgsConstructor
+@Value
 public class ConfirmLockInventoryCommand extends AbstractDomainCommand {
     @TargetAggregateIdentifier
-    private InventoryId id;
+    private final InventoryId id;
 
-    private PoItemId poItemId;
+    private final PurchaseOrderId purchaseOrderId;
+
+    private final PoItemId poItemId;
 }

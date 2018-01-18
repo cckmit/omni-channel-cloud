@@ -34,4 +34,13 @@ public interface InventoryRestApi {
      */
     @GetMapping("/inventories/{id}")
     ResponseEntity<InventoryDTO> getInventory(@PathVariable("id") String id);
+
+    /**
+     * GET  /inventories?productId={productId} : get the "productId" inventory.
+     *
+     * @param productId the id of the product
+     * @return the ResponseEntity with status 200 (OK) and with body the inventoryDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/inventories/product/{productId}")
+    ResponseEntity<InventoryDTO> getInventoryByProduct(@PathVariable("productId") String productId);
 }

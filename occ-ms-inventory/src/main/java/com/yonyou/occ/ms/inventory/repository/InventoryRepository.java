@@ -12,5 +12,5 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, String> {
-
+    Inventory findByProductId(String productId);
 }

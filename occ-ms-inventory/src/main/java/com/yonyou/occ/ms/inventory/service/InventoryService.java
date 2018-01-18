@@ -55,8 +55,7 @@ public class InventoryService {
     @Transactional(readOnly = true)
     public Page<InventoryDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Inventories");
-        return inventoryRepository.findAll(pageable)
-            .map(inventoryMapper::toDto);
+        return inventoryRepository.findAll(pageable).map(inventoryMapper:: toDto);
     }
 
     /**
@@ -80,5 +79,18 @@ public class InventoryService {
     public void delete(String id) {
         log.debug("Request to delete Inventory : {}", id);
         inventoryRepository.delete(id);
+    }
+
+    /**
+     * Get one inventory by productId.
+     *
+     * @param productId the id of the product
+     * @return the inventory entity
+     */
+    @Transactional(readOnly = true)
+    public InventoryDTO findByProductId(String productId) {
+        log.debug("Request to get Inventory by productId : {}", productId);
+        Inventory inventory = inventoryRepository.findByProductId(productId);
+        return inventoryMapper.toDto(inventory);
     }
 }
